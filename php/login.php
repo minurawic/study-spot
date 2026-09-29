@@ -1,46 +1,56 @@
 <?php
 // ============================================================
-//  StudySpot – Login Handler
+//  StudySpot – Login Handler (JSON API)
 // ============================================================
+ob_start(); // catch any stray PHP output / warnings
 
-session_start();
+header('Content-Type: application/json');
 
-// Only allow POST requests
+// Only allow POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: ../login.html');
+    ob_clean();
+    echo json_encode(['success' => false, 'error' => 'validation']);
     exit;
 }
 
-// ── Collect input ────────────────────────────────────────────
+// ── Collect input ─────────────────────────────────────────────
 $email    = trim($_POST['email']    ?? '');
 $password =      $_POST['password'] ?? '';
 
-// ── Basic validation ─────────────────────────────────────────
+// ── Basic validation ──────────────────────────────────────────
 if (empty($email) || empty($password) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header('Location: ../login.html?error=validation');
+    ob_clean();
+    echo json_encode(['success' => false, 'error' => 'validation']);
     exit;
 }
 
-// ── Database connection ──────────────────────────────────────
+// ── Database connection ───────────────────────────────────────
 require_once __DIR__ . '/db.php';
 
 // ── Lookup user ───────────────────────────────────────────────
-$stmt = $pdo->prepare('SELECT id, full_name, email, password_hash FROM users WHERE email = ?');
-$stmt->execute([$email]);
-$user = $stmt->fetch();
+try {
+    $stmt = $pdo->prepare('SELECT id, full_name, email, password_hash FROM users WHERE email = ?');
+    $stmt->execute([$email]);
+    $user = $stmt->fetch();
 
-// ── Verify credentials ────────────────────────────────────────
-if ($user && password_verify($password, $user['password_hash'])) {
-    // Regenerate session ID to prevent fixation
-    session_regenerate_id(true);
+    // ── Verify credentials ────────────────────────────────────
+    if ($user && password_verify($password, $user['password_hash'])) {
+        ob_clean();
+        echo json_encode([
+            'success' => true,
+            'user'    => [
+                'id'        => $user['id'],
+                'full_name' => $user['full_name'],
+                'email'     => $user['email'],
+            ]
+        ]);
+        exit;
+    }
 
-    $_SESSION['user_id']    = $user['id'];
-    $_SESSION['user_name']  = $user['full_name'];
-    $_SESSION['user_email'] = $user['email'];
+    ob_clean();
+    echo json_encode(['success' => false, 'error' => 'invalid']);
 
-    header('Location: ../index.html');
-    exit;
+} catch (PDOException $e) {
+    ob_clean();
+    echo json_encode(['success' => false, 'error' => 'server_error', 'msg' => $e->getMessage()]);
 }
-
-header('Location: ../login.html?error=invalid');
-exit;

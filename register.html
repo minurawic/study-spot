@@ -11,15 +11,25 @@
   <div class="auth-container">
     <div class="auth-card">
 
+      <!-- Logo -->
+      <div class="auth-logo">
+        <svg class="logo-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H15V15H9V21H4C3.44772 21 3 20.5523 3 20V9.5Z" fill="#2D6A2D"/>
+          <path d="M9 21V15H15V21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M3 9.5L12 3L21 9.5" stroke="#2D6A2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span><span class="study">Study</span><span class="spot">Spot</span></span>
+      </div>
+
       <!-- Heading -->
       <h1 class="auth-title">Create Account</h1>
       <p class="auth-subtitle">Sign up to get started</p>
 
-      <!-- Error message (shown via JS) -->
+      <!-- Error / Success message -->
       <div class="error-message" id="errorMessage" role="alert"></div>
 
       <!-- Registration Form -->
-      <form action="php/register.php" method="POST" id="registerForm" novalidate>
+      <form id="registerForm" novalidate>
 
         <!-- Full Name -->
         <div class="form-group">
@@ -62,13 +72,7 @@
               required
               autocomplete="new-password"
             />
-            <button
-              type="button"
-              class="toggle-password"
-              onclick="togglePassword(this)"
-              aria-label="Toggle password visibility"
-            >
-              <!-- Closed-eye SVG (default) -->
+            <button type="button" class="toggle-password" onclick="togglePassword(this)" aria-label="Toggle password visibility">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                    fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
@@ -91,13 +95,7 @@
               required
               autocomplete="new-password"
             />
-            <button
-              type="button"
-              class="toggle-password"
-              onclick="togglePassword(this)"
-              aria-label="Toggle confirm password visibility"
-            >
-              <!-- Closed-eye SVG (default) -->
+            <button type="button" class="toggle-password" onclick="togglePassword(this)" aria-label="Toggle confirm password visibility">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                    fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
@@ -107,7 +105,7 @@
           </div>
         </div>
 
-        <button type="submit" class="btn-primary">Sign up</button>
+        <button type="submit" class="btn-primary" id="submitBtn">Sign up</button>
       </form>
 
       <!-- Footer link -->
@@ -120,5 +118,89 @@
   </div><!-- /.auth-container -->
 
   <script src="JS/main.js"></script>
+  <script>
+    /* ── Error messages ───────────────────────────────────────── */
+    const ERRORS = {
+      validation:       'Please fill in all fields correctly.',
+      password_short:   'Password must be at least 6 characters.',
+      password_mismatch:'Passwords do not match. Please try again.',
+      email_exists:     'This email is already registered. Please login.',
+      server_error:     'Something went wrong. Please try again later.',
+    };
+
+    function showError(code) {
+      const banner = document.getElementById('errorMessage');
+      banner.textContent = ERRORS[code] || 'An unexpected error occurred.';
+      banner.style.background = '#fff5f5';
+      banner.style.color      = '#dc3545';
+      banner.style.border     = '1px solid #f5c6cb';
+      banner.classList.add('show');
+    }
+
+    function showSuccess(msg) {
+      const banner = document.getElementById('errorMessage');
+      banner.textContent = msg;
+      banner.style.background = '#e8f5e9';
+      banner.style.color      = '#2D6A2D';
+      banner.style.border     = '1px solid #a5d6a7';
+      banner.classList.add('show');
+    }
+
+    /* ── Form Submit via fetch ────────────────────────────────── */
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled    = true;
+      btn.textContent = 'Creating account…';
+
+      // Client-side check
+      const full_name        = document.getElementById('full_name').value.trim();
+      const email            = document.getElementById('email').value.trim();
+      const password         = document.getElementById('password').value;
+      const confirm_password = document.getElementById('confirm_password').value;
+
+      if (!full_name || !email || !password || !confirm_password) {
+        showError('validation');
+        btn.disabled = false; btn.textContent = 'Sign up';
+        return;
+      }
+
+      if (password.length < 6) {
+        showError('password_short');
+        btn.disabled = false; btn.textContent = 'Sign up';
+        return;
+      }
+
+      if (password !== confirm_password) {
+        showError('password_mismatch');
+        btn.disabled = false; btn.textContent = 'Sign up';
+        return;
+      }
+
+      // Send to PHP
+      try {
+        const formData = new FormData(this);
+        const res      = await fetch('php/register.php', {
+          method: 'POST',
+          body:   formData,
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          // Save user to localStorage
+          localStorage.setItem('studyspot_user', JSON.stringify(data.user));
+          window.location.href = 'index.html';
+        } else {
+          showError(data.error || 'server_error');
+          btn.disabled = false; btn.textContent = 'Sign up';
+        }
+
+      } catch (err) {
+        showError('server_error');
+        btn.disabled = false; btn.textContent = 'Sign up';
+      }
+    });
+  </script>
 </body>
 </html>
