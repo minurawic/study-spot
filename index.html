@@ -14,7 +14,7 @@
 <nav class="navbar">
 
   <!-- Logo -->
-  <a href="index.php" class="nav-logo">
+  <a href="index.html" class="nav-logo">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H15V15H9V21H4C3.44772 21 3 20.5523 3 20V9.5Z" fill="#2D6A2D"/>
       <path d="M9 21V15H15V21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -24,7 +24,7 @@
 
   <!-- Nav Links -->
   <ul class="nav-links">
-    <li><a href="index.php" class="active">Home</a></li>
+    <li><a href="index.html" class="active">Home</a></li>
     <li><a href="#">Map</a></li>
     <li><a href="#">About Us</a></li>
     <li><a href="#">Explore</a></li>
@@ -40,22 +40,8 @@
       </svg>
     </button>
 
-    <!-- User avatar / login -->
-    <?php
-      // Show user name if logged in, else show login button
-      session_start();
-      if (!empty($_SESSION['user_id'])): ?>
-        <button class="btn-icon" aria-label="Profile" title="<?= htmlspecialchars($_SESSION['full_name'] ?? 'Profile') ?>">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="#2D6A2D"
-               xmlns="http://www.w3.org/2000/svg">
-            <circle cx="12" cy="8" r="4" fill="#2D6A2D"/>
-            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="#2D6A2D"/>
-          </svg>
-        </button>
-        <a href="php/logout.php" class="btn-nav-login" style="background:#dc3545;">Logout</a>
-      <?php else: ?>
-        <a href="login.html" class="btn-nav-login">Login</a>
-      <?php endif; ?>
+    <!-- Login / Profile button (JS handles session via localStorage) -->
+    <div id="navAuthArea"></div>
   </div>
 </nav>
 
@@ -154,9 +140,33 @@
 const API_URL = 'php/get_spaces.php';
 
 /* ── State ───────────────────────────────────────────────── */
-let activeType   = '';
-let searchQuery  = '';
+let activeType  = '';
+let searchQuery = '';
 let debounceTimer;
+
+/* ── Auth Area (Login / Profile) ─────────────────────────── */
+function renderAuthArea() {
+  const area = document.getElementById('navAuthArea');
+  const user = JSON.parse(localStorage.getItem('studyspot_user') || 'null');
+
+  if (user && user.id) {
+    area.innerHTML = `
+      <button class="btn-icon" title="${user.full_name || 'Profile'}" aria-label="Profile">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="#2D6A2D" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="8" r="4" fill="#2D6A2D"/>
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="#2D6A2D"/>
+        </svg>
+      </button>
+      <button class="btn-nav-login" style="background:#dc3545;" onclick="logout()">Logout</button>`;
+  } else {
+    area.innerHTML = `<a href="login.html" class="btn-nav-login">Login</a>`;
+  }
+}
+
+function logout() {
+  localStorage.removeItem('studyspot_user');
+  renderAuthArea();
+}
 
 /* ── Fetch & Render ──────────────────────────────────────── */
 async function loadSpaces() {
@@ -165,8 +175,8 @@ async function loadSpaces() {
 
   try {
     const params = new URLSearchParams({ limit: 8 });
-    if (activeType)   params.set('type',   activeType);
-    if (searchQuery)  params.set('search', searchQuery);
+    if (activeType)  params.set('type',   activeType);
+    if (searchQuery) params.set('search', searchQuery);
 
     const res  = await fetch(`${API_URL}?${params}`);
     const data = await res.json();
@@ -205,7 +215,8 @@ function renderCard(s) {
 
   return `
   <article class="space-card" onclick="window.location='#space-${s.id}'">
-    <img class="card-image" src="${img}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600'" />
+    <img class="card-image" src="${img}" alt="${name}" loading="lazy"
+         onerror="this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600'" />
     <div class="card-body">
       <div class="card-location">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
@@ -246,7 +257,7 @@ document.querySelectorAll('.chip').forEach(chip => {
   });
 });
 
-/* ── Search Input (debounced) ────────────────────────────── */
+/* ── Search Input (debounced 400ms) ──────────────────────── */
 document.getElementById('searchInput').addEventListener('input', e => {
   clearTimeout(debounceTimer);
   debounceTimer = setTimeout(() => {
@@ -263,7 +274,6 @@ document.getElementById('btnLocation').addEventListener('click', () => {
   }
   navigator.geolocation.getCurrentPosition(
     pos => {
-      // In a full app, pass coords to the API for distance sorting
       alert(`Location: ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}\n(Nearest-spot feature coming soon!)`);
     },
     () => alert('Unable to retrieve your location.')
@@ -281,6 +291,7 @@ function resetFilters() {
 }
 
 /* ── Init ────────────────────────────────────────────────── */
+renderAuthArea();
 loadSpaces();
 </script>
 
