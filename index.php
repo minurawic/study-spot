@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudySpot – Find the Best Study Spots Near You</title>
+  <link rel="stylesheet" href="CSS/home.css" />
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════════════════════ -->
+<nav class="navbar">
+
+  <!-- Logo -->
+  <a href="index.php" class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H15V15H9V21H4C3.44772 21 3 20.5523 3 20V9.5Z" fill="#2D6A2D"/>
+      <path d="M9 21V15H15V21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span><span class="study">Study</span><span class="spot">Spot</span></span>
+  </a>
+
+  <!-- Nav Links -->
+  <ul class="nav-links">
+    <li><a href="index.php" class="active">Home</a></li>
+    <li><a href="#">Map</a></li>
+    <li><a href="#">About Us</a></li>
+    <li><a href="#">Explore</a></li>
+  </ul>
+
+  <!-- Actions -->
+  <div class="nav-actions">
+    <!-- Favourites heart -->
+    <button class="btn-icon" aria-label="Favourites" title="Favourites">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </button>
+
+    <!-- User avatar / login -->
+    <?php
+      // Show user name if logged in, else show login button
+      session_start();
+      if (!empty($_SESSION['user_id'])): ?>
+        <button class="btn-icon" aria-label="Profile" title="<?= htmlspecialchars($_SESSION['full_name'] ?? 'Profile') ?>">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="#2D6A2D"
+               xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" fill="#2D6A2D"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" fill="#2D6A2D"/>
+          </svg>
+        </button>
+        <a href="php/logout.php" class="btn-nav-login" style="background:#dc3545;">Logout</a>
+      <?php else: ?>
+        <a href="login.html" class="btn-nav-login">Login</a>
+      <?php endif; ?>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════
+     HERO SECTION
+════════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-text">
+    <h1>Find the Best Study<br>Spots Near You</h1>
+    <p>Discover quiet libraries, cozy cafés, co-working spaces and university areas to help you focus and get more done.</p>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <div class="search-input-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search study spaces, e.g. library, cafe…"
+          autocomplete="off"
+        />
+      </div>
+      <button class="btn-location" id="btnLocation">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Use My Location
+      </button>
+    </div>
+
+    <!-- Category Chips -->
+    <div class="category-chips">
+      <button class="chip active" data-type="">
+        <span class="chip-icon">🏢</span> All
+      </button>
+      <button class="chip" data-type="library">
+        <span class="chip-icon">📚</span> Libraries
+      </button>
+      <button class="chip" data-type="cafe">
+        <span class="chip-icon">☕</span> Cafés
+      </button>
+      <button class="chip" data-type="coworking">
+        <span class="chip-icon">🖥</span> Co-working Spaces
+      </button>
+      <button class="chip" data-type="university">
+        <span class="chip-icon">🎓</span> University Areas
+      </button>
+    </div>
+  </div>
+
+  <!-- Hero Illustration -->
+  <div class="hero-image">
+    <img
+      src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80"
+      alt="Person studying at a desk"
+      loading="eager"
+    />
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     POPULAR SPACES
+════════════════════════════════════════════════════════════ -->
+<section class="spaces-section">
+  <div class="section-header">
+    <h2>Popular Study Spaces</h2>
+    <a href="#" class="view-all-link">
+      View All
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Cards injected here by JS -->
+  <div class="spaces-grid" id="spacesGrid">
+    <div class="loading-grid">
+      <div class="spinner"></div>
+      <span>Loading study spaces…</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     SCRIPTS
+════════════════════════════════════════════════════════════ -->
+<script>
+/* ── Config ──────────────────────────────────────────────── */
+const API_URL = 'php/get_spaces.php';
+
+/* ── State ───────────────────────────────────────────────── */
+let activeType   = '';
+let searchQuery  = '';
+let debounceTimer;
+
+/* ── Fetch & Render ──────────────────────────────────────── */
+async function loadSpaces() {
+  const grid = document.getElementById('spacesGrid');
+  grid.innerHTML = `<div class="loading-grid"><div class="spinner"></div><span>Loading…</span></div>`;
+
+  try {
+    const params = new URLSearchParams({ limit: 8 });
+    if (activeType)   params.set('type',   activeType);
+    if (searchQuery)  params.set('search', searchQuery);
+
+    const res  = await fetch(`${API_URL}?${params}`);
+    const data = await res.json();
+
+    if (!data.success) throw new Error('API error');
+
+    if (data.spaces.length === 0) {
+      grid.innerHTML = `<div class="error-grid">
+        <p>😔 No study spaces found.</p>
+        <button onclick="resetFilters()">Clear Filters</button>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = data.spaces.map(renderCard).join('');
+
+  } catch (err) {
+    console.error(err);
+    grid.innerHTML = `<div class="error-grid">
+      <p>⚠️ Could not load spaces. Make sure the server is running.</p>
+      <button onclick="loadSpaces()">Retry</button>
+    </div>`;
+  }
+}
+
+/* ── Card Template ───────────────────────────────────────── */
+function renderCard(s) {
+  const img     = s.image_url
+    ? escHtml(s.image_url)
+    : 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=600';
+  const name    = escHtml(s.name);
+  const loc     = escHtml(s.district);
+  const rating  = parseFloat(s.rating).toFixed(1);
+  const reviews = parseInt(s.total_reviews).toLocaleString();
+  const open    = s.is_open;
+
+  return `
+  <article class="space-card" onclick="window.location='#space-${s.id}'">
+    <img class="card-image" src="${img}" alt="${name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600'" />
+    <div class="card-body">
+      <div class="card-location">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        ${loc}
+      </div>
+      <div class="card-name">${name}</div>
+      <div class="card-footer">
+        <div class="card-rating">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="#f5a623" stroke="#f5a623" stroke-width="0">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+          ${rating}
+          <span class="reviews">(${reviews})</span>
+        </div>
+        <span class="badge ${open ? 'badge-open' : 'badge-closed'}">${open ? 'Open Now' : 'Closed'}</span>
+      </div>
+    </div>
+  </article>`;
+}
+
+/* ── Escape HTML ─────────────────────────────────────────── */
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ── Category Chips ──────────────────────────────────────── */
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    activeType = chip.dataset.type;
+    loadSpaces();
+  });
+});
+
+/* ── Search Input (debounced) ────────────────────────────── */
+document.getElementById('searchInput').addEventListener('input', e => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    searchQuery = e.target.value.trim();
+    loadSpaces();
+  }, 400);
+});
+
+/* ── Use My Location ─────────────────────────────────────── */
+document.getElementById('btnLocation').addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    alert('Geolocation is not supported by your browser.');
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      // In a full app, pass coords to the API for distance sorting
+      alert(`Location: ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}\n(Nearest-spot feature coming soon!)`);
+    },
+    () => alert('Unable to retrieve your location.')
+  );
+});
+
+/* ── Reset Filters ───────────────────────────────────────── */
+function resetFilters() {
+  activeType  = '';
+  searchQuery = '';
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  document.querySelector('.chip[data-type=""]').classList.add('active');
+  loadSpaces();
+}
+
+/* ── Init ────────────────────────────────────────────────── */
+loadSpaces();
+</script>
+
+</body>
+</html>
