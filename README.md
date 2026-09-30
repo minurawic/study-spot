@@ -35,7 +35,13 @@ studyspotnew/
 │   ├── add-review.php     Saves a review
 │   ├── toggle-favorite.php  Adds/removes a favorite (fetch API)
 │   ├── update-profile.php   Updates name/email (account-settings.html)
-│   └── update-password.php  Changes password (account-settings.html)
+│   ├── update-password.php  Changes password (account-settings.html)
+│   ├── get_faqs.php         Returns FAQs from MySQL with auto-table seeding
+│   ├── admin_stats.php      Provides live counts for users, spaces, bookings
+│   ├── admin_spaces.php     Full CRUD & status toggling for study spaces
+│   ├── admin_users.php      Lists and manages user accounts
+│   ├── admin_bookings.php   Manages booking statuses
+│   └── admin_reviews.php    Review moderation and management
 ├── index.html             Home
 ├── login.html
 ├── register.html
@@ -52,6 +58,10 @@ studyspotnew/
 ├── favourites.html           Saved spaces
 ├── write-review.html         Submit a review
 ├── help.html                  Help & FAQ ("About Us" in the nav)
+├── about.html                 About Us routing alias
+├── faq.html                   FAQ routing alias
+├── admin-dashboard.html       Admin Dashboard (spaces, users, bookings, reviews)
+├── admin.html                 Admin Dashboard shortcut
 └── README.md
 ```
 
