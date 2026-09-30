@@ -93,6 +93,7 @@ if ($table === 'places') {
     // Order SQL
     switch ($sort) {
         case 'rating':
+        case 'top_rated':
             $orderSql = 'avg_rating DESC, p.id ASC';
             break;
         case 'distance':
@@ -120,7 +121,13 @@ if ($table === 'places') {
                        WHEN 2 THEN 4.4 
                        WHEN 3 THEN 4.7 
                        WHEN 4 THEN 4.8 
-                       ELSE COALESCE(ROUND(AVG(r.rating), 1), 4.5)
+                       WHEN 9 THEN 4.8
+                       WHEN 10 THEN 4.7
+                       WHEN 11 THEN 4.6
+                       WHEN 12 THEN 4.5
+                       WHEN 13 THEN 4.4
+                       WHEN 14 THEN 4.3
+                       ELSE COALESCE(p.rating, ROUND(AVG(r.rating), 1), 4.5)
                    END AS avg_rating,
                    '05' AS review_count
             FROM places p
@@ -165,20 +172,20 @@ function formatTimeRange($open, $close) {
     return $t1 . '-' . $t2;
 }
 
-function typeTitle($type, $id) {
+function typeTitle($type, $id = 0) {
     if ($id == 3) return 'Working Space';
     return match (strtolower($type)) {
         'library'    => 'Library',
-        'cafe'       => 'Cafe',
-        'coworking'  => 'Working Space',
-        'university' => 'Library',
+        'cafe'       => 'Café',
+        'coworking'  => 'Co-working',
+        'university' => 'University',
         default      => ucfirst($type),
     };
 }
 
 function noiseTitle($noise) {
     return match (strtolower($noise)) {
-        'very_quiet' => 'Very Quiet',
+        'very_quiet' => 'Quiet',
         'quiet'      => 'Quiet',
         'moderate'   => 'Moderate',
         'lively'     => 'Lively',
@@ -206,8 +213,12 @@ foreach ($rows as $item) {
 
     // Extract area/suburb e.g. "Colombo 07"
     $area = $item['city'] ?? 'Colombo';
-    if (!empty($item['address']) && preg_match('/(Colombo\s*\d+|[A-Za-z\s]+)(?:,|$)/i', $item['address'], $m)) {
-        $area = trim($m[1]);
+    if (!empty($item['address'])) {
+        if (preg_match('/(Colombo\s*\d+|Malabe|Nugegoda|Peradeniya|Kandy)/i', $item['address'], $m)) {
+            $area = trim($m[1]);
+        } elseif (preg_match('/^([^,]+)/', $item['address'], $m)) {
+            $area = trim($m[1]);
+        }
     }
     $districtLine = $area . '  ' . $distText;
 
@@ -216,23 +227,37 @@ foreach ($rows as $item) {
     if ($item['id'] == 2) $costDisplay = 'LKR 200-500';
     if ($item['id'] == 3) $costDisplay = 'LKR 300/day';
     if ($item['id'] == 4) $costDisplay = 'Free';
+    if ($item['id'] == 9) $costDisplay = 'Free';
+    if ($item['id'] == 10) $costDisplay = 'Free';
+    if ($item['id'] == 11) $costDisplay = 'LKR 500/hr';
+    if ($item['id'] == 12) $costDisplay = 'LKR 300/hr';
+    if ($item['id'] == 13) $costDisplay = 'Free';
+    if ($item['id'] == 14) $costDisplay = 'LKR 250/hr';
+
+    $wifiBadge = ($item['wifi'] === 'none') ? 'No Wi-Fi' : 'Wi-Fi Yes';
+    $noiseBadge = noiseTitle($item['noise_level'] ?? 'quiet');
 
     $results[] = [
         'id'            => (int)$item['id'],
         'name'          => $item['name'],
         'type'          => $item['type'],
         'type_label'    => typeTitle($item['type'], $item['id']),
+        'category_badge'=> typeTitle($item['type'], $item['id']),
         'city'          => $item['city'] ?? 'Colombo',
         'address'       => $item['address'] ?? '',
+        'location_badge'=> $area,
         'district_line' => $districtLine,
         'distance_km'   => $rawDist,
         'distance_text' => $distText,
         'wifi'          => $item['wifi'] ?? 'free',
         'wifi_label'    => ($item['wifi'] === 'paid') ? 'Paid Wi-Fi' : (($item['id'] == 3) ? 'High Speed Wi-Fi' : 'Free Wi-Fi'),
+        'wifi_badge'    => $wifiBadge,
         'noise_level'   => $item['noise_level'] ?? 'quiet',
-        'noise_label'   => noiseTitle($item['noise_level'] ?? 'quiet'),
+        'noise_label'   => $noiseBadge,
+        'noise_badge'   => $noiseBadge,
         'cost_type'     => $item['cost_type'] ?? 'free',
         'cost_display'  => $costDisplay,
+        'cost_badge'    => $costDisplay,
         'price'         => (float)($item['price'] ?? 0),
         'open_time'     => substr($openTime, 0, 5),
         'close_time'    => substr($closeTime, 0, 5),
