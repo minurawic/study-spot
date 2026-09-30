@@ -264,4 +264,39 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+--
+-- Table structure for table `faqs`
+--
+
+DROP TABLE IF EXISTS `faqs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `faqs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `question` varchar(255) NOT NULL,
+  `answer` text NOT NULL,
+  `category` varchar(50) DEFAULT 'General',
+  `display_order` int(11) DEFAULT 0,
+  `is_active` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `faqs`
+--
+
+LOCK TABLES `faqs` WRITE;
+/*!40000 ALTER TABLE `faqs` DISABLE KEYS */;
+INSERT INTO `faqs` VALUES 
+(1,'How do I make a booking?','To make a booking, browse available study spaces on the Explore or Map page, select your preferred location, choose your desired date and time slot, specify the number of people, and confirm your reservation. You will receive an instant confirmation reference.','Booking',1,1,'2026-09-30 19:46:25'),
+(2,'Can I cancel my booking?','Yes, you can cancel your upcoming booking through your bookings dashboard. Cancellations made at least 2 hours prior to the scheduled start time are free of charge and eligible for a full refund where applicable.','Booking',2,1,'2026-09-30 19:46:25'),
+(3,'What payment methods are available?','We accept all major credit and debit cards (Visa, MasterCard), local online bank transfers, and on-site cash payments at selected study spaces. For free public libraries and university halls, no payment is required.','Payments',3,1,'2026-09-30 19:46:25'),
+(4,'Is there a refund policy?','Yes, we have a clear refund policy. Cancellations made at least 2 hours before your scheduled reservation are eligible for a 100% refund. For later cancellations or no-shows, cancellation policies depend on the specific venue.','Payments',4,1,'2026-09-30 19:46:25'),
+(5,'How do I add a place to my favorites?','Simply click the heart icon on any study space card or space detail page. You can access all your saved favorite spaces anytime from the navigation bar heart icon when logged in.','Account',5,1,'2026-09-30 19:46:25'),
+(6,'How can I contact support?','You can reach out to our dedicated support team 24/7 by emailing us at support@studyspot.lk or by using the contact options below. We typically respond within a few hours.','Support',6,1,'2026-09-30 19:46:25');
+/*!40000 ALTER TABLE `faqs` ENABLE KEYS */;
+UNLOCK TABLES;
+
 -- Dump completed on 2026-09-30 19:46:25
