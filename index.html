@@ -25,9 +25,9 @@
   <!-- Nav Links -->
   <ul class="nav-links">
     <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="explore.html">Explore</a></li>
     <li><a href="#">Map</a></li>
     <li><a href="#">About Us</a></li>
-    <li><a href="#">Explore</a></li>
   </ul>
 
   <!-- Actions -->
@@ -114,7 +114,7 @@
 <section class="spaces-section">
   <div class="section-header">
     <h2>Popular Study Spaces</h2>
-    <a href="#" class="view-all-link">
+    <a href="explore.html" class="view-all-link">
       View All
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -214,7 +214,7 @@ function renderCard(s) {
   const open    = s.is_open;
 
   return `
-  <article class="space-card" onclick="window.location='#space-${s.id}'">
+  <article class="space-card" onclick="window.location='space-detail.html?id=${s.id}'">
     <img class="card-image" src="${img}" alt="${name}" loading="lazy"
          onerror="this.src='https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600'" />
     <div class="card-body">

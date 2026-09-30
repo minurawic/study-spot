@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="400" height="260" role="img" aria-label="Study space photo">
+  <rect width="400" height="260" fill="#E8EFE9"/>
+  <rect x="60" y="150" width="280" height="14" rx="3" fill="#B7CFBD"/>
+  <rect x="96" y="96" width="60" height="54" rx="4" fill="#9CBBA4"/>
+  <rect x="166" y="112" width="70" height="38" rx="4" fill="#87AC91"/>
+  <circle cx="286" cy="120" r="24" fill="#9CBBA4"/>
+  <text x="200" y="210" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="15" fill="#5C7A66">StudySpot</text>
+</svg>
