@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Map – StudySpot</title>
+  
+  <!-- Leaflet CSS for Map Rendering -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  
+  <link rel="stylesheet" href="CSS/map.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════════════════════════ -->
+  <nav class="navbar">
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H15V15H9V21H4C3.44772 21 3 20.5523 3 20V9.5Z" fill="#2D6A2D"/>
+        <path d="M9 21V15H15V21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span><span class="study">Study</span><span class="spot">Spot</span></span>
+    </a>
+
+    <!-- Nav Links -->
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="map.html" class="active">Map</a></li>
+      <li><a href="about.html">About Us</a></li>
+    </ul>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <!-- Favourites Heart -->
+      <button class="btn-icon" aria-label="Favourites" title="Favourites">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+
+      <!-- Profile Avatar -->
+      <button class="btn-icon" aria-label="Account" title="Account">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════
+       SEARCH & FILTERS BAR
+  ════════════════════════════════════════════════════════════ -->
+  <section class="map-top-bar">
+    <div class="search-input-box">
+      <input
+        type="search"
+        id="mapSearchInput"
+        class="map-search-input"
+        placeholder="Search in this area..."
+        autocomplete="off"
+      />
+    </div>
+
+    <button type="button" class="btn-filters" id="btnFilters">
+      <!-- Filter sliders icon -->
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="4" y1="21" x2="4" y2="14"></line>
+        <line x1="4" y1="10" x2="4" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12" y2="3"></line>
+        <line x1="20" y1="21" x2="20" y2="16"></line>
+        <line x1="20" y1="12" x2="20" y2="3"></line>
+        <line x1="1" y1="14" x2="7" y2="14"></line>
+        <line x1="9" y1="8" x2="15" y2="8"></line>
+        <line x1="17" y1="16" x2="23" y2="16"></line>
+      </svg>
+      <span>Filters</span>
+    </button>
+
+    <!-- Filters Dropdown Panel -->
+    <div class="filter-dropdown-panel" id="filterDropdownPanel">
+      <div class="filter-dropdown-header">
+        <h4>Filter Spaces</h4>
+        <span class="filter-clear-link" id="clearFiltersBtn">Reset</span>
+      </div>
+
+      <div class="filter-row">
+        <label for="filterType">Place Type</label>
+        <select id="filterType" class="filter-select">
+          <option value="all">All Types</option>
+          <option value="library">Library</option>
+          <option value="cafe">Cafe</option>
+          <option value="coworking">Co-working Space</option>
+          <option value="university">University</option>
+        </select>
+      </div>
+
+      <div class="filter-row">
+        <label for="filterCost">Cost</label>
+        <select id="filterCost" class="filter-select">
+          <option value="all">Any Cost</option>
+          <option value="free">Free Only</option>
+          <option value="paid">Paid</option>
+        </select>
+      </div>
+
+      <div class="filter-row">
+        <label for="filterWifi">Wi-Fi</label>
+        <select id="filterWifi" class="filter-select">
+          <option value="all">Any Wi-Fi</option>
+          <option value="free">Free Wi-Fi</option>
+          <option value="paid">Paid Wi-Fi</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MAIN 2-COLUMN MAP BODY
+  ════════════════════════════════════════════════════════════ -->
+  <main class="map-page-body">
+
+    <!-- Left: Map Container -->
+    <div class="map-frame">
+      <div id="leafletMap"></div>
+    </div>
+
+    <!-- Right: Nearby Study Spaces List -->
+    <aside class="nearby-sidebar">
+      <h2 class="nearby-title">Nearby Study Spaces</h2>
+      <div class="spaces-card-list" id="spacesCardList">
+        <!-- Rendered dynamically via JS and DB API -->
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <script src="JS/map.js"></script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book Your Spot – StudySpot</title>
+  <link rel="stylesheet" href="CSS/booking.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════════════════════════ -->
+  <nav class="navbar">
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H15V15H9V21H4C3.44772 21 3 20.5523 3 20V9.5Z" fill="#2D6A2D"/>
+        <path d="M9 21V15H15V21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span><span class="study">Study</span><span class="spot">Spot</span></span>
+    </a>
+
+    <!-- Nav Links -->
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="about.html">About Us</a></li>
+    </ul>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <!-- Favourites Heart -->
+      <button class="btn-icon" aria-label="Favourites" title="Favourites">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+
+      <!-- Profile Avatar -->
+      <button class="btn-icon" aria-label="Account" title="Account">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MAIN BOOKING CONTAINER
+  ════════════════════════════════════════════════════════════ -->
+  <main class="booking-page-container">
+
+    <div class="booking-grid">
+
+      <!-- Left Column: Place Overview -->
+      <section class="place-preview-card">
+        <div class="place-img-wrap">
+          <img
+            id="placeImg"
+            src="images/library-cafe.jpg"
+            alt="The Library Cafe"
+            class="place-img"
+            onerror="this.src='images/national-library.jpg'"
+          />
+        </div>
+
+        <div class="place-meta-info">
+          <h1 class="place-name" id="placeName">The Library Cafe</h1>
+          <div class="place-city" id="placeCity">Kandy</div>
+          <div class="place-rating" id="placeRating">
+            <span class="star">★</span> 4.6 (124)
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Booking Form -->
+      <section class="booking-form-card">
+        <h2 class="booking-title">Book Your Spot</h2>
+
+        <div class="booking-form">
+
+          <!-- Date Field -->
+          <div class="booking-field">
+            <label for="dateInput" class="booking-label">Date</label>
+            <div class="booking-input-wrap">
+              <input
+                type="date"
+                id="dateInput"
+                class="booking-input"
+                required
+              />
+              <span class="booking-input-icon">
+                <!-- Calendar Icon [19] -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                  <text x="12" y="18" font-size="8" font-weight="bold" text-anchor="middle" fill="currentColor" stroke="none">19</text>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <!-- Time Field -->
+          <div class="booking-field">
+            <label for="timeInput" class="booking-label">Time</label>
+            <div class="booking-input-wrap">
+              <input
+                type="time"
+                id="timeInput"
+                class="booking-input"
+                required
+              />
+              <span class="booking-input-icon">
+                <!-- Clock Icon -->
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <!-- Number of People Field -->
+          <div class="booking-field">
+            <label class="booking-label">Number of People</label>
+            <div class="stepper-wrap">
+              <button type="button" class="btn-stepper" id="btnMinus" aria-label="Decrease people">&minus;</button>
+              <span class="stepper-count" id="stepperCount">1</span>
+              <button type="button" class="btn-stepper" id="btnPlus" aria-label="Increase people">&plus;</button>
+            </div>
+          </div>
+
+          <!-- Total Price Row -->
+          <div class="total-price-row">
+            <span class="total-price-label">Total Price</span>
+            <span class="total-price-amount" id="totalPriceAmount">Rs. 500</span>
+          </div>
+
+          <!-- Process to Payment Button -->
+          <button type="button" class="btn-process" id="btnProcess">
+            Process to Payment
+          </button>
+
+          <!-- Back Link -->
+          <div class="back-link-bottom">
+            <a href="space-detail.html?id=5" class="back-to-details" id="backToDetailsLink">
+              <span style="font-size: 16px;">&larr;</span>
+              <span>Back to details</span>
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════════
+       CONFIRMATION MODAL
+  ════════════════════════════════════════════════════════════ -->
+  <div class="booking-modal-overlay" id="bookingModal">
+    <div class="booking-modal-card">
+      <div class="modal-icon-circle">&#10003;</div>
+      <h3 class="modal-title">Booking Confirmed!</h3>
+      <p class="modal-subtitle">Your study spot has been reserved successfully.</p>
+
+      <div class="modal-receipt-box">
+        <div class="receipt-row">
+          <span>Study Space:</span>
+          <strong id="modalPlace">The Library Cafe</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Date:</span>
+          <strong id="modalDate">2026-10-01</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Time:</span>
+          <strong id="modalTime">10:00 AM</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Guests:</span>
+          <strong id="modalPeople">1 Person</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Total Paid:</span>
+          <strong id="modalTotal">Rs. 500</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Reference:</span>
+          <strong id="modalRef" style="color: #2D6A2D;">SS-100234</strong>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-modal-primary" id="btnCloseModal">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="JS/booking.js"></script>
+</body>
+</html>
