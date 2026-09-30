@@ -264,8 +264,10 @@ foreach ($rows as $item) {
         'hours_text'    => formatTimeRange($openTime, $closeTime),
         'is_open'       => $isOpen,
         'rating'        => number_format((float)($item['avg_rating'] ?? 4.5), 1),
-        'review_count'  => '05',
+        'review_count'  => '120',
         'image_url'     => $img,
+        'latitude'      => isset($item['latitude']) ? (float)$item['latitude'] : 6.9061,
+        'longitude'     => isset($item['longitude']) ? (float)$item['longitude'] : 79.8612,
     ];
 }
 

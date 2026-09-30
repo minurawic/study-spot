@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Write a Review – StudySpot</title>
+  <link rel="stylesheet" href="CSS/write-review.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════════════════════════ -->
+  <nav class="navbar">
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H15V15H9V21H4C3.44772 21 3 20.5523 3 20V9.5Z" fill="#2D6A2D"/>
+        <path d="M9 21V15H15V21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span><span class="study">Study</span><span class="spot">Spot</span></span>
+    </a>
+
+    <!-- Nav Links -->
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="about.html">About Us</a></li>
+    </ul>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <!-- Favourites Heart -->
+      <button class="btn-icon" aria-label="Favourites" title="Favourites">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </button>
+
+      <!-- Profile Avatar -->
+      <button class="btn-icon" aria-label="Account" title="Account">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MAIN CONTAINER
+  ════════════════════════════════════════════════════════════ -->
+  <main class="review-page-container">
+
+    <!-- Back to Space Link -->
+    <div class="back-link-wrap">
+      <a href="space-detail.html?id=1" class="back-link" id="backLink">
+        <span style="font-size: 16px;">&larr;</span>
+        <span id="backLinkText">Back to National Library Colombo</span>
+      </a>
+    </div>
+
+    <!-- Review Grid -->
+    <div class="review-grid">
+
+      <!-- Left Column: Form -->
+      <section class="review-form-card">
+        <h1 class="review-title">Write a Review</h1>
+        <p class="review-subtitle">Share your experience and help other students</p>
+
+        <form id="reviewForm">
+          <input type="hidden" id="ratingInput" name="rating" value="5" />
+
+          <!-- Overall Rating -->
+          <div class="rating-section">
+            <label class="rating-label">Overall Rating</label>
+            <div class="star-rating-row">
+              <div class="stars-container" id="starsContainer" title="Select Rating">
+                <span class="star-icon filled" data-value="1">★</span>
+                <span class="star-icon filled" data-value="2">★</span>
+                <span class="star-icon filled" data-value="3">★</span>
+                <span class="star-icon filled" data-value="4">★</span>
+                <span class="star-icon filled" data-value="5">★</span>
+              </div>
+              <span class="rating-score" id="ratingScore">5.0</span>
+            </div>
+          </div>
+
+          <!-- Dropdowns Grid (2 Columns) -->
+          <div class="dropdowns-grid">
+            <!-- Col 1: Noise Level -->
+            <div class="form-group">
+              <label for="noiseSelect" class="form-label">Noise Level</label>
+              <div class="select-wrapper">
+                <select id="noiseSelect" name="noise_level" class="custom-select">
+                  <option value="Very Quiet" selected>Very Quiet</option>
+                  <option value="Quiet">Quiet</option>
+                  <option value="Moderate">Moderate</option>
+                  <option value="Lively">Lively</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Col 2: Wi-Fi Quality -->
+            <div class="form-group">
+              <label for="wifiSelect" class="form-label">Wi-Fi Quality</label>
+              <div class="select-wrapper">
+                <select id="wifiSelect" name="wifi_quality" class="custom-select">
+                  <option value="Excellence" selected>Excellence</option>
+                  <option value="Good">Good</option>
+                  <option value="Average">Average</option>
+                  <option value="Poor">Poor</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Col 1 Row 2: Value for Money -->
+            <div class="form-group">
+              <label for="valueSelect" class="form-label">Value for Money</label>
+              <div class="select-wrapper">
+                <select id="valueSelect" name="value_for_money" class="custom-select">
+                  <option value="Excellence" selected>Excellence</option>
+                  <option value="Good">Good</option>
+                  <option value="Average">Average</option>
+                  <option value="Poor">Poor</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Textarea: Your Review -->
+          <div class="form-group review-textarea-group">
+            <label for="reviewTextarea" class="form-label">Your Review</label>
+            <div class="textarea-wrapper">
+              <textarea
+                id="reviewTextarea"
+                name="comment"
+                class="review-textarea"
+                maxlength="500"
+                placeholder="Write Your review here..."
+                required
+              ></textarea>
+              <span class="char-counter"><span id="charCount">0</span>/500</span>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-submit" id="btnSubmit">
+            Submit Review
+          </button>
+
+          <!-- Status Alert -->
+          <div class="submit-alert" id="submitAlert"></div>
+        </form>
+      </section>
+
+      <!-- Right Column: Review Guidelines Card -->
+      <aside class="guidelines-card">
+        <h2 class="guidelines-title">Review Guidelines</h2>
+        
+        <ul class="guidelines-list">
+          <li class="guidelines-item">
+            <span class="check-icon">&#10003;</span>
+            <span>Be honest and Respectful</span>
+          </li>
+          <li class="guidelines-item">
+            <span class="check-icon">&#10003;</span>
+            <span>Focus on your experience</span>
+          </li>
+          <li class="guidelines-item">
+            <span class="check-icon">&#10003;</span>
+            <span>Mention noise level, Wi-Fi,Cleanliness, Facilities etc.</span>
+          </li>
+        </ul>
+
+        <p class="guidelines-note">
+          Avoid personal or offensive comments
+        </p>
+
+        <!-- Illustration matching PNG 1 -->
+        <div class="guidelines-image-wrap">
+          <img src="images/review-guide.png" alt="Girl working on laptop giving thumbs up" />
+        </div>
+      </aside>
+
+    </div>
+
+  </main>
+
+  <script src="JS/write-review.js"></script>
+</body>
+</html>

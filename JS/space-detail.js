@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const overviewDistance  = document.getElementById('overviewDistance');
   const btnSave           = document.getElementById('btnSave');
   const btnShare          = document.getElementById('btnShare');
+  const btnBookSpot       = document.getElementById('btnBookSpot');
+  const btnWriteReview    = document.getElementById('btnWriteReview');
+
+  if (btnBookSpot) btnBookSpot.href = `booking.html?id=${placeId}`;
+  if (btnWriteReview) btnWriteReview.href = `write-review.html?id=${placeId}`;
   
   // Spec fields
   const specHours         = document.getElementById('specHours');
