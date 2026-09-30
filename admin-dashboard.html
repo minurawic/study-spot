@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard – StudySpot</title>
+  <link rel="stylesheet" href="CSS/admin.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════
+       NAVBAR (Matching PNG 2)
+  ════════════════════════════════════════════════════════════ -->
+  <nav class="navbar">
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H15V15H9V21H4C3.44772 21 3 20.5523 3 20V9.5Z" fill="#2D6A2D"/>
+        <path d="M9 21V15H15V21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span><span class="study">Study</span><span class="spot">Spot</span></span>
+    </a>
+
+    <!-- Nav Links (Home, Map, About Us, Explore) -->
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="help.html">About Us</a></li>
+      <li><a href="explore.html">Explore</a></li>
+    </ul>
+
+    <!-- Top Right Action -->
+    <div class="nav-actions">
+      <a href="login.html" class="btn-nav-login" id="navLoginBtn">Login</a>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MAIN ADMIN CONTAINER
+  ════════════════════════════════════════════════════════════ -->
+  <main class="admin-container">
+
+    <!-- Header Section -->
+    <header class="admin-header">
+      <div class="admin-tag">ADMINISTRATION</div>
+      <h1 class="admin-title">Admin Dashboard</h1>
+      <p class="admin-subtitle">Manage users, study spaces, bookings and reviews from one place.</p>
+    </header>
+
+    <!-- Top Stat Cards (Matching PNG 2) -->
+    <section class="stats-row">
+      <!-- Total Users -->
+      <div class="stat-card">
+        <div class="stat-label">Total Users</div>
+        <div class="stat-value" id="statUsersVal">248</div>
+      </div>
+
+      <!-- Study Spaces -->
+      <div class="stat-card">
+        <div class="stat-label">Study Spaces</div>
+        <div class="stat-value" id="statSpacesVal">32</div>
+      </div>
+
+      <!-- Bookings -->
+      <div class="stat-card">
+        <div class="stat-label">Bookings</div>
+        <div class="stat-value" id="statBookingsVal">486</div>
+      </div>
+    </section>
+
+    <!-- Main Grid: Study Space Management & Quick Management -->
+    <div class="dashboard-grid">
+
+      <!-- Left Column: Study Space Management -->
+      <section class="dashboard-card">
+        <h2 class="card-heading">Study Space Management</h2>
+        <div class="table-wrap">
+          <table class="spaces-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="spacesTableBody">
+              <!-- Dynamically populated from Database via JS/admin.js -->
+              <tr>
+                <td class="space-name-cell">Colombo Public Library</td>
+                <td class="space-type-cell">Library</td>
+                <td><span class="status-badge badge-active">Active</span></td>
+                <td><button class="btn-action-outline">Edit</button></td>
+              </tr>
+              <tr>
+                <td class="space-name-cell">Focus Coworking</td>
+                <td class="space-type-cell">Co-working</td>
+                <td><span class="status-badge badge-active">Active</span></td>
+                <td><button class="btn-action-outline">Edit</button></td>
+              </tr>
+              <tr>
+                <td class="space-name-cell">Read &amp; Relax Cafe</td>
+                <td class="space-type-cell">Café</td>
+                <td><span class="status-badge badge-review">Review</span></td>
+                <td><button class="btn-action-outline">View</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Right Column: Quick Management -->
+      <section class="dashboard-card">
+        <h2 class="card-heading">Quick Management</h2>
+        <div class="quick-actions-list">
+          <button class="btn-quick-primary" id="btnOpenAddSpace">
+            + Add Study Space
+          </button>
+          <button class="btn-quick-outline" id="btnManageUsers">
+            Manage Users
+          </button>
+          <button class="btn-quick-outline" id="btnManageBookings">
+            Manage Bookings
+          </button>
+          <button class="btn-quick-outline" id="btnManageReviews">
+            Manage Reviews
+          </button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Centered Footer Matching PNG 2 -->
+    <footer class="admin-footer">
+      <p>Study_Spot - Find a better place to focus.</p>
+    </footer>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MODALS FOR DATABASE CRUD & MANAGEMENT
+  ════════════════════════════════════════════════════════════ -->
+
+  <!-- 1. Add Study Space Modal -->
+  <div class="modal-overlay" id="addSpaceModal">
+    <div class="modal-box">
+      <button class="modal-close-btn" aria-label="Close">&times;</button>
+      <h3 class="modal-title">+ Add New Study Space</h3>
+      <p class="modal-subtitle">Add a new library, cafe or co-working spot directly into the database.</p>
+
+      <form id="addSpaceForm">
+        <div class="modal-form-grid">
+          <div class="form-group full-span">
+            <label class="form-label" for="addName">Space Name *</label>
+            <input type="text" id="addName" name="name" class="form-input" placeholder="e.g. Colombo Central Library" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="addType">Type *</label>
+            <select id="addType" name="type" class="form-select" required>
+              <option value="library">Library</option>
+              <option value="coworking">Co-working</option>
+              <option value="cafe">Café</option>
+              <option value="university">University</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="addStatus">Status *</label>
+            <select id="addStatus" name="status" class="form-select" required>
+              <option value="active">Active</option>
+              <option value="review">Review</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="addCity">City</label>
+            <input type="text" id="addCity" name="city" class="form-input" placeholder="e.g. Colombo" value="Colombo" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="addPrice">Hourly / Day Price (LKR)</label>
+            <input type="number" id="addPrice" name="price" class="form-input" placeholder="0 for Free" value="0" />
+          </div>
+
+          <div class="form-group full-span">
+            <label class="form-label" for="addAddress">Full Address *</label>
+            <input type="text" id="addAddress" name="address" class="form-input" placeholder="e.g. No. 12, Peradeniya Road, Kandy" required />
+          </div>
+
+          <div class="form-group full-span">
+            <label class="form-label" for="addDesc">Description</label>
+            <textarea id="addDesc" name="description" class="form-textarea" placeholder="Describe the atmosphere, quiet zones, facilities..."></textarea>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-modal-save">Save &amp; Publish Space</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Edit Study Space Modal -->
+  <div class="modal-overlay" id="editSpaceModal">
+    <div class="modal-box">
+      <button class="modal-close-btn" aria-label="Close">&times;</button>
+      <h3 class="modal-title" id="editModalTitle">Edit Study Space</h3>
+      <p class="modal-subtitle">Modify details and update status in the MySQL database.</p>
+
+      <form id="editSpaceForm">
+        <input type="hidden" id="editSpaceId" name="id" />
+
+        <div class="modal-form-grid">
+          <div class="form-group full-span">
+            <label class="form-label" for="editSpaceName">Space Name</label>
+            <input type="text" id="editSpaceName" name="name" class="form-input" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editSpaceType">Type</label>
+            <select id="editSpaceType" name="type" class="form-select">
+              <option value="library">Library</option>
+              <option value="coworking">Co-working</option>
+              <option value="cafe">Café</option>
+              <option value="university">University</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editSpaceStatus">Status</label>
+            <select id="editSpaceStatus" name="status" class="form-select">
+              <option value="active">Active</option>
+              <option value="review">Review</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editSpaceCity">City</label>
+            <input type="text" id="editSpaceCity" name="city" class="form-input" />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="editSpacePrice">Price (LKR)</label>
+            <input type="number" id="editSpacePrice" name="price" class="form-input" />
+          </div>
+
+          <div class="form-group full-span">
+            <label class="form-label" for="editSpaceAddress">Address</label>
+            <input type="text" id="editSpaceAddress" name="address" class="form-input" required />
+          </div>
+
+          <div class="form-group full-span">
+            <label class="form-label" for="editSpaceCostLabel">Cost Label</label>
+            <input type="text" id="editSpaceCostLabel" name="cost_label" class="form-input" placeholder="e.g. Free, LKR 500/hr" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-modal-save">Update Space</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Manage Users Modal -->
+  <div class="modal-overlay" id="usersModal">
+    <div class="modal-box modal-box-wide">
+      <button class="modal-close-btn" aria-label="Close">&times;</button>
+      <h3 class="modal-title">Registered Users</h3>
+      <p class="modal-subtitle">All student accounts registered in the database.</p>
+
+      <div style="overflow-x:auto;">
+        <table class="modal-table">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Email Address</th>
+              <th>Bookings</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="usersListBody">
+            <!-- Injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Manage Bookings Modal -->
+  <div class="modal-overlay" id="bookingsModal">
+    <div class="modal-box modal-box-wide">
+      <button class="modal-close-btn" aria-label="Close">&times;</button>
+      <h3 class="modal-title">Space Reservations</h3>
+      <p class="modal-subtitle">All student reservations logged in the database.</p>
+
+      <div style="overflow-x:auto;">
+        <table class="modal-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Space</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsListBody">
+            <!-- Injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Manage Reviews Modal -->
+  <div class="modal-overlay" id="reviewsModal">
+    <div class="modal-box modal-box-wide">
+      <button class="modal-close-btn" aria-label="Close">&times;</button>
+      <h3 class="modal-title">Student Reviews &amp; Ratings</h3>
+      <p class="modal-subtitle">All feedback submitted by users from the database.</p>
+
+      <div style="overflow-x:auto;">
+        <table class="modal-table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Space</th>
+              <th>Rating</th>
+              <th>Comment</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="reviewsListBody">
+            <!-- Injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="JS/admin.js"></script>
+</body>
+</html>
