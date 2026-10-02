@@ -151,12 +151,26 @@ document.addEventListener('DOMContentLoaded', () => {
       zoomControl: true
     });
 
-    // CartoDB Positron Tiles - Light, clean, matching PNG 2 aesthetics
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 19
-    }).addTo(map);
+    // Base tile layers (Free, no API key required, no watermarks)
+    const osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+
+    const esriStreetLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+      attribution: 'Tiles &copy; Esri'
+    });
+
+    // Add default OpenStreetMap layer
+    osmLayer.addTo(map);
+
+    // Add base layer switcher
+    const baseMaps = {
+      "OpenStreetMap": osmLayer,
+      "Esri Streets": esriStreetLayer
+    };
+    L.control.layers(baseMaps, null, { position: 'topright' }).addTo(map);
 
     markersLayer = L.layerGroup().addTo(map);
 
@@ -171,6 +185,15 @@ document.addEventListener('DOMContentLoaded', () => {
     userMarker = L.marker([6.8850, 79.8750], { icon: blueIcon })
       .addTo(map)
       .bindPopup('<strong>Your Location</strong><br>Colombo, Sri Lanka');
+
+    // Ensure map tiles properly render after DOM layout finishes
+    setTimeout(() => {
+      if (map) map.invalidateSize();
+    }, 250);
+
+    window.addEventListener('resize', () => {
+      if (map) map.invalidateSize();
+    });
   }
 
   // ── 3. Fetch Spaces from DB ─────────────────────────────────
