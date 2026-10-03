@@ -5,14 +5,14 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // Elements
-  const searchInput    = document.getElementById('searchInput');
+  const searchInput = document.getElementById('searchInput');
   const distanceSlider = document.getElementById('distanceSlider');
-  const distanceVal    = document.getElementById('distanceVal');
-  const sortSelect     = document.getElementById('sortSelect');
-  const clearAllBtn    = document.getElementById('clearAllBtn');
-  const openNowCheck   = document.getElementById('openNowCheck');
-  const resultsCount   = document.getElementById('resultsCount');
-  const spacesList     = document.getElementById('spacesList');
+  const distanceVal = document.getElementById('distanceVal');
+  const sortSelect = document.getElementById('sortSelect');
+  const clearAllBtn = document.getElementById('clearAllBtn');
+  const openNowCheck = document.getElementById('openNowCheck');
+  const resultsCount = document.getElementById('resultsCount');
+  const spacesList = document.getElementById('spacesList');
   const paginationWrap = document.getElementById('paginationWrap');
 
   // Filter state
@@ -152,8 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!spaces || spaces.length === 0) {
       spacesList.innerHTML = `
         <div class="state-box">
-          <p style="font-size:16px;font-weight:600;color:#111;margin-bottom:8px;">No study spaces found</p>
-          <p style="font-size:14px;color:#6b7280;margin-bottom:16px;">Try adjusting your search criteria or clearing filters.</p>
+          <p style="font-size:var(--fs-base);font-weight:600;color:#111;margin-bottom:8px;">No study spaces found</p>
+          <p style="font-size:var(--fs-sm);color:#6b7280;margin-bottom:16px;">Try adjusting your search criteria or clearing filters.</p>
           <button onclick="document.getElementById('clearAllBtn').click()" style="background:#2D6A2D;color:#fff;border:none;border-radius:6px;padding:8px 18px;cursor:pointer;font-weight:600;">Clear Filters</button>
         </div>`;
       paginationWrap.innerHTML = '';
@@ -350,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       document.querySelectorAll('input[name="filter_type"]').forEach(c => c.checked = false);
       document.querySelectorAll('input[name="filter_noise"]').forEach(c => c.checked = false);
-      
+
       const defaultWifi = document.querySelector('input[name="filter_wifi"][value="any"]');
       if (defaultWifi) defaultWifi.checked = true;
 

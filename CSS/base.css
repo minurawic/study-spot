@@ -1,0 +1,111 @@
+/* ============================================================
+   StudySpot – SHARED Base Stylesheet
+   Loaded FIRST on EVERY page (including login & register).
+
+   This is the single place that controls:
+     1. The site font
+     2. The font-size scale
+     3. The basic CSS reset
+
+   TEAM RULE: never type a raw font-size like "14px" in a page
+   stylesheet. Use one of the --fs-* variables below instead,
+   e.g.  font-size: var(--fs-sm);
+   To change the look of the whole site, change it HERE only.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* ── Font ─────────────────────────────────────────────── */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        Roboto, Helvetica, Arial, sans-serif;
+
+    /* ── Font-size scale ──────────────────────────────────── */
+    --fs-xs: 12px;
+    /* badges, captions, tiny labels            */
+    --fs-sm: 14px;
+    /* secondary text, meta info, table cells   */
+    --fs-base: 16px;
+    /* body text, paragraphs, inputs, buttons   */
+    --fs-md: 18px;
+    /* sub-headings, modal titles, card headers */
+    --fs-lg: 22px;
+    /* section headings (h2), price/emphasis    */
+    --fs-xl: 32px;
+    /* page titles (h1)                         */
+    --fs-hero: 42px;
+    /* home page hero heading only              */
+
+    --line-height-body: 1.5;
+}
+
+/* Smaller headings on phones – every page follows automatically */
+@media (max-width: 640px) {
+    :root {
+        --fs-lg: 20px;
+        --fs-xl: 26px;
+        --fs-hero: 32px;
+    }
+}
+
+/* ── Reset ────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--fs-base);
+    line-height: var(--line-height-body);
+    color: #1a1a1a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Form controls do not inherit the font by default – force it.
+   (Browser default is 13.33px which is not on our scale.) */
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size: var(--fs-sm);
+}
+
+/* ── Default heading sizes (page CSS may refine layout, not size) ── */
+h1 {
+    font-size: var(--fs-xl);
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: var(--fs-lg);
+    line-height: 1.25;
+}
+
+h3 {
+    font-size: var(--fs-md);
+    line-height: 1.3;
+}
+
+h4 {
+    font-size: var(--fs-base);
+    line-height: 1.3;
+}
+
+p {
+    font-size: var(--fs-base);
+}

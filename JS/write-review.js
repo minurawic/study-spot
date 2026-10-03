@@ -8,41 +8,53 @@ document.addEventListener('DOMContentLoaded', () => {
   const placeId = parseInt(urlParams.get('id') || '1') || 1;
 
   // DOM Elements
-  const backLinkText  = document.getElementById('backLinkText');
-  const backLink      = document.getElementById('backLink');
-  const reviewForm    = document.getElementById('reviewForm');
-  const starsContainer= document.getElementById('starsContainer');
-  const ratingScore   = document.getElementById('ratingScore');
-  const ratingInput   = document.getElementById('ratingInput');
-  const noiseSelect   = document.getElementById('noiseSelect');
-  const wifiSelect    = document.getElementById('wifiSelect');
-  const valueSelect   = document.getElementById('valueSelect');
-  const reviewTextarea= document.getElementById('reviewTextarea');
-  const charCount     = document.getElementById('charCount');
-  const btnSubmit     = document.getElementById('btnSubmit');
-  const submitAlert   = document.getElementById('submitAlert');
+  const backLinkText = document.getElementById('backLinkText');
+  const backLink = document.getElementById('backLink');
+  const reviewForm = document.getElementById('reviewForm');
+  const starsContainer = document.getElementById('starsContainer');
+  const ratingScore = document.getElementById('ratingScore');
+  const ratingInput = document.getElementById('ratingInput');
+  const noiseSelect = document.getElementById('noiseSelect');
+  const wifiSelect = document.getElementById('wifiSelect');
+  const valueSelect = document.getElementById('valueSelect');
+  const reviewTextarea = document.getElementById('reviewTextarea');
+  const charCount = document.getElementById('charCount');
+  const btnSubmit = document.getElementById('btnSubmit');
+  const submitAlert = document.getElementById('submitAlert');
 
   let currentRating = 5;
-  let placeName = 'National Library Colombo';
+  let placeName = '';
 
   // Set default back link
   backLink.href = `space-detail.html?id=${placeId}`;
 
   // ── 1. Fetch Place Information to Update Back Link ─────────
+  function showPlaceName(name) {
+    placeName = name;
+    backLinkText.textContent = `Back to ${placeName}`;
+    document.title = `Write a Review – ${placeName}`;
+  }
+
   async function loadPlaceInfo() {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 4000);
     try {
-      const res = await fetch(`php/get_space_detail.php?id=${placeId}`);
+      const res = await fetch(`php/get_space_detail.php?id=${placeId}`, { signal: ctrl.signal });
       if (res.ok) {
         const data = await res.json();
         if (data.success && data.place) {
-          placeName = data.place.name;
-          backLinkText.textContent = `Back to ${placeName}`;
-          document.title = `Write a Review – ${placeName}`;
+          showPlaceName(data.place.name);
+          return;
         }
       }
     } catch (err) {
       console.warn('Could not load place details for review form:', err);
+    } finally {
+      clearTimeout(timer);
     }
+    // Offline fallback: the place the user selected (JS/places-data.js)
+    const fb = window.StudySpotPlaces && window.StudySpotPlaces.get(placeId);
+    if (fb) showPlaceName(fb.name);
   }
   loadPlaceInfo();
 
@@ -109,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const user = JSON.parse(stored);
         if (user && user.id) userId = user.id;
       }
-    } catch (_) {}
+    } catch (_) { }
 
     const payload = {
       place_id: placeId,

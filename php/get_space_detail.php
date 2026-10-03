@@ -55,8 +55,9 @@ try {
             'images/national-library-4.jpg',
             'images/national-library-5.jpg',
         ];
-    } elseif (empty($gallery)) {
-        $gallery = [$cover];
+    } else {
+        // Always start with the cover image, then the extra gallery images (no duplicates, max 5)
+        $gallery = array_slice(array_values(array_unique(array_merge([$cover], $gallery))), 0, 5);
     }
 
     // 3. Fetch reviews joined with users
@@ -79,18 +80,18 @@ try {
         $hours = round($diff / 3600);
         if ($hours < 24) return $hours . 'h ago';
         $days = round($diff / 86400);
-        if ($days < 7) return $days . ' days ago';
+        if ($days < 7) return $days . ($days == 1 ? ' day ago' : ' days ago');
         $weeks = round($diff / 604800);
-        if ($weeks < 4) return $weeks . ' weeks ago';
+        if ($weeks < 4) return $weeks . ($weeks == 1 ? ' week ago' : ' weeks ago');
         return date('M d, Y', $timestamp);
     }
 
     $reviews = [];
     foreach ($reviewRows as $rev) {
-        $timeAgoStr = ($rev['id'] == 1) ? '5 days ago' : timeAgo($rev['created_at']);
+        $timeAgoStr = timeAgo($rev['created_at']);
         $reviews[] = [
             'id'        => (int)$rev['id'],
-            'user_name' => !empty($rev['user_name']) ? $rev['user_name'] : 'Tharushi D.',
+            'user_name' => !empty($rev['user_name']) ? $rev['user_name'] : 'Anonymous',
             'avatar'    => $rev['avatar'] ?? null,
             'rating'    => (int)$rev['rating'],
             'comment'   => $rev['comment'],
@@ -99,27 +100,21 @@ try {
         ];
     }
 
-    // Ensure mock review exists if empty
-    if (empty($reviews)) {
-        $reviews[] = [
-            'id'        => 1,
-            'user_name' => 'Tharushi D.',
-            'avatar'    => null,
-            'rating'    => 5,
-            'comment'   => 'Very quiet and comfortable. Perfect place for long study sessions!',
-            'time_ago'  => '5 days ago',
-        ];
+    // 4. Parse Facilities list from the `facilities` column (comma separated)
+    $facilitiesList = array_values(array_filter(
+        array_map('trim', explode(',', (string)($place['facilities'] ?? ''))),
+        'strlen'
+    ));
+    if (empty($facilitiesList)) {
+        $facilitiesList = ['Power Outlets', 'Parking', 'Air Conditioning', 'Drinking Water', 'Restrooms'];
     }
-
-    // 4. Parse Facilities list (matching mockup exact labels)
-    $facilitiesList = ['Power Outletst', 'Parkingt', 'Air Conditioning', 'Drinking Water', 'Restrooms'];
 
     // 5. Format opening hours
     $openTime  = $place['open_time'] ?? '08:00:00';
     $closeTime = $place['close_time'] ?? '20:00:00';
-    $openFormatted  = date('g.i AM', strtotime($openTime));
-    $closeFormatted = date('g.i PM', strtotime($closeTime));
-    $hoursLabel     = ($id == 1) ? '8.00 AM - 8.00 PM' : "$openFormatted - $closeFormatted";
+    $openFormatted  = date('g.i A', strtotime($openTime));
+    $closeFormatted = date('g.i A', strtotime($closeTime));
+    $hoursLabel     = "$openFormatted - $closeFormatted";
 
     // Format type label
     $typeLabel = match (strtolower($place['type'])) {
@@ -131,7 +126,11 @@ try {
     };
 
     // Format wifi label and note
-    $wifiLabel = ($place['wifi'] === 'paid') ? 'Paid Wi-Fi' : 'Free Wi-Fi';
+    $wifiLabel = match ($place['wifi']) {
+        'paid'  => 'Paid Wi-Fi',
+        'none'  => 'No Wi-Fi',
+        default => 'Free Wi-Fi',
+    };
     $wifiNote  = !empty($place['wifi_note']) ? $place['wifi_note'] : 'High Speed';
 
     // Format noise label and note
@@ -145,11 +144,11 @@ try {
     $noiseNote = !empty($place['noise_note']) ? $place['noise_note'] : 'Perfect for deep focus';
 
     // Cost info
-    $costLabel = ($id == 1) ? 'Free' : ($place['cost_label'] ?? ($place['price'] > 0 ? 'LKR ' . number_format($place['price'], 0) : 'Free'));
-    $costNote  = ($place['price'] <= 0 || strtolower($place['cost_type']) === 'free' || $id == 1) ? 'No entrance fee' : 'Per session / day';
+    $costLabel = !empty($place['cost_label']) ? $place['cost_label'] : ($place['price'] > 0 ? 'LKR ' . number_format($place['price'], 0) : 'Free');
+    $costNote  = ($place['price'] <= 0 || strtolower($place['cost_type']) === 'free') ? 'No entrance fee' : 'Per session / day';
 
     // Total reviews count
-    $totalReviewsCount = ($id == 1) ? 128 : (count($reviews) > 0 ? count($reviews) : 12);
+    $totalReviewsCount = count($reviews);
 
     $responseData = [
         'success' => true,
@@ -160,8 +159,8 @@ try {
             'type_label'    => $typeLabel,
             'city'          => $place['city'],
             'address'       => $place['address'],
-            'distance_km'   => (float)($place['distance_km'] ?? 0.8),
-            'distance_text' => '0.8 km from you',
+            'distance_km'   => (float)($place['distance_km'] ?? 0),
+            'distance_text' => number_format((float)($place['distance_km'] ?? 0), 1) . ' km from you',
             'cover_image'   => $cover,
             'gallery'       => $gallery,
             'open_time'     => $openTime,
@@ -179,8 +178,8 @@ try {
             'cost_note'     => $costNote,
             'price'         => (float)$place['price'],
             'facilities'    => $facilitiesList,
-            'description'   => $place['description'] ?? 'The National Library Colombo is a peaceful and spacious environment ideal for focused study and research. It offers a wide collection of books, comfortable seating and free Wi-Fi for students.',
-            'rating'        => 4.6,
+            'description'   => $place['description'] ?? '',
+            'rating'        => (float)($place['rating'] ?? 0),
             'total_reviews' => $totalReviewsCount,
         ],
         'reviews' => $reviews,

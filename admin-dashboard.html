@@ -1,37 +1,53 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard – StudySpot</title>
+  <link rel="stylesheet" href="CSS/base.css" />
   <link rel="stylesheet" href="CSS/admin.css" />
+  <link rel="stylesheet" href="CSS/navbar.css" />
 </head>
+
 <body>
 
   <!-- ════════════════════════════════════════════════════════════
        NAVBAR (Matching PNG 2)
   ════════════════════════════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       NAVBAR
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <nav class="navbar">
     <!-- Logo -->
     <a href="index.html" class="nav-logo">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H15V15H9V21H4C3.44772 21 3 20.5523 3 20V9.5Z" fill="#2D6A2D"/>
-        <path d="M9 21V15H15V21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <img src="images/logo.png" alt="StudySpot Logo" />
       <span><span class="study">Study</span><span class="spot">Spot</span></span>
     </a>
 
-    <!-- Nav Links (Home, Map, About Us, Explore) -->
+    <!-- Nav Links -->
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
       <li><a href="map.html">Map</a></li>
       <li><a href="help.html">About Us</a></li>
-      <li><a href="explore.html">Explore</a></li>
     </ul>
 
-    <!-- Top Right Action -->
+    <!-- Actions -->
     <div class="nav-actions">
-      <a href="login.html" class="btn-nav-login" id="navLoginBtn">Login</a>
+      <button class="btn-icon" aria-label="Favourites" title="Favourites">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+      </button>
+      <button class="btn-icon" aria-label="Account" title="Account" onclick="window.location.href='login.html'">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+      </button>
     </div>
   </nav>
 
@@ -152,7 +168,8 @@
         <div class="modal-form-grid">
           <div class="form-group full-span">
             <label class="form-label" for="addName">Space Name *</label>
-            <input type="text" id="addName" name="name" class="form-input" placeholder="e.g. Colombo Central Library" required />
+            <input type="text" id="addName" name="name" class="form-input" placeholder="e.g. Colombo Central Library"
+              required />
           </div>
 
           <div class="form-group">
@@ -186,12 +203,14 @@
 
           <div class="form-group full-span">
             <label class="form-label" for="addAddress">Full Address *</label>
-            <input type="text" id="addAddress" name="address" class="form-input" placeholder="e.g. No. 12, Peradeniya Road, Kandy" required />
+            <input type="text" id="addAddress" name="address" class="form-input"
+              placeholder="e.g. No. 12, Peradeniya Road, Kandy" required />
           </div>
 
           <div class="form-group full-span">
             <label class="form-label" for="addDesc">Description</label>
-            <textarea id="addDesc" name="description" class="form-textarea" placeholder="Describe the atmosphere, quiet zones, facilities..."></textarea>
+            <textarea id="addDesc" name="description" class="form-textarea"
+              placeholder="Describe the atmosphere, quiet zones, facilities..."></textarea>
           </div>
         </div>
 
@@ -252,7 +271,8 @@
 
           <div class="form-group full-span">
             <label class="form-label" for="editSpaceCostLabel">Cost Label</label>
-            <input type="text" id="editSpaceCostLabel" name="cost_label" class="form-input" placeholder="e.g. Free, LKR 500/hr" />
+            <input type="text" id="editSpaceCostLabel" name="cost_label" class="form-input"
+              placeholder="e.g. Free, LKR 500/hr" />
           </div>
         </div>
 
@@ -341,4 +361,5 @@
 
   <script src="JS/admin.js"></script>
 </body>
+
 </html>
