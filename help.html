@@ -1,54 +1,79 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Help & FAQ – StudySpot</title>
+  <link rel="stylesheet" href="CSS/base.css" />
   <link rel="stylesheet" href="CSS/help.css" />
+  <link rel="stylesheet" href="CSS/navbar.css" />
 </head>
+
 <body>
 
-  <!-- ════════════════════════════════════════════════════════════
-       NAVBAR (Matching PNG 1)
-  ════════════════════════════════════════════════════════════ -->
+  <!-- ==================== NAVBAR ==================== -->
   <nav class="navbar">
+
     <!-- Logo -->
     <a href="index.html" class="nav-logo">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H15V15H9V21H4C3.44772 21 3 20.5523 3 20V9.5Z" fill="#2D6A2D"/>
-        <path d="M9 21V15H15V21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span><span class="study">Study</span><span class="spot">Spot</span></span>
+      <img src="images/logo.png" alt="StudySpot Logo">
+      <span>
+        <span class="study">Study</span><span class="spot">Spot</span>
+      </span>
     </a>
 
-    <!-- Nav Links -->
+    <!-- Navigation Links -->
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="explore.html">Explore</a></li>
-      <li><a href="map.html">Map</a></li>
-      <li><a href="help.html" class="active">About Us</a></li>
+      <li>
+        <a href="index.html">Home</a>
+      </li>
+
+      <li>
+        <a href="explore.html">Explore</a>
+      </li>
+
+      <li>
+        <a href="map.html">Map</a>
+      </li>
+
+      <li>
+        <a href="help.html" class="active">About Us</a>
+      </li>
     </ul>
 
-    <!-- Actions -->
+    <!-- Navigation Actions -->
     <div class="nav-actions">
-      <!-- Favourites Heart -->
-      <button class="btn-icon" aria-label="Favourites" title="Favourites" onclick="window.location='favourites.html'">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+
+      <!-- Favourites -->
+      <button class="btn-icon" aria-label="Favourites" title="Favourites" type="button">
+
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
         </svg>
+
       </button>
 
-      <!-- Profile Avatar -->
-      <div id="navAuthArea">
-        <button class="user-avatar-btn" aria-label="Account" title="Account" onclick="window.location='login.html'">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-          </svg>
-        </button>
-      </div>
+      <!-- Account -->
+      <button class="btn-icon" aria-label="Account" title="Account" type="button"
+        onclick="window.location.href='login.html'">
+
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+
+      </button>
+
     </div>
+
   </nav>
+  <!-- ==================== END NAVBAR ==================== -->
+
 
   <!-- ════════════════════════════════════════════════════════════
        MAIN HELP & FAQ CONTAINER
@@ -65,12 +90,14 @@
     <div class="help-card" id="helpCard">
       <div class="help-card-icon">
         <svg width="48" height="42" viewBox="0 0 24 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2.5 0C1.11929 0 0 1.11929 0 2.5V17.5C0 18.8807 1.11929 20 2.5 20H21.5C22.8807 20 24 18.8807 24 17.5V2.5C24 1.11929 22.8807 0 21.5 0H2.5ZM2.875 2.5H21.125L12 8.78125L2.875 2.5ZM2 4.125L11.4375 10.5938C11.7812 10.8281 12.2188 10.8281 12.5625 10.5938L22 4.125V17.5C22 17.7761 21.7761 18 21.5 18H2.5C2.22386 18 2 17.7761 2 17.5V4.125Z"/>
+          <path
+            d="M2.5 0C1.11929 0 0 1.11929 0 2.5V17.5C0 18.8807 1.11929 20 2.5 20H21.5C22.8807 20 24 18.8807 24 17.5V2.5C24 1.11929 22.8807 0 21.5 0H2.5ZM2.875 2.5H21.125L12 8.78125L2.875 2.5ZM2 4.125L11.4375 10.5938C11.7812 10.8281 12.2188 10.8281 12.5625 10.5938L22 4.125V17.5C22 17.7761 21.7761 18 21.5 18H2.5C2.22386 18 2 17.7761 2 17.5V4.125Z" />
         </svg>
       </div>
       <div class="help-card-content">
         <h2 class="help-card-title">Need more help?</h2>
-        <a href="mailto:support@studyspot.lk" class="help-card-email" id="contactBtn">Contact us at support@studyspot.lk</a>
+        <a href="mailto:support@studyspot.lk" class="help-card-email" id="contactBtn">Contact us at
+          support@studyspot.lk</a>
       </div>
     </div>
   </main>
@@ -87,11 +114,13 @@
       <form class="modal-form" id="contactForm">
         <div class="form-group">
           <label class="form-label" for="contactSubject">Subject</label>
-          <input type="text" id="contactSubject" class="form-input" placeholder="e.g. Booking assistance, Space details..." required />
+          <input type="text" id="contactSubject" class="form-input"
+            placeholder="e.g. Booking assistance, Space details..." required />
         </div>
         <div class="form-group">
           <label class="form-label" for="contactMessage">Your Message</label>
-          <textarea id="contactMessage" class="form-textarea" placeholder="Tell us how we can help you..." required></textarea>
+          <textarea id="contactMessage" class="form-textarea" placeholder="Tell us how we can help you..."
+            required></textarea>
         </div>
         <button type="submit" class="btn-submit">Send Email to Support</button>
       </form>
@@ -100,4 +129,5 @@
 
   <script src="JS/help.js"></script>
 </body>
+
 </html>

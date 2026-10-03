@@ -6,103 +6,98 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Query param id defaults to 5 (The Library Cafe) to match PNG 3 exactly
   const urlParams = new URLSearchParams(window.location.search);
-  const placeId = parseInt(urlParams.get('id') || '5') || 5;
+  let placeId = parseInt(urlParams.get('id') || '5') || 5;
 
   // DOM Elements
-  const placeImg          = document.getElementById('placeImg');
-  const placeName         = document.getElementById('placeName');
-  const placeCity         = document.getElementById('placeCity');
-  const placeRating       = document.getElementById('placeRating');
-  const dateInput         = document.getElementById('dateInput');
-  const timeInput         = document.getElementById('timeInput');
-  const stepperCount      = document.getElementById('stepperCount');
-  const btnMinus          = document.getElementById('btnMinus');
-  const btnPlus           = document.getElementById('btnPlus');
-  const totalPriceAmount  = document.getElementById('totalPriceAmount');
-  const btnProcess        = document.getElementById('btnProcess');
+  const placeImg = document.getElementById('placeImg');
+  const placeName = document.getElementById('placeName');
+  const placeCity = document.getElementById('placeCity');
+  const placeRating = document.getElementById('placeRating');
+  const dateInput = document.getElementById('dateInput');
+  const startInput = document.getElementById('startInput');
+  const endInput = document.getElementById('endInput');
+  const timeError = document.getElementById('timeError');
+  const priceBreakdown = document.getElementById('priceBreakdown');
+  const stepperCount = document.getElementById('stepperCount');
+  const btnMinus = document.getElementById('btnMinus');
+  const btnPlus = document.getElementById('btnPlus');
+  const totalPriceAmount = document.getElementById('totalPriceAmount');
+  const btnProcess = document.getElementById('btnProcess');
   const backToDetailsLink = document.getElementById('backToDetailsLink');
 
   // Confirmation Modal Elements
-  const bookingModal      = document.getElementById('bookingModal');
-  const modalPlace        = document.getElementById('modalPlace');
-  const modalDate         = document.getElementById('modalDate');
-  const modalTime         = document.getElementById('modalTime');
-  const modalPeople       = document.getElementById('modalPeople');
-  const modalTotal        = document.getElementById('modalTotal');
-  const modalRef          = document.getElementById('modalRef');
-  const btnCloseModal     = document.getElementById('btnCloseModal');
+  const bookingModal = document.getElementById('bookingModal');
+  const modalPlace = document.getElementById('modalPlace');
+  const modalDate = document.getElementById('modalDate');
+  const modalTime = document.getElementById('modalTime');
+  const modalPeople = document.getElementById('modalPeople');
+  const modalTotal = document.getElementById('modalTotal');
+  const modalRef = document.getElementById('modalRef');
+  const btnCloseModal = document.getElementById('btnCloseModal');
 
   // State
   let peopleCount = 1;
-  let unitPrice = 500;
+  let unitPrice = 0;
   let isFreePlace = false;
-  let currentPlace = {
-    id: 5,
-    name: 'The Library Cafe',
-    city: 'Kandy',
-    price: 500,
-    cover_image: 'images/library-cafe.jpg',
-    rating: '4.6',
-    reviews_count: 124
-  };
+  let currentPlace = { id: placeId, name: 'Study Space' };   // replaced once the real place is loaded
 
   // Set default back link
   backToDetailsLink.href = `space-detail.html?id=${placeId}`;
 
-  // Default Date: Tomorrow
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  const yyyy = tomorrow.getFullYear();
-  const mm = String(tomorrow.getMonth() + 1).padStart(2, '0');
-  const dd = String(tomorrow.getDate()).padStart(2, '0');
-  dateInput.value = `${yyyy}-${mm}-${dd}`;
-
-  // Default Time
-  timeInput.value = '10:00';
+  // Date/time start empty (as in the design). Past dates can't be picked.
+  const now = new Date();
+  dateInput.min = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
   // ── 1. Fetch Place Details from DB ─────────────────────────
+  // The card stays blank ("Loading…") until the REAL place is known, so the page
+  // never shows a different location first and then swaps it a moment later.
   async function loadPlaceData() {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 4000);   // don't wait forever on a slow server
     try {
-      const res = await fetch(`php/get_space_detail.php?id=${placeId}`);
+      const res = await fetch(`php/get_space_detail.php?id=${placeId}`, { signal: ctrl.signal });
       if (res.ok) {
         const data = await res.json();
         if (data.success && data.place) {
+          // The server may return a different place if the id was not found – always follow it
+          placeId = parseInt(data.place.id) || placeId;
+          backToDetailsLink.href = `space-detail.html?id=${placeId}`;
           currentPlace = data.place;
-          renderPlaceData(data.place);
+          renderPlaceData(data.place, data.place.total_reviews ?? (data.place.reviews ? data.place.reviews.length : null));
           return;
         }
       }
     } catch (err) {
       console.warn('Could not load place details, using fallback data:', err);
+    } finally {
+      clearTimeout(timer);
     }
 
-    // Fallback based on ID
-    if (placeId === 1) {
-      currentPlace = {
-        id: 1,
-        name: 'National Library Colombo',
-        city: 'Colombo',
-        price: 0,
-        cover_image: 'images/national-library.jpg',
-        rating: '4.6',
-        reviews_count: 128
-      };
+    // Offline fallback: the place the user selected (JS/places-data.js) – never a different one
+    const fb = window.StudySpotPlaces && window.StudySpotPlaces.get(placeId);
+    if (fb) {
+      currentPlace = fb;
+      renderPlaceData(fb, null);
+    } else {
+      placeName.textContent = 'Study space not available';
+      placeCity.textContent = '';
+      placeRating.textContent = '';
     }
-    renderPlaceData(currentPlace);
   }
 
-  function renderPlaceData(p) {
+  function renderPlaceData(p, reviewCount) {
     document.title = `Book Spot – ${p.name}`;
     placeName.textContent = p.name;
-    placeCity.textContent = p.city || 'Kandy';
-    
-    // Rating
-    const rScore = p.rating || '4.6';
-    const rCount = p.total_reviews || (p.reviews ? p.reviews.length : 124);
-    placeRating.innerHTML = `<span class="star">★</span> ${rScore} (${rCount})`;
+    placeCity.textContent = p.city || '';
+
+    // Rating (show the review count only when we really know it)
+    const rScore = p.rating || '';
+    placeRating.innerHTML = rScore
+      ? `<span class="star">★</span> ${rScore}${reviewCount != null ? ` (${reviewCount})` : ''}`
+      : '';
 
     // Image
-    let imgSrc = p.cover_image || 'images/library-cafe.jpg';
+    let imgSrc = p.cover_image || 'images/placeholder.svg';
     if (!imgSrc.startsWith('http') && !imgSrc.startsWith('images/')) {
       imgSrc = 'images/' + imgSrc;
     }
@@ -112,23 +107,84 @@ document.addEventListener('DOMContentLoaded', () => {
     // Price
     unitPrice = parseFloat(p.price) || 0;
     isFreePlace = (unitPrice === 0 || (p.cost_label && p.cost_label.toLowerCase().includes('free')));
-    if (p.id === 5) {
-      unitPrice = 500;
-      isFreePlace = false;
-    }
 
     updatePriceDisplay();
+    btnProcess.disabled = false;   // booking is allowed only after the real place + price are known
   }
 
-  // ── 2. Stepper & Price Calculation ──────────────────────────
+  // ── 2. Time, Stepper & Price Calculation ───────────────────
+  // PRICING RULE (kept in sync with php/create_booking.php):
+  //   • "per hour" places (cost label like "LKR 500/hr"):  price × hours × people
+  //     (hours = End − Start, rounded UP to a whole hour, minimum 1)
+  //   • all other places:                                   price × people
+  const fmtRs = (n) => `Rs. ${Number(n).toLocaleString('en-US')}`;
+
+  function isHourlyPlace() {
+    return /\/\s*(hr|hour)/i.test(currentPlace.cost_label || '');
+  }
+
+  // "HH:MM" -> minutes since midnight (null if empty)
+  function toMinutes(v) {
+    if (!v || !/^\d{1,2}:\d{2}/.test(v)) return null;
+    const [h, m] = v.split(':').map(Number);
+    return h * 60 + m;
+  }
+
+  // Duration in hours, or null if start/end are not both set; may be <= 0 if invalid
+  function durationHours() {
+    const s = toMinutes(startInput.value), e = toMinutes(endInput.value);
+    if (s === null || e === null) return null;
+    return (e - s) / 60;
+  }
+
+  function timesAreInvalid() {
+    const d = durationHours();
+    return d !== null && d <= 0;
+  }
+
+  function billableHours() {
+    const d = durationHours();
+    if (!isHourlyPlace() || d === null || d <= 0) return 1;   // nothing chosen yet -> price of 1 hour
+    return Math.max(1, Math.ceil(d));
+  }
+
+  function calcTotal() {
+    if (isFreePlace) return 0;
+    return unitPrice * peopleCount * billableHours();
+  }
+
   function updatePriceDisplay() {
+    // inline error for End <= Start
+    if (timesAreInvalid()) {
+      timeError.textContent = 'End time must be after the start time.';
+      timeError.hidden = false;
+    } else {
+      timeError.hidden = true;
+    }
+
     if (isFreePlace) {
       totalPriceAmount.textContent = 'Free';
+      priceBreakdown.hidden = true;
+      return;
+    }
+
+    totalPriceAmount.textContent = fmtRs(calcTotal());
+
+    // Breakdown, shown only when it explains more than the total itself
+    const hourly = isHourlyPlace();
+    const parts = [fmtRs(unitPrice) + (hourly ? ' / hr' : '')];
+    if (hourly && durationHours() > 0) parts.push(`${billableHours()} hr${billableHours() > 1 ? 's' : ''}`);
+    if (peopleCount > 1) parts.push(`${peopleCount} people`);
+    if (hourly || peopleCount > 1) {
+      priceBreakdown.textContent = parts.join(' × ');
+      priceBreakdown.hidden = false;
     } else {
-      const total = unitPrice * peopleCount;
-      totalPriceAmount.textContent = `Rs. ${total.toLocaleString()}`;
+      priceBreakdown.hidden = true;
     }
   }
+
+  startInput.addEventListener('input', updatePriceDisplay);
+  endInput.addEventListener('input', updatePriceDisplay);
 
   btnMinus.addEventListener('click', () => {
     if (peopleCount > 1) {
@@ -149,17 +205,32 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── 3. Submit Booking / Process to Payment ───────────────────
   btnProcess.addEventListener('click', async () => {
     const selectedDate = dateInput.value;
-    const selectedTime = timeInput.value;
+    const selectedStart = startInput.value;
+    const selectedEnd = endInput.value;
 
     if (!selectedDate) {
       alert('Please select a booking date.');
       dateInput.focus();
       return;
     }
-
-    if (!selectedTime) {
-      alert('Please select a booking time.');
-      timeInput.focus();
+    if (dateInput.min && selectedDate < dateInput.min) {
+      alert('Please choose today or a future date.');
+      dateInput.focus();
+      return;
+    }
+    if (!selectedStart) {
+      alert('Please select a start time.');
+      startInput.focus();
+      return;
+    }
+    if (!selectedEnd) {
+      alert('Please select an end time.');
+      endInput.focus();
+      return;
+    }
+    if (timesAreInvalid()) {
+      alert('End time must be after the start time.');
+      endInput.focus();
       return;
     }
 
@@ -174,17 +245,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const u = JSON.parse(stored);
         if (u && u.id) userId = u.id;
       }
-    } catch (_) {}
+    } catch (_) { }
 
-    const calculatedPrice = isFreePlace ? 0 : (unitPrice * peopleCount);
+    const calculatedPrice = calcTotal();
 
     const payload = {
       place_id: placeId,
       user_id: userId,
       booking_date: selectedDate,
-      time: selectedTime,
+      time: selectedStart,          // kept for older code
+      start_time: selectedStart,
+      end_time: selectedEnd,
       people: peopleCount,
-      total_price: calculatedPrice
+      total_price: calculatedPrice  // the server re-calculates and has the final say
     };
 
     try {
@@ -207,7 +280,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const fakeBooking = {
         place_name: currentPlace.name,
         booking_date: selectedDate,
-        start_time: selectedTime,
+        start_time: selectedStart,
+        end_time: selectedEnd,
         people: peopleCount,
         total_price: calculatedPrice,
         payment_ref: 'SS-' + Math.floor(100000 + Math.random() * 900000)
@@ -223,9 +297,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function showConfirmationModal(b) {
     modalPlace.textContent = b.place_name || currentPlace.name;
     modalDate.textContent = b.booking_date;
-    modalTime.textContent = b.start_time;
+    modalTime.textContent = b.end_time ? `${b.start_time} – ${b.end_time}` : b.start_time;
     modalPeople.textContent = `${b.people} Person${b.people > 1 ? 's' : ''}`;
-    modalTotal.textContent = (b.total_price > 0) ? `Rs. ${b.total_price}` : 'Free';
+    modalTotal.textContent = (Number(b.total_price) > 0) ? fmtRs(b.total_price) : 'Free';
     modalRef.textContent = b.payment_ref;
 
     bookingModal.classList.add('show');

@@ -5,26 +5,26 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // Elements
-  const statUsersVal    = document.getElementById('statUsersVal');
-  const statSpacesVal   = document.getElementById('statSpacesVal');
+  const statUsersVal = document.getElementById('statUsersVal');
+  const statSpacesVal = document.getElementById('statSpacesVal');
   const statBookingsVal = document.getElementById('statBookingsVal');
   const spacesTableBody = document.getElementById('spacesTableBody');
 
   // Modals
-  const addSpaceModal    = document.getElementById('addSpaceModal');
-  const editSpaceModal   = document.getElementById('editSpaceModal');
-  const usersModal       = document.getElementById('usersModal');
-  const bookingsModal    = document.getElementById('bookingsModal');
-  const reviewsModal     = document.getElementById('reviewsModal');
+  const addSpaceModal = document.getElementById('addSpaceModal');
+  const editSpaceModal = document.getElementById('editSpaceModal');
+  const usersModal = document.getElementById('usersModal');
+  const bookingsModal = document.getElementById('bookingsModal');
+  const reviewsModal = document.getElementById('reviewsModal');
 
   // Buttons
-  const btnOpenAddSpace  = document.getElementById('btnOpenAddSpace');
-  const btnManageUsers   = document.getElementById('btnManageUsers');
-  const btnManageBookings= document.getElementById('btnManageBookings');
+  const btnOpenAddSpace = document.getElementById('btnOpenAddSpace');
+  const btnManageUsers = document.getElementById('btnManageUsers');
+  const btnManageBookings = document.getElementById('btnManageBookings');
   const btnManageReviews = document.getElementById('btnManageReviews');
 
   // Forms
-  const addSpaceForm  = document.getElementById('addSpaceForm');
+  const addSpaceForm = document.getElementById('addSpaceForm');
   const editSpaceForm = document.getElementById('editSpaceForm');
 
   // Initial Seed / Fallback Spaces (Exact match to PNG 2)
@@ -81,8 +81,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!res.ok) throw new Error('API error');
       const data = await res.json();
       if (data && data.success && data.stats) {
-        if (statUsersVal)    statUsersVal.textContent    = data.stats.total_users;
-        if (statSpacesVal)   statSpacesVal.textContent   = data.stats.study_spaces;
+        if (statUsersVal) statUsersVal.textContent = data.stats.total_users;
+        if (statSpacesVal) statSpacesVal.textContent = data.stats.study_spaces;
         if (statBookingsVal) statBookingsVal.textContent = data.stats.bookings;
         return;
       }
@@ -90,8 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
       console.warn('Could not load stats from DB, using UI defaults:', e);
     }
     // Fallback matching PNG 2
-    if (statUsersVal)    statUsersVal.textContent    = "248";
-    if (statSpacesVal)   statSpacesVal.textContent   = "32";
+    if (statUsersVal) statUsersVal.textContent = "248";
+    if (statSpacesVal) statSpacesVal.textContent = "32";
     if (statBookingsVal) statBookingsVal.textContent = "486";
   }
 
@@ -123,12 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     spacesTableBody.innerHTML = spaces.map((s) => {
       const statusKey = (s.status || 'active').toLowerCase();
-      const statusClass = statusKey === 'active' 
-        ? 'badge-active' 
+      const statusClass = statusKey === 'active'
+        ? 'badge-active'
         : (statusKey === 'review' ? 'badge-review' : 'badge-inactive');
-      
+
       const statusDisplay = s.status_display || (statusKey === 'active' ? 'Active' : (statusKey === 'review' ? 'Review' : 'Inactive'));
-      const typeDisplay   = s.type_display || formatType(s.type);
+      const typeDisplay = s.type_display || formatType(s.type);
 
       // In PNG 2: row 1 & 2 have "Edit", row 3 has "View"
       const actionLabel = s.action_type || (statusKey === 'review' ? 'View' : 'Edit');
@@ -156,17 +156,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!t) return 'Library';
     switch (t.toLowerCase()) {
       case 'coworking': return 'Co-working';
-      case 'cafe':      return 'Café';
-      case 'library':   return 'Library';
-      case 'university':return 'University';
-      default:          return t.charAt(0).toUpperCase() + t.slice(1);
+      case 'cafe': return 'Café';
+      case 'library': return 'Library';
+      case 'university': return 'University';
+      default: return t.charAt(0).toUpperCase() + t.slice(1);
     }
   }
 
   // ─────────────────────────────────────────────────────────────
   // 4. SPACE ACTIONS: EDIT, VIEW, STATUS TOGGLE
   // ─────────────────────────────────────────────────────────────
-  window.handleSpaceAction = function(id, action) {
+  window.handleSpaceAction = function (id, action) {
     const space = currentSpaces.find(s => s.id == id);
     if (!space) return;
 
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  window.toggleSpaceStatus = async function(id, currentStatus) {
+  window.toggleSpaceStatus = async function (id, currentStatus) {
     // Cycle status: active -> review -> inactive -> active
     let nextStatus = 'active';
     if (currentStatus === 'active') nextStatus = 'review';
@@ -220,14 +220,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openEditModal(space, isViewOnly = false) {
     if (!editSpaceModal) return;
-    document.getElementById('editSpaceId').value       = space.id;
-    document.getElementById('editSpaceName').value     = space.name || '';
-    document.getElementById('editSpaceType').value     = (space.type || 'library').toLowerCase();
-    document.getElementById('editSpaceCity').value     = space.city || '';
-    document.getElementById('editSpaceAddress').value  = space.address || '';
-    document.getElementById('editSpaceStatus').value   = (space.status || 'active').toLowerCase();
-    document.getElementById('editSpacePrice').value    = space.price || 0;
-    document.getElementById('editSpaceCostLabel').value= space.cost_label || '';
+    document.getElementById('editSpaceId').value = space.id;
+    document.getElementById('editSpaceName').value = space.name || '';
+    document.getElementById('editSpaceType').value = (space.type || 'library').toLowerCase();
+    document.getElementById('editSpaceCity').value = space.city || '';
+    document.getElementById('editSpaceAddress').value = space.address || '';
+    document.getElementById('editSpaceStatus').value = (space.status || 'active').toLowerCase();
+    document.getElementById('editSpacePrice').value = space.price || 0;
+    document.getElementById('editSpaceCostLabel').value = space.cost_label || '';
 
     const titleEl = document.getElementById('editModalTitle');
     if (titleEl) titleEl.textContent = isViewOnly ? 'View Study Space' : 'Edit Study Space';
@@ -395,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  window.deleteUser = async function(id) {
+  window.deleteUser = async function (id) {
     if (!confirm('Are you sure you want to remove this user?')) return;
     try {
       const fd = new FormData();
@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${b.booking_date}</td>
             <td><span class="status-badge ${b.status === 'upcoming' ? 'badge-active' : (b.status === 'completed' ? 'badge-review' : 'badge-inactive')}">${escapeHtml(b.status)}</span></td>
             <td>
-              <button class="btn-action-outline" style="font-size:11px; padding:2px 8px;" onclick="changeBookingStatus(${b.id}, '${b.status}')">Status</button>
+              <button class="btn-action-outline" style="font-size:var(--fs-xs); padding:2px 8px;" onclick="changeBookingStatus(${b.id}, '${b.status}')">Status</button>
             </td>
           </tr>
         `).join('');
@@ -437,13 +437,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     listBody.innerHTML = `
-      <tr><td>#1</td><td>Sahan Perera</td><td>The Library Cafe</td><td>2026-09-12</td><td><span class="status-badge badge-active">upcoming</span></td><td><button class="btn-action-outline" style="font-size:11px; padding:2px 8px;" onclick="alert('Status toggled.')">Status</button></td></tr>
-      <tr><td>#2</td><td>Sahan Perera</td><td>Green Space</td><td>2026-09-15</td><td><span class="status-badge badge-active">upcoming</span></td><td><button class="btn-action-outline" style="font-size:11px; padding:2px 8px;" onclick="alert('Status toggled.')">Status</button></td></tr>
-      <tr><td>#3</td><td>Tharushi D.</td><td>Cafe Kumbuk</td><td>2026-08-20</td><td><span class="status-badge badge-review">completed</span></td><td><button class="btn-action-outline" style="font-size:11px; padding:2px 8px;" onclick="alert('Status toggled.')">Status</button></td></tr>
+      <tr><td>#1</td><td>Sahan Perera</td><td>The Library Cafe</td><td>2026-09-12</td><td><span class="status-badge badge-active">upcoming</span></td><td><button class="btn-action-outline" style="font-size:var(--fs-xs); padding:2px 8px;" onclick="alert('Status toggled.')">Status</button></td></tr>
+      <tr><td>#2</td><td>Sahan Perera</td><td>Green Space</td><td>2026-09-15</td><td><span class="status-badge badge-active">upcoming</span></td><td><button class="btn-action-outline" style="font-size:var(--fs-xs); padding:2px 8px;" onclick="alert('Status toggled.')">Status</button></td></tr>
+      <tr><td>#3</td><td>Tharushi D.</td><td>Cafe Kumbuk</td><td>2026-08-20</td><td><span class="status-badge badge-review">completed</span></td><td><button class="btn-action-outline" style="font-size:var(--fs-xs); padding:2px 8px;" onclick="alert('Status toggled.')">Status</button></td></tr>
     `;
   }
 
-  window.changeBookingStatus = async function(id, curr) {
+  window.changeBookingStatus = async function (id, curr) {
     const next = curr === 'upcoming' ? 'completed' : (curr === 'completed' ? 'cancelled' : 'upcoming');
     try {
       const fd = new FormData();
@@ -489,7 +489,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
   }
 
-  window.deleteReview = async function(id) {
+  window.deleteReview = async function (id) {
     if (!confirm('Are you sure you want to remove this review?')) return;
     try {
       const fd = new FormData();

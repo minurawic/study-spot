@@ -24,7 +24,8 @@ if (empty($input)) {
 $placeId     = (int)($input['place_id'] ?? 0);
 $userId      = (int)($input['user_id'] ?? 1); // default logged in demo user
 $bookingDate = trim($input['booking_date'] ?? date('Y-m-d'));
-$startTime   = trim($input['time'] ?? $input['start_time'] ?? '10:00:00');
+$startTime   = trim($input['start_time'] ?? $input['time'] ?? '10:00:00');
+$endTimeIn   = trim($input['end_time'] ?? '');
 $people      = max(1, min(20, (int)($input['people'] ?? 1)));
 $totalPrice  = (float)($input['total_price'] ?? 0.00);
 
@@ -33,19 +34,43 @@ if ($placeId <= 0) {
     exit;
 }
 
-// Format time if only HH:MM was sent
-if (preg_match('/^\d{1,2}:\d{2}$/', $startTime)) {
-    $startTime .= ':00';
-} elseif (preg_match('/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i', $startTime, $m)) {
-    $hour = (int)$m[1];
-    if (strtoupper($m[3]) === 'PM' && $hour < 12) $hour += 12;
-    if (strtoupper($m[3]) === 'AM' && $hour === 12) $hour = 0;
-    $startTime = sprintf('%02d:%s:00', $hour, $m[2]);
+// Normalise "HH:MM", "HH:MM:SS" or "h:mm AM/PM" into "HH:MM:SS" (null if not a valid time)
+function normalize_time(string $t): ?string
+{
+    if (preg_match('/^(\d{1,2}):(\d{2})(?::\d{2})?$/', $t, $m)) {
+        $h = (int)$m[1]; $min = (int)$m[2];
+    } elseif (preg_match('/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i', $t, $m)) {
+        $h = (int)$m[1]; $min = (int)$m[2];
+        if (strtoupper($m[3]) === 'PM' && $h < 12) $h += 12;
+        if (strtoupper($m[3]) === 'AM' && $h === 12) $h = 0;
+    } else {
+        return null;
+    }
+    if ($h > 23 || $min > 59) return null;
+    return sprintf('%02d:%02d:00', $h, $min);
 }
 
-// Calculate end time (default 2 hours later)
-$endTimeTs = strtotime($startTime) + (2 * 3600);
-$endTime   = date('H:i:s', $endTimeTs);
+$startNorm = normalize_time($startTime);
+if ($startNorm === null) {
+    echo json_encode(['success' => false, 'error' => 'Invalid start time.']);
+    exit;
+}
+$startTime = $startNorm;
+
+// End time: use the one the user picked; (older clients that send none get start + 2 hours)
+if ($endTimeIn !== '') {
+    $endTime = normalize_time($endTimeIn);
+    if ($endTime === null) {
+        echo json_encode(['success' => false, 'error' => 'Invalid end time.']);
+        exit;
+    }
+    if (strtotime($endTime) <= strtotime($startTime)) {
+        echo json_encode(['success' => false, 'error' => 'End time must be after the start time.']);
+        exit;
+    }
+} else {
+    $endTime = date('H:i:s', strtotime($startTime) + (2 * 3600));
+}
 
 // Fetch place details for total price verification if not passed
 try {
@@ -58,8 +83,20 @@ try {
         exit;
     }
 
-    if ($totalPrice <= 0 && $place['price'] > 0) {
-        $totalPrice = (float)$place['price'] * $people;
+    // The server calculates the price itself (never trust the browser's number).
+    // Same rule as JS/booking.js:
+    //   "per hour" places (cost label like "LKR 500/hr") -> price x hours x people
+    //   (hours = end - start, rounded UP to a whole hour, minimum 1)
+    //   all other places                                  -> price x people
+    if ((float)$place['price'] > 0) {
+        $isHourly = (bool)preg_match('#/\s*(hr|hour)#i', (string)($place['cost_label'] ?? ''));
+        $hours = 1;
+        if ($isHourly) {
+            $hours = max(1, (int)ceil((strtotime($endTime) - strtotime($startTime)) / 3600));
+        }
+        $totalPrice = (float)$place['price'] * $people * $hours;
+    } else {
+        $totalPrice = 0.00;
     }
 
     // Generate unique payment reference

@@ -1,23 +1,27 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Explore Study Spaces – StudySpot</title>
+  <link rel="stylesheet" href="CSS/base.css" />
   <link rel="stylesheet" href="CSS/explore.css" />
+  <link rel="stylesheet" href="CSS/navbar.css" />
 </head>
+
 <body>
 
   <!-- ════════════════════════════════════════════════════════════
        NAVBAR
   ════════════════════════════════════════════════════════════ -->
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       NAVBAR
+  â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
   <nav class="navbar">
     <!-- Logo -->
     <a href="index.html" class="nav-logo">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 9.5L12 3L21 9.5V20C21 20.5523 20.5523 21 20 21H15V15H9V21H4C3.44772 21 3 20.5523 3 20V9.5Z" fill="#2D6A2D"/>
-        <path d="M9 21V15H15V21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <img src="images/logo.png" alt="StudySpot Logo" />
       <span><span class="study">Study</span><span class="spot">Spot</span></span>
     </a>
 
@@ -26,23 +30,22 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="explore.html" class="active">Explore</a></li>
       <li><a href="map.html">Map</a></li>
-      <li><a href="about.html">About Us</a></li>
+      <li><a href="help.html">About Us</a></li>
     </ul>
 
     <!-- Actions -->
     <div class="nav-actions">
-      <!-- Favourites Heart -->
       <button class="btn-icon" aria-label="Favourites" title="Favourites">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
         </svg>
       </button>
-
-      <!-- Profile Avatar -->
-      <button class="btn-icon" aria-label="Account" title="Account">
+      <button class="btn-icon" aria-label="Account" title="Account" onclick="window.location.href='login.html'">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
         </svg>
       </button>
     </div>
@@ -62,16 +65,13 @@
     <!-- Search & Location Row -->
     <section class="search-row">
       <div class="search-bar-wrap">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
         </svg>
-        <input
-          type="search"
-          id="searchInput"
-          class="search-bar-input"
-          placeholder="Search location, place, name or type..."
-          autocomplete="off"
-        />
+        <input type="search" id="searchInput" class="search-bar-input"
+          placeholder="Search location, place, name or type..." autocomplete="off" />
       </div>
 
       <!-- Location Chip -->
@@ -85,7 +85,7 @@
 
       <!-- ── Left Filters Sidebar ── -->
       <aside class="filters-sidebar">
-        
+
         <!-- Header -->
         <div class="filters-header">
           <h3>Filters</h3>
@@ -100,15 +100,7 @@
               <span>1km</span>
               <span id="distanceVal">20km</span>
             </div>
-            <input
-              type="range"
-              id="distanceSlider"
-              class="range-slider"
-              min="1"
-              max="10"
-              step="0.5"
-              value="10"
-            />
+            <input type="range" id="distanceSlider" class="range-slider" min="1" max="10" step="0.5" value="10" />
             <div class="distance-labels" style="justify-content:flex-end;">
               <span>10km</span>
             </div>
@@ -185,7 +177,8 @@
           <div class="filter-cost-header">
             <span class="filter-title">Cost</span>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
           </div>
           <div class="filter-options">
@@ -224,7 +217,7 @@
 
       <!-- ── Right Results Section ── -->
       <section class="results-area">
-        
+
         <!-- Top bar: Count & Sort Dropdown -->
         <div class="results-topbar">
           <div class="results-count" id="resultsCount">42 results found</div>
@@ -262,4 +255,5 @@
 
   <script src="JS/explore.js"></script>
 </body>
+
 </html>

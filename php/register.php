@@ -1,85 +1,80 @@
 <?php
 // ============================================================
-//  StudySpot – Registration Handler (JSON API)
+//  StudySpot – Registration Handler
 // ============================================================
-ob_start(); // catch any stray PHP output / warnings
 
-header('Content-Type: application/json');
+session_start();
 
-// Only allow POST
+// Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    ob_clean();
-    echo json_encode(['success' => false, 'error' => 'validation']);
+    header('Location: ../register.html');
     exit;
 }
 
-// ── Collect input ─────────────────────────────────────────────
+// ── Collect input ────────────────────────────────────────────
 $full_name        = trim($_POST['full_name']        ?? '');
 $email            = trim($_POST['email']            ?? '');
 $password         =      $_POST['password']         ?? '';
 $confirm_password =      $_POST['confirm_password'] ?? '';
 
-// ── Validate: fields not empty ────────────────────────────────
+// ── Validate: fields not empty ───────────────────────────────
 if (empty($full_name) || empty($email) || empty($password) || empty($confirm_password)) {
-    ob_clean();
-    echo json_encode(['success' => false, 'error' => 'validation']);
+    header('Location: ../register.html?error=validation');
     exit;
 }
 
-// ── Validate: email format ────────────────────────────────────
+// ── Validate: email format ───────────────────────────────────
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    ob_clean();
-    echo json_encode(['success' => false, 'error' => 'validation']);
+    header('Location: ../register.html?error=validation');
     exit;
 }
 
-// ── Validate: password length ─────────────────────────────────
+// ── Validate: password length ────────────────────────────────
 if (strlen($password) < 6) {
-    ob_clean();
-    echo json_encode(['success' => false, 'error' => 'password_short']);
+    header('Location: ../register.html?error=validation');
     exit;
 }
 
 // ── Validate: passwords match ─────────────────────────────────
 if ($password !== $confirm_password) {
-    ob_clean();
-    echo json_encode(['success' => false, 'error' => 'password_mismatch']);
+    header('Location: ../register.html?error=password_mismatch');
     exit;
 }
 
-// ── Database connection ───────────────────────────────────────
+// ── Database connection ──────────────────────────────────────
 require_once __DIR__ . '/db.php';
 
 try {
-    // Check email uniqueness
+    // ── Check email uniqueness ───────────────────────────────
     $stmt = $pdo->prepare('SELECT id FROM users WHERE email = ?');
     $stmt->execute([$email]);
 
     if ($stmt->fetch()) {
-        ob_clean();
-        echo json_encode(['success' => false, 'error' => 'email_exists']);
+        header('Location: ../register.html?error=email_exists');
         exit;
     }
 
-    // Hash password & insert
-    $hash   = password_hash($password, PASSWORD_DEFAULT);
+    // ── Hash password & insert ───────────────────────────────
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
     $insert = $pdo->prepare(
         'INSERT INTO users (full_name, email, password_hash) VALUES (?, ?, ?)'
     );
     $insert->execute([$full_name, $email, $hash]);
+
     $new_id = (int) $pdo->lastInsertId();
 
-    ob_clean();
-    echo json_encode([
-        'success' => true,
-        'user'    => [
-            'id'        => $new_id,
-            'full_name' => $full_name,
-            'email'     => $email,
-        ]
-    ]);
+    // ── Set session ──────────────────────────────────────────
+    session_regenerate_id(true);
+
+    $_SESSION['user_id']    = $new_id;
+    $_SESSION['user_name']  = $full_name;
+    $_SESSION['user_email'] = $email;
+
+    header('Location: ../index.html');
+    exit;
 
 } catch (PDOException $e) {
-    ob_clean();
-    echo json_encode(['success' => false, 'error' => 'server_error', 'msg' => $e->getMessage()]);
+    header('Location: ../register.html?error=server_error');
+    exit;
 }

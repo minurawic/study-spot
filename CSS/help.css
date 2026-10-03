@@ -1,31 +1,32 @@
-/* ============================================================
+﻿/* ============================================================
    StudySpot – Help & FAQ Stylesheet (help.css)
    Pixel-accurate matching to design / PNG 1
    ============================================================ */
 
 :root {
-  --green-primary:  #2D6A2D;
-  --green-hover:    #225222;
-  --green-light:    #e8f5e9;
-  --green-card-bg:  #a1d2b7;
-  --green-card-text:#112918;
-  --text-dark:      #111827;
-  --text-body:      #4b5563;
-  --text-gray:      #555555;
-  --text-muted:     #9ca3af;
-  --border:         #e5e7eb;
-  --border-light:   #edf2f7;
-  --bg-page:        #ffffff;
-  --bg-card:        #ffffff;
-  --radius-sm:      6px;
-  --radius-md:      12px;
-  --radius-lg:      16px;
-  --font-family:    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --shadow-card:    0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-hover:   0 4px 12px rgba(0, 0, 0, 0.06);
+  --green-primary: #2D6A2D;
+  --green-hover: #225222;
+  --green-light: #e8f5e9;
+  --green-card-bg: #a1d2b7;
+  --green-card-text: #112918;
+  --text-dark: #111827;
+  --text-body: #4b5563;
+  --text-gray: #555555;
+  --text-muted: #9ca3af;
+  --border: #e5e7eb;
+  --border-light: #edf2f7;
+  --bg-page: #ffffff;
+  --bg-card: #ffffff;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -44,76 +45,6 @@ a {
   color: inherit;
 }
 
-/* ══════════════════════════════════════════════════════════════
-   NAVBAR
-   ══════════════════════════════════════════════════════════════ */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: #ffffff;
-  border-bottom: 1px solid var(--border);
-  height: 68px;
-  display: flex;
-  align-items: center;
-  padding: 0 48px;
-  gap: 36px;
-}
-
-.nav-logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-  margin-right: auto;
-}
-.nav-logo .study { color: #111827; }
-.nav-logo .spot  { color: var(--green-primary); }
-
-.nav-links {
-  display: flex;
-  gap: 36px;
-  list-style: none;
-}
-.nav-links a {
-  font-size: 15px;
-  font-weight: 500;
-  color: #111827;
-  transition: color 0.2s;
-}
-.nav-links a:hover {
-  color: var(--green-primary);
-}
-.nav-links a.active {
-  color: #111827;
-  font-weight: 700;
-}
-
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.btn-icon {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #111827;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px;
-  border-radius: 50%;
-  transition: background 0.2s, transform 0.15s;
-}
-.btn-icon:hover {
-  background: #f3f4f6;
-  transform: scale(1.05);
-}
-
 .user-avatar-btn {
   width: 34px;
   height: 34px;
@@ -127,6 +58,7 @@ a {
   border: none;
   transition: opacity 0.2s, transform 0.15s;
 }
+
 .user-avatar-btn:hover {
   opacity: 0.9;
   transform: scale(1.05);
@@ -142,7 +74,7 @@ a {
 }
 
 .faq-title {
-  font-size: 36px;
+  font-size: var(--fs-xl);
   font-weight: 800;
   color: #111827;
   letter-spacing: -0.6px;
@@ -191,7 +123,7 @@ a {
 }
 
 .faq-question {
-  font-size: 17px;
+  font-size: var(--fs-base);
   font-weight: 700;
   color: #111827;
   line-height: 1.4;
@@ -226,7 +158,7 @@ a {
 .faq-answer {
   padding: 0 26px 20px 26px;
   color: var(--text-body);
-  font-size: 15px;
+  font-size: var(--fs-base);
   line-height: 1.65;
   border-top: 1px solid #f3f4f6;
   padding-top: 16px;
@@ -267,7 +199,7 @@ a {
 }
 
 .help-card-title {
-  font-size: 22px;
+  font-size: var(--fs-lg);
   font-weight: 800;
   color: #0f172a;
   letter-spacing: -0.3px;
@@ -275,7 +207,7 @@ a {
 }
 
 .help-card-email {
-  font-size: 16px;
+  font-size: var(--fs-base);
   font-weight: 700;
   color: #0f172a;
   display: inline-block;
@@ -308,8 +240,13 @@ a {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .modal-box {
@@ -324,8 +261,15 @@ a {
 }
 
 @keyframes slideUp {
-  from { transform: translateY(16px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .modal-close-btn {
@@ -334,7 +278,7 @@ a {
   right: 20px;
   background: none;
   border: none;
-  font-size: 22px;
+  font-size: var(--fs-lg);
   cursor: pointer;
   color: #64748b;
   width: 32px;
@@ -344,20 +288,21 @@ a {
   align-items: center;
   justify-content: center;
 }
+
 .modal-close-btn:hover {
   background: #f1f5f9;
   color: #0f172a;
 }
 
 .modal-title {
-  font-size: 20px;
+  font-size: var(--fs-md);
   font-weight: 800;
   color: #0f172a;
   margin-bottom: 8px;
 }
 
 .modal-subtitle {
-  font-size: 14px;
+  font-size: var(--fs-sm);
   color: #64748b;
   margin-bottom: 20px;
 }
@@ -375,14 +320,15 @@ a {
 }
 
 .form-label {
-  font-size: 13px;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: #334155;
 }
 
-.form-input, .form-textarea {
+.form-input,
+.form-textarea {
   font-family: inherit;
-  font-size: 14px;
+  font-size: var(--fs-sm);
   padding: 10px 14px;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
@@ -390,7 +336,8 @@ a {
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.form-input:focus, .form-textarea:focus {
+.form-input:focus,
+.form-textarea:focus {
   border-color: var(--green-primary);
   box-shadow: 0 0 0 3px rgba(45, 106, 45, 0.12);
 }
@@ -406,11 +353,12 @@ a {
   border: none;
   padding: 12px;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: var(--fs-base);
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .btn-submit:hover {
   background: var(--green-hover);
 }
@@ -419,25 +367,22 @@ a {
    RESPONSIVE
    ══════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  .navbar {
-    padding: 0 20px;
-    gap: 16px;
-  }
-  .nav-links {
-    gap: 16px;
-  }
   .faq-page-container {
     padding: 24px 16px 60px 16px;
   }
+
   .faq-title {
-    font-size: 28px;
+    font-size: var(--fs-xl);
   }
+
   .faq-header {
     padding: 16px 18px;
   }
+
   .faq-question {
-    font-size: 16px;
+    font-size: var(--fs-base);
   }
+
   .help-card {
     padding: 22px 20px;
     flex-direction: column;
