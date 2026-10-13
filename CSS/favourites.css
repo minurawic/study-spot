@@ -1,0 +1,395 @@
+/* ============================================================
+   StudySpot – Favourites Page Stylesheet (favourites.css)
+   Pixel-accurate matching to Figma UI mockup / PNG
+   ============================================================ */
+
+:root {
+  --green-primary: #2D6A2D;
+  --green-hover: #225222;
+  --green-light: #e8f5e9;
+  --green-subtle: #f0fdf4;
+  --heart-pink: #ff4d6d;
+  --heart-pink-hover: #f43f5e;
+  --text-dark: #1a1a1a;
+  --text-gray: #4b5563;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --border-light: #edf2f7;
+  --bg-page: #ffffff;
+  --bg-card: #ffffff;
+  --radius-card: 12px;
+  --radius-img: 8px;
+  --radius-btn: 8px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CONTAINER & LAYOUT
+   ══════════════════════════════════════════════════════════════ */
+.favourites-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 40px 80px;
+}
+
+.page-heading {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.4px;
+  margin-bottom: 28px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FAVOURITES LIST & CARDS
+   ══════════════════════════════════════════════════════════════ */
+.favourites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.favourite-card {
+  display: flex;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 16px 24px 16px 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, opacity 0.3s ease, max-height 0.3s ease, margin 0.3s ease, padding 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.favourite-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.favourite-card.removing {
+  opacity: 0;
+  transform: translateX(30px);
+  max-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: -20px !important;
+  border-width: 0 !important;
+  pointer-events: none;
+}
+
+/* Image */
+.card-img-wrap {
+  width: 200px;
+  height: 130px;
+  border-radius: var(--radius-img);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f3f4f6;
+  position: relative;
+}
+
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.favourite-card:hover .card-img-wrap img {
+  transform: scale(1.03);
+}
+
+/* Details */
+.card-details {
+  margin-left: 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+  line-height: 1.25;
+}
+
+.card-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.card-title a:hover {
+  color: var(--green-primary);
+}
+
+.card-location {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.card-rating-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.star-icon {
+  width: 18px;
+  height: 18px;
+  fill: #f59e0b;
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+
+/* Actions */
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-left: 24px;
+  flex-shrink: 0;
+}
+
+.btn-fav-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-fav-toggle:hover {
+  transform: scale(1.18);
+}
+
+.btn-fav-toggle svg {
+  width: 32px;
+  height: 32px;
+  fill: var(--heart-pink);
+  stroke: var(--heart-pink);
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+.btn-fav-toggle:active svg {
+  transform: scale(0.9);
+}
+
+.btn-view-space {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 110px;
+  height: 44px;
+  padding: 0 32px;
+  border: 1px solid #d1d5db;
+  border-radius: var(--radius-btn);
+  background: #ffffff;
+  color: var(--green-primary);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-view-space:hover {
+  border-color: var(--green-primary);
+  background: var(--green-subtle);
+  color: var(--green-hover);
+  transform: translateY(-1px);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LOADING SPINNER & EMPTY STATE
+   ══════════════════════════════════════════════════════════════ */
+.state-box {
+  background: #ffffff;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-card);
+  padding: 64px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.state-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e2e8f0;
+  border-top-color: var(--green-primary);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.empty-icon-wrap {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #fef2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.empty-icon-wrap svg {
+  width: 36px;
+  height: 36px;
+  stroke: var(--heart-pink);
+  fill: none;
+}
+
+.empty-title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.empty-desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+.btn-explore-cta {
+  background: var(--green-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 8px;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.btn-explore-cta:hover {
+  background: var(--green-hover);
+  transform: translateY(-1px);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TOAST NOTIFICATION
+   ══════════════════════════════════════════════════════════════ */
+.fav-toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #1f2937;
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: var(--fs-sm);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+  opacity: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.fav-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fav-toast-undo {
+  background: none;
+  border: none;
+  color: #a7f3d0;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE DESIGN
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .favourites-container {
+    padding: 24px 20px 60px;
+  }
+
+  .card-img-wrap {
+    width: 160px;
+    height: 115px;
+  }
+
+  .card-details {
+    margin-left: 20px;
+  }
+
+  .card-actions {
+    gap: 20px;
+    margin-left: 16px;
+  }
+
+  .btn-view-space {
+    min-width: 90px;
+    padding: 0 20px;
+    font-size: var(--fs-sm);
+    height: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .favourite-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .card-img-wrap {
+    width: 100%;
+    height: 180px;
+  }
+
+  .card-details {
+    margin-left: 0;
+  }
+
+  .card-actions {
+    margin-left: 0;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .btn-view-space {
+    flex: 1;
+  }
+}
