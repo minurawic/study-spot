@@ -1,0 +1,522 @@
+/* ============================================================
+   StudySpot – Payment Page Stylesheet (payment.css)
+   Pixel-accurate matching to PNG design (Booking Summary +
+   Card Details two-column layout)
+   ============================================================ */
+
+:root {
+  --green-primary: #1f7a3d;
+  --green-hover: #196332;
+  --green-light: #eaf3ec;
+  --text-dark: #1c1f1e;
+  --text-gray: #4b5563;
+  --text-muted: #6b7280;
+  --border: #d1d5db;
+  --border-input: #e3e6e4;
+  --bg-page: #f6f7f5;
+  --bg-card: #ffffff;
+  --bg-input: #fbfbfa;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-input: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-page);
+  color: var(--text-dark);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MAIN PAYMENT CONTAINER
+   ══════════════════════════════════════════════════════════════ */
+.payment-page-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 48px 80px;
+}
+
+/* Two-column grid: left (summary + method) | right (card form) */
+.payment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px;
+  align-items: start;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   LEFT COLUMN
+   ══════════════════════════════════════════════════════════════ */
+.summary-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Booking Summary Card ── */
+.summary-card,
+.payment-method-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.summary-title {
+  font-size: var(--fs-md);
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 20px;
+}
+
+/* Place image + name row */
+.summary-place-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.summary-place-img-wrap {
+  width: 76px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f3f4f6;
+}
+
+.summary-place-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.summary-place-name {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 3px;
+}
+
+.summary-place-city {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Booking detail rows */
+.summary-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid var(--border-input);
+  padding-top: 16px;
+}
+
+.summary-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--fs-sm);
+}
+
+.summary-detail-label {
+  color: var(--text-gray);
+  font-weight: 500;
+}
+
+.summary-detail-value {
+  font-weight: 600;
+  color: #111827;
+  text-align: right;
+}
+
+.summary-price {
+  font-size: var(--fs-base);
+  font-weight: 700;
+}
+
+/* ── Payment Method Card ── */
+.payment-method-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.payment-method-option {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  padding: 4px 0;
+  user-select: none;
+}
+
+/* Hide native radio */
+.payment-method-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Custom radio circle */
+.radio-visual {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color 0.2s;
+  background: #fff;
+}
+
+.payment-method-option.selected .radio-visual,
+.payment-method-option input[type="radio"]:checked ~ .radio-visual {
+  border-color: var(--green-primary);
+}
+
+.payment-method-option.selected .radio-visual::after,
+.payment-method-option input[type="radio"]:checked ~ .radio-visual::after {
+  content: '';
+  width: 11px;
+  height: 11px;
+  background: var(--green-primary);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.payment-method-label {
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: #111827;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RIGHT COLUMN – Card Details + Alt Payment Panels
+   ══════════════════════════════════════════════════════════════ */
+.card-details-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-details-panel,
+.alt-payment-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-details-title {
+  font-size: var(--fs-md);
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+/* Card form layout */
+.card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: #111827;
+}
+
+.card-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-input);
+  background: var(--bg-input);
+  font-family: inherit;
+  font-size: var(--fs-base);
+  font-weight: 500;
+  color: var(--text-dark);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.card-input:focus {
+  border-color: var(--green-primary);
+  box-shadow: 0 0 0 3px rgba(31, 122, 61, 0.15);
+}
+
+.card-input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.card-input.input-error {
+  border-color: #b91c1c;
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.1);
+}
+
+.field-error {
+  font-size: var(--fs-xs);
+  color: #b91c1c;
+  font-weight: 600;
+  min-height: 16px;
+}
+
+/* Expiry + CVV side-by-side */
+.card-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Pay Now Button */
+.btn-pay-now {
+  width: 100%;
+  height: 50px;
+  background-color: var(--green-primary);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: var(--fs-base);
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-input);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 2px 6px rgba(31, 122, 61, 0.25);
+  margin-top: 4px;
+}
+
+.btn-pay-now:hover {
+  background-color: var(--green-hover);
+}
+
+.btn-pay-now:active {
+  transform: translateY(1px);
+}
+
+.btn-pay-now:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* SSL notice */
+.ssl-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: -4px;
+}
+
+/* ── Alt payment panels (bank / cash) ── */
+.alt-payment-panel[hidden] {
+  display: none;
+}
+
+.alt-payment-info {
+  font-size: var(--fs-sm);
+  color: var(--text-gray);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.bank-details-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+  background: #f9fafb;
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.bank-detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--fs-sm);
+  color: var(--text-gray);
+}
+
+.bank-detail-row strong {
+  color: #111827;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SUCCESS CONFIRMATION MODAL
+   ══════════════════════════════════════════════════════════════ */
+.payment-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.payment-modal-overlay.show {
+  display: flex;
+}
+
+.payment-modal-card {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  max-width: 440px;
+  width: 100%;
+  padding: 36px 32px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  animation: modal-pop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modal-pop {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-icon-circle {
+  width: 64px;
+  height: 64px;
+  background: #ecfdf5;
+  color: #10b981;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xl);
+  margin: 0 auto 18px;
+}
+
+.modal-title {
+  font-size: var(--fs-md);
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.modal-subtitle {
+  font-size: var(--fs-sm);
+  color: #6b7280;
+  margin-bottom: 20px;
+}
+
+.modal-receipt-box {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: left;
+  margin-bottom: 24px;
+  font-size: var(--fs-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  color: #4b5563;
+}
+
+.receipt-row strong {
+  color: #111827;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-modal-primary {
+  flex: 1;
+  padding: 12px;
+  background: var(--green-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: var(--fs-base);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-modal-primary:hover {
+  background: var(--green-hover);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVENESS
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .payment-page-container {
+    padding: 32px 24px 60px;
+  }
+
+  .payment-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-row {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-page-container {
+    padding: 24px 16px 60px;
+  }
+}
