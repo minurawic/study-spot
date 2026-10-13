@@ -3,11 +3,14 @@
 //  StudySpot – API: Toggle Favorite
 // ============================================================
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once __DIR__ . '/db.php';
 header('Content-Type: application/json');
 
 $placeId = (int)($_POST['place_id'] ?? $_GET['place_id'] ?? 0);
-$userId  = (int)($_POST['user_id']  ?? $_GET['user_id']  ?? 1); // default demo user
+$userId  = (int)($_SESSION['user_id'] ?? $_POST['user_id'] ?? $_GET['user_id'] ?? 1); // logged-in user or demo user
 
 if ($placeId <= 0) {
     echo json_encode(['success' => false, 'error' => 'Invalid place ID']);
