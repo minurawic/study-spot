@@ -33,7 +33,8 @@ studyspotnew/
 │   ├── book.php           Creates a booking
 │   ├── pay.php            Marks a booking as paid (demo)
 │   ├── add-review.php     Saves a review
-│   ├── toggle-favorite.php  Adds/removes a favorite (fetch API)
+│   ├── toggle_favorite.php  Adds/removes a favorite (fetch API)
+│   ├── get_favorites.php    Returns favorited spaces for user (MySQL)
 │   ├── update-profile.php   Updates name/email (account-settings.html)
 │   ├── update-password.php  Changes password (account-settings.html)
 │   ├── get_faqs.php         Returns FAQs from MySQL with auto-table seeding
