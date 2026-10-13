@@ -270,15 +270,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await response.json();
 
       if (result.success && result.booking) {
-        showConfirmationModal(result.booking);
+        redirectToPayment(result.booking);
       } else {
         alert(result.error || 'Booking could not be processed. Please try again.');
       }
     } catch (err) {
-      console.warn('Network error, creating simulated booking confirmation:', err);
-      // Fallback confirmation
+      console.warn('Network error, redirecting to payment with local data:', err);
+      // Fallback: redirect with locally-known data
       const fakeBooking = {
+        id: 0,
+        place_id: placeId,
         place_name: currentPlace.name,
+        place_city: currentPlace.city || '',
+        cover_image: currentPlace.cover_image || '',
         booking_date: selectedDate,
         start_time: selectedStart,
         end_time: selectedEnd,
@@ -286,30 +290,29 @@ document.addEventListener('DOMContentLoaded', () => {
         total_price: calculatedPrice,
         payment_ref: 'SS-' + Math.floor(100000 + Math.random() * 900000)
       };
-      showConfirmationModal(fakeBooking);
+      redirectToPayment(fakeBooking);
     } finally {
       btnProcess.disabled = false;
       btnProcess.textContent = 'Process to Payment';
     }
   });
 
-  // ── 4. Confirmation Modal ───────────────────────────────────
-  function showConfirmationModal(b) {
-    modalPlace.textContent = b.place_name || currentPlace.name;
-    modalDate.textContent = b.booking_date;
-    modalTime.textContent = b.end_time ? `${b.start_time} – ${b.end_time}` : b.start_time;
-    modalPeople.textContent = `${b.people} Person${b.people > 1 ? 's' : ''}`;
-    modalTotal.textContent = (Number(b.total_price) > 0) ? fmtRs(b.total_price) : 'Free';
-    modalRef.textContent = b.payment_ref;
-
-    bookingModal.classList.add('show');
-  }
-
-  if (btnCloseModal) {
-    btnCloseModal.addEventListener('click', () => {
-      bookingModal.classList.remove('show');
-      window.location.href = `space-detail.html?id=${placeId}`;
+  // ── 4. Redirect to Payment Page ─────────────────────────────────────
+  function redirectToPayment(b) {
+    const p = new URLSearchParams({
+      booking_id:   b.id            || 0,
+      place_id:     b.place_id      || placeId,
+      place_name:   b.place_name    || currentPlace.name,
+      place_city:   b.place_city    || currentPlace.city || '',
+      cover_image:  b.cover_image   || currentPlace.cover_image || '',
+      booking_date: b.booking_date,
+      start_time:   b.start_time,
+      end_time:     b.end_time,
+      people:       b.people,
+      total_price:  b.total_price,
+      payment_ref:  b.payment_ref   || '',
     });
+    window.location.href = `payment.html?${p.toString()}`;
   }
 
   // Initialize
