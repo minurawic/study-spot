@@ -5,10 +5,10 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const bookingsList = document.getElementById('bookingsList');
-  const tabBtns = document.querySelectorAll('.tab-btn');
-
-  let currentTab = 'all';
-  let allBookings = [];
+<<<<<<< HEAD
+  const tabUpcoming = document.getElementById('tabUpcoming');
+  const tabCompleted = document.getElementById('tabCompleted');
+  const tabCancelled = document.getElementById('tabCancelled');
 
   // Seeded fallback matching database/schema.sql
   const fallbackBookings = [
@@ -106,10 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="empty-bookings-title">No ${currentTab === 'all' ? '' : currentTab} bookings found</div>
           <p class="empty-bookings-sub">You don't have any bookings in this section yet.</p>
           <a href="explore.html" class="btn-explore">Find Study Spaces</a>
+>>>>>>> main
         </div>
       `;
       return;
-    }
 
     filtered.forEach(b => {
       const card = document.createElement('article');
