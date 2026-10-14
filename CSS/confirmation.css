@@ -1,0 +1,339 @@
+/* ============================================================
+   StudySpot – Booking Confirmed Stylesheet (confirmation.css)
+   Pixel-accurate matching to Figma design / PNG mockup
+   ============================================================ */
+
+:root {
+  --green-primary: #0b6623;
+  --green-hover: #084d1a;
+  --green-badge: #1ea451;
+  --green-badge-light: #e8f7ee;
+  --text-dark: #111827;
+  --text-gray: #374151;
+  --text-muted: #6b7280;
+  --border-card: #e5e7eb;
+  --bg-page: #ffffff;
+  --radius-card: 14px;
+  --radius-img: 10px;
+  --radius-btn: 8px;
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MAIN CONFIRMATION CONTAINER
+   ══════════════════════════════════════════════════════════════ */
+.confirmation-container {
+  max-width: 680px;
+  width: 100%;
+  margin: 40px auto 60px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── Top Celebration Badge & Titles ── */
+.celebration-hero {
+  text-align: center;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.celebration-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+/* Large Green Checkmark Circle */
+.success-checkmark-circle {
+  width: 76px;
+  height: 76px;
+  background-color: var(--green-badge);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(30, 164, 81, 0.25);
+  flex-shrink: 0;
+  animation: pop-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.success-checkmark-circle svg {
+  width: 44px;
+  height: 44px;
+  stroke: #ffffff;
+}
+
+/* Party Poppers (Confetti Cannons) */
+.party-popper {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  animation: float-celebrate 2s ease-in-out infinite alternate;
+}
+
+.party-popper-left {
+  transform: rotate(-8deg);
+}
+
+.party-popper-right {
+  transform: scaleX(-1) rotate(-8deg);
+  animation-delay: 0.3s;
+}
+
+.party-popper svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Title & Subtitle */
+.confirmation-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  letter-spacing: -0.4px;
+  line-height: 1.25;
+}
+
+.confirmation-subtitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-gray);
+  margin: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BOOKING SUMMARY CARD
+   ══════════════════════════════════════════════════════════════ */
+.booking-summary-card {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  padding: 22px 24px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  box-shadow: var(--shadow-subtle);
+  transition: box-shadow 0.2s ease;
+}
+
+/* Left Thumbnail Image */
+.card-thumb-wrap {
+  width: 175px;
+  height: 120px;
+  border-radius: var(--radius-img);
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: #f3f4f6;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.card-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.booking-summary-card:hover .card-thumb-img {
+  transform: scale(1.02);
+}
+
+/* Right Details Info */
+.card-details-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.place-name {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.place-city {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+}
+
+/* 2-Column Key/Value Table */
+.details-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-row {
+  display: flex;
+  align-items: baseline;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.detail-label {
+  width: 140px;
+  flex-shrink: 0;
+  color: var(--text-dark);
+}
+
+.detail-value {
+  color: var(--text-dark);
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ACTION BUTTONS
+   ══════════════════════════════════════════════════════════════ */
+.confirmation-actions {
+  width: 100%;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-confirm-primary {
+  display: block;
+  width: 100%;
+  background-color: var(--green-primary);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  padding: 14px 20px;
+  border-radius: var(--radius-btn);
+  border: 1.5px solid var(--green-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-confirm-primary:hover {
+  background-color: var(--green-hover);
+  border-color: var(--green-hover);
+  transform: translateY(-1px);
+}
+
+.btn-confirm-primary:active {
+  transform: translateY(0);
+}
+
+.btn-confirm-secondary {
+  display: block;
+  width: 100%;
+  background-color: #ffffff;
+  color: var(--text-dark);
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  padding: 13px 20px;
+  border-radius: var(--radius-btn);
+  border: 1.5px solid var(--green-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-confirm-secondary:hover {
+  background-color: #f0fdf4;
+  color: var(--green-primary);
+  transform: translateY(-1px);
+}
+
+.btn-confirm-secondary:active {
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ANIMATIONS & KEYFRAMES
+   ══════════════════════════════════════════════════════════════ */
+@keyframes pop-in {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float-celebrate {
+  0% {
+    transform: translateY(0) rotate(-8deg);
+  }
+  100% {
+    transform: translateY(-3px) rotate(-4deg);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE DESIGN (TABLETS & PHONES)
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .confirmation-container {
+    margin: 28px auto 40px;
+    padding: 0 16px;
+  }
+
+  .confirmation-title {
+    font-size: 24px;
+  }
+
+  .confirmation-subtitle {
+    font-size: 15px;
+  }
+
+  .booking-summary-card {
+    flex-direction: column;
+    padding: 18px;
+    gap: 16px;
+  }
+
+  .card-thumb-wrap {
+    width: 100%;
+    height: 180px;
+  }
+
+  .detail-label {
+    width: 110px;
+  }
+
+  .detail-row {
+    font-size: 13.5px;
+  }
+
+  .btn-confirm-primary,
+  .btn-confirm-secondary {
+    padding: 13px 16px;
+    font-size: 14.5px;
+  }
+}
