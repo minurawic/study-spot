@@ -226,8 +226,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ── 9. Success Modal ───────────────────────────────────────────────
+  // ── 9. Success Modal & Confirmation ────────────────────────────────
+  let lastConfirmedRef = paymentRef;
+
   function showModal(ref) {
+    lastConfirmedRef = ref;
     document.getElementById('modalPlace').textContent  = placeName;
     document.getElementById('modalDate').textContent   = bookDate;
     document.getElementById('modalTime').textContent   = (startTime && endTime)
@@ -244,7 +247,20 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnCloseModal) {
     btnCloseModal.addEventListener('click', () => {
       document.getElementById('paymentModal').classList.remove('show');
-      window.location.href = `my-bookings.html`;
+      const q = new URLSearchParams({
+        booking_id:   bookingId || 1,
+        ref:          lastConfirmedRef || paymentRef,
+        place_id:     placeId,
+        place_name:   placeName,
+        place_city:   placeCity,
+        cover_image:  coverImg,
+        booking_date: bookDate,
+        start_time:   startTime,
+        end_time:     endTime,
+        people:       people,
+        total_price:  totalPrice
+      });
+      window.location.href = `confirmation.html?${q.toString()}`;
     });
   }
 

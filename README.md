@@ -41,6 +41,8 @@ studyspotnew/
 │   ├── update-profile.php   Updates name/email (account-settings.html)
 │   ├── update-password.php  Changes password (account-settings.html)
 │   ├── get_faqs.php         Returns FAQs from MySQL with auto-table seeding
+│   ├── get_booking_confirmation.php Returns confirmed booking details from DB
+│   ├── get_user_bookings.php Returns all bookings for user from DB
 │   ├── admin_stats.php      Provides live counts for users, spaces, bookings
 │   ├── admin_spaces.php     Full CRUD & status toggling for study spaces
 │   ├── admin_users.php      Lists and manages user accounts

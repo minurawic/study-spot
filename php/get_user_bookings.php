@@ -1,141 +1,91 @@
 <?php
 // ============================================================
 //  StudySpot – API: Get User Bookings
-//  Returns upcoming, completed, and cancelled bookings for a user
+//  Retrieves all user bookings with place details
 // ============================================================
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-require_once __DIR__ . '/db.php';
+ob_start();
 header('Content-Type: application/json; charset=utf-8');
 
-// Use authenticated user or fallback to demo user (Sahan Perera, id = 1)
-$userId = (int)($_SESSION['user_id'] ?? $_POST['user_id'] ?? $_GET['user_id'] ?? 1);
+require_once __DIR__ . '/db.php';
 
-function format_time_display($timeStr) {
-    if (!$timeStr) return '';
-    $timestamp = strtotime("1970-01-01 " . $timeStr);
-    if (!$timestamp) return $timeStr;
-    // Format as "10.00 AM" to match PNG
-    return date('h.i A', $timestamp);
-}
+$userId = isset($_GET['user_id']) ? (int)$_GET['user_id'] : 1;
 
 try {
-    $sql = "
-        SELECT 
-            b.id AS booking_id,
-            b.user_id,
-            b.place_id,
-            b.booking_date,
-            b.start_time,
-            b.end_time,
-            b.people,
-            b.total_price,
-            b.status,
-            b.payment_ref,
-            b.created_at,
-            p.name AS place_name,
-            p.type AS place_type,
-            p.city AS place_city,
-            p.address AS place_address,
-            p.cover_image,
-            p.rating,
-            p.wifi,
-            p.noise_level,
-            p.cost_label
+    $stmt = $pdo->prepare('
+        SELECT b.id, b.user_id, b.place_id, b.booking_date, b.start_time, b.end_time,
+               b.people, b.total_price, b.status, b.payment_ref, b.created_at,
+               p.name AS place_name, p.city AS place_city, p.cover_image, p.price AS place_price,
+               p.address AS place_address
         FROM `bookings` b
-        JOIN `places` p ON b.place_id = p.id
+        INNER JOIN `places` p ON p.id = b.place_id
         WHERE b.user_id = ?
-        ORDER BY 
-            CASE 
-                WHEN b.status = 'upcoming' THEN 1
-                WHEN b.status = 'completed' THEN 2
-                WHEN b.status = 'cancelled' THEN 3
-                ELSE 4
-            END,
-            b.booking_date DESC,
-            b.start_time ASC
-    ";
-
-    $stmt = $pdo->prepare($sql);
+        ORDER BY b.booking_date DESC, b.id DESC
+    ');
     $stmt->execute([$userId]);
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $rows = $stmt->fetchAll();
 
-    $upcoming  = [];
-    $completed = [];
-    $cancelled = [];
-
+    $bookings = [];
     foreach ($rows as $row) {
-        $cover = $row['cover_image'] ?? 'placeholder.svg';
-        if (!str_starts_with($cover, 'http') && !str_starts_with($cover, 'images/')) {
+        $cover = $row['cover_image'] ?? 'library-cafe.jpg';
+        if (!str_starts_with($cover, 'images/') && !str_starts_with($cover, 'http')) {
             $cover = 'images/' . $cover;
         }
 
-        $startTimeFmt = format_time_display($row['start_time']);
-        $endTimeFmt   = format_time_display($row['end_time']);
-        $timeSlotFmt  = trim($startTimeFmt . ' - ' . $endTimeFmt);
+        // Format time
+        $formatTime = function ($t) {
+            if (!$t) return '';
+            $parts = explode(':', $t);
+            $h = (int)($parts[0] ?? 0);
+            $m = (int)($parts[1] ?? 0);
+            $p = $h >= 12 ? 'PM' : 'AM';
+            if ($h === 0) $h = 12;
+            elseif ($h > 12) $h -= 12;
+            return sprintf('%d.%02d %s', $h, $m, $p);
+        };
 
-        $peopleCount = (int)($row['people'] ?? 1);
-        $peopleText  = $peopleCount . ' Peoples'; // Matches PNG design: "1 Peoples", "2 Peoples"
-
-        $bookingItem = [
-            'id'             => (int)$row['booking_id'],
-            'booking_id'     => (int)$row['booking_id'],
-            'place_id'       => (int)$row['place_id'],
-            'place_name'     => $row['place_name'],
-            'place_type'     => ucfirst($row['place_type']),
-            'place_city'     => $row['place_city'],
-            'place_address'  => $row['place_address'],
-            'cover_image'    => $cover,
-            'rating'         => (float)$row['rating'],
-            'booking_date'   => $row['booking_date'],
-            'start_time'     => substr($row['start_time'], 0, 5),
-            'end_time'       => substr($row['end_time'], 0, 5),
-            'start_time_fmt' => $startTimeFmt,
-            'end_time_fmt'   => $endTimeFmt,
-            'time_slot'      => $timeSlotFmt,
-            'people'         => $peopleCount,
-            'people_label'   => $peopleText,
-            'total_price'    => (float)$row['total_price'],
-            'status'         => strtolower($row['status']),
-            'status_label'   => ucfirst($row['status']),
-            'payment_ref'    => $row['payment_ref'] ?? ('SS-' . (100000 + (int)$row['booking_id'])),
-            'created_at'     => $row['created_at'],
-            'wifi'           => ucfirst($row['wifi'] ?? 'Free'),
-            'noise_level'    => ucfirst($row['noise_level'] ?? 'Quiet'),
-            'cost_label'     => $row['cost_label'] ?? 'Free'
-        ];
-
-        $status = strtolower($row['status']);
-        if ($status === 'upcoming' || $status === 'pending') {
-            $upcoming[] = $bookingItem;
-        } elseif ($status === 'completed') {
-            $completed[] = $bookingItem;
-        } elseif ($status === 'cancelled') {
-            $cancelled[] = $bookingItem;
+        $timeStr = '';
+        if (!empty($row['start_time']) && !empty($row['end_time'])) {
+            $timeStr = $formatTime($row['start_time']) . ' - ' . $formatTime($row['end_time']);
+        } elseif (!empty($row['start_time'])) {
+            $timeStr = $formatTime($row['start_time']);
         }
+
+        $price = (float)($row['total_price'] ?? 0.00);
+        $priceStr = ($price <= 0) ? 'Free' : ('Rs. ' . (floor($price) == $price ? number_format($price, 0) : number_format($price, 2)));
+
+        $bookings[] = [
+            'id'              => (int)$row['id'],
+            'place_id'        => (int)$row['place_id'],
+            'place_name'      => $row['place_name'],
+            'place_city'      => $row['place_city'],
+            'place_address'   => $row['place_address'] ?? '',
+            'cover_image'     => $cover,
+            'booking_date'    => $row['booking_date'],
+            'start_time'      => $row['start_time'],
+            'end_time'        => $row['end_time'],
+            'formatted_time'  => $timeStr,
+            'people'          => (int)($row['people'] ?? 1),
+            'total_price'     => $price,
+            'formatted_price' => $priceStr,
+            'status'          => $row['status'] ?? 'upcoming',
+            'payment_ref'     => $row['payment_ref'] ?? '',
+            'created_at'      => $row['created_at'] ?? ''
+        ];
     }
 
+    ob_clean();
     echo json_encode([
-        'success' => true,
-        'counts'  => [
-            'upcoming'  => count($upcoming),
-            'completed' => count($completed),
-            'cancelled' => count($cancelled),
-            'total'     => count($rows)
-        ],
-        'bookings' => [
-            'upcoming'  => $upcoming,
-            'completed' => $completed,
-            'cancelled' => $cancelled
-        ]
+        'success'  => true,
+        'bookings' => $bookings
     ]);
+    exit;
+
 } catch (Exception $e) {
-    http_response_code(500);
+    ob_clean();
     echo json_encode([
         'success' => false,
-        'error'   => 'Could not retrieve bookings: ' . $e->getMessage()
+        'error'   => $e->getMessage()
     ]);
+    exit;
 }
