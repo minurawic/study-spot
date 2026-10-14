@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnCloseModal) {
     btnCloseModal.addEventListener('click', () => {
       document.getElementById('paymentModal').classList.remove('show');
-      window.location.href = `space-detail.html?id=${placeId}`;
+      window.location.href = `my-bookings.html`;
     });
   }
 
