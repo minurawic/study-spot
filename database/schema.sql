@@ -188,6 +188,11 @@ CREATE TABLE `recently_viewed` (
 
 LOCK TABLES `recently_viewed` WRITE;
 /*!40000 ALTER TABLE `recently_viewed` DISABLE KEYS */;
+INSERT INTO `recently_viewed` VALUES 
+(1,1,5,'2026-10-22 14:15:00'),
+(2,1,1,'2026-10-22 11:40:00'),
+(3,1,3,'2026-10-21 16:30:00'),
+(4,1,8,'2026-10-11 10:20:00');
 /*!40000 ALTER TABLE `recently_viewed` ENABLE KEYS */;
 UNLOCK TABLES;
 
