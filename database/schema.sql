@@ -251,7 +251,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Sahan Perera','sahan@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(2,'Tharushi D.','tharushi@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(3,'Nimal Fernando','nimal@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(4,'Shanilka Induwara','shani@gamil.com','$2y$10$7uWOlhD34kRIo/Zjqork/O6rKauw6bpxFxQ6JHXqaBu9bDdFLlAOa',NULL,'2026-09-30 04:22:57');
+INSERT INTO `users` VALUES (1,'Sahan Perera','sahan@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(2,'Tharushi D.','tharushi@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(3,'Nimal Fernando','nimal@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(4,'Shanilka Induwara','shani@gamil.com','$2y$10$7uWOlhD34kRIo/Zjqork/O6rKauw6bpxFxQ6JHXqaBu9bDdFLlAOa',NULL,'2026-09-30 04:22:57'),(5,'Nimali Perera','nimali.perera@gmail.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-10-14 09:30:00');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -299,28 +299,4 @@ INSERT INTO `faqs` VALUES
 /*!40000 ALTER TABLE `faqs` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `contact_messages`
---
-
-DROP TABLE IF EXISTS `contact_messages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `contact_messages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `subject` varchar(200) NOT NULL,
-  `message` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-LOCK TABLES `contact_messages` WRITE;
-/*!40000 ALTER TABLE `contact_messages` DISABLE KEYS */;
-INSERT INTO `contact_messages` VALUES (1,'Sahan Perera','sahan@example.com','General Inquiry','Hello StudySpot team, looking for more quiet study zones in Colombo.','2026-10-14 12:00:00');
-/*!40000 ALTER TABLE `contact_messages` ENABLE KEYS */;
-UNLOCK TABLES;
-
--- Dump completed on 2026-10-14 12:30:00
+-- Dump completed on 2026-09-30 19:46:25
