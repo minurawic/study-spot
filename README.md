@@ -37,6 +37,9 @@ studyspotnew/
 │   ├── add-review.php     Saves a review
 │   ├── toggle_favorite.php  Adds/removes a favorite (fetch API)
 │   ├── get_favorites.php    Returns favorited spaces for user (MySQL)
+│   ├── get_recently_viewed.php Returns recently viewed spaces with timestamps (MySQL)
+│   ├── record_recently_viewed.php Records a space view with timestamp (MySQL)
+│   ├── clear_recently_viewed.php Clears recently viewed history for user (MySQL)
 │   ├── get_user_bookings.php Returns upcoming/completed/cancelled bookings for user (MySQL)
 │   ├── get_booking_detail.php Returns single booking information with space details (MySQL)
 │   ├── cancel_booking.php   Cancels an upcoming booking in MySQL
@@ -74,7 +77,8 @@ studyspotnew/
 ├── user-profile.html       Profile routing alias
 ├── my-bookings.html         Upcoming / completed / cancelled bookings
 ├── account-settings.html     Update name/email/password
-├── recently-viewed.html      Spaces you've opened (tracked via localStorage)
+├── recently-viewed.html      Spaces you've opened (tracked via MySQL & localStorage)
+├── recent.html               Recently viewed routing alias
 ├── favourites.html           Saved spaces
 ├── write-review.html         Submit a review
 ├── help.html                  Help & FAQ ("About Us" in the nav)
