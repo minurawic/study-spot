@@ -84,8 +84,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function recordRecentlyViewed(p) {
+    if (!p || !p.id) return;
+    try {
+      const formData = new FormData();
+      formData.append('place_id', p.id);
+      fetch('php/record_recently_viewed.php', { method: 'POST', body: formData }).catch(() => {});
+    } catch (_) {}
+
+    try {
+      let recent = [];
+      const stored = localStorage.getItem('study_recently_viewed');
+      if (stored) recent = JSON.parse(stored);
+      if (!Array.isArray(recent)) recent = [];
+      recent = recent.filter(item => String(item.id) !== String(p.id));
+      recent.unshift({
+        id: p.id,
+        name: p.name,
+        city: p.city || 'Colombo',
+        rating: p.rating || '4.5',
+        review_count: (p.reviews && p.reviews.length) || p.review_count || 45,
+        image_url: p.cover_image || 'images/placeholder.svg',
+        viewed_at: new Date().toISOString()
+      });
+      if (recent.length > 20) recent = recent.slice(0, 20);
+      localStorage.setItem('study_recently_viewed', JSON.stringify(recent));
+    } catch (_) {}
+  }
+
   function renderDetail(p, reviews, offline) {
     document.title = `${p.name} – StudySpot`;
+
+    // Record view in DB and localStorage
+    recordRecentlyViewed(p);
 
     // Breadcrumb
     if (breadcrumbCurrent) breadcrumbCurrent.textContent = p.name;
