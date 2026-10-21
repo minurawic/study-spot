@@ -28,6 +28,8 @@ studyspotnew/
 │   ├── db.php             Database connection (PDO)
 │   ├── login.php          Handles login form
 │   ├── register.php       Handles sign-up form
+│   ├── forgot_password.php Handles password reset link requests (MySQL password_resets)
+│   ├── reset_password.php  Handles updating password with verified reset token
 │   ├── logout.php         Destroys session
 │   ├── get-spaces.php     Returns spaces as JSON (search/filter)
 │   ├── book.php           Creates a booking
@@ -55,6 +57,9 @@ studyspotnew/
 ├── index.html             Home
 ├── login.html
 ├── register.html
+├── forgot-password.html    Forgot password (matches Figma design)
+├── forgot.html            Forgot password routing alias
+├── reset-password.html     Reset password with token verification
 ├── explore.html           Search & filter study spaces
 ├── map.html                Map view + nearby list
 ├── space-detail.html       Single space details + reviews
