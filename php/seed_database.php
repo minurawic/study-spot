@@ -58,7 +58,22 @@ try {
     $pdo->exec("UPDATE reviews SET user_id=1, comment='Very quiet and comfortable. Perfect place for long study sessions!', rating=5, created_at=DATE_SUB(NOW(), INTERVAL 5 DAY) WHERE id=1");
     $pdo->exec("UPDATE reviews SET user_id=1 WHERE id IN (2, 4, 5, 8, 11)");
 
-    echo "SUCCESS: Database seeded properly for Dashboard, Profile, and Contact.\n";
+    // 6. Ensure user 1 has recently viewed spaces matching Figma UI (places 5, 1, 3, 8)
+    $pdo->exec("DELETE FROM recently_viewed WHERE user_id=1");
+    $today215 = date('Y-m-d 14:15:00');
+    $today1140 = date('Y-m-d 11:40:00');
+    $yesterday = date('Y-m-d 16:30:00', strtotime('-1 day'));
+    $sun11Oct = date('2026-10-11 10:20:00');
+    $stmt = $pdo->prepare("
+        INSERT INTO recently_viewed (user_id, place_id, viewed_at) VALUES 
+        (1, 5, ?),
+        (1, 1, ?),
+        (1, 3, ?),
+        (1, 8, ?)
+    ");
+    $stmt->execute([$today215, $today1140, $yesterday, $sun11Oct]);
+
+    echo "SUCCESS: Database seeded properly for Dashboard, Profile, Contact, and Recently Viewed.\n";
 
     // Verify stats
     $upCount = $pdo->query("SELECT COUNT(*) FROM bookings WHERE user_id=1 AND status IN ('upcoming', 'pending')")->fetchColumn();
