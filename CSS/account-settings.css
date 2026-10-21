@@ -1,0 +1,356 @@
+/* ============================================================
+   StudySpot – Account Settings Stylesheet
+   Matches uploaded Figma / PNG design mockup
+   ============================================================ */
+
+.settings-wrapper {
+  background-color: #ffffff;
+  min-height: calc(100vh - 68px);
+  padding: 40px 48px 80px;
+}
+
+.settings-container {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* ── Page Title ───────────────────────────────────────────── */
+.settings-page-title {
+  font-size: var(--fs-xl, 32px);
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.6px;
+  margin-bottom: 32px;
+  line-height: 1.2;
+}
+
+/* ── Two Column Layout ────────────────────────────────────── */
+.settings-layout {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* ── Left Sidebar Navigation ──────────────────────────────── */
+.settings-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+}
+
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-nav li {
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #374151;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  box-sizing: border-box;
+}
+
+.sidebar-item:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+/* Active State matching PNG (soft green background & forest green text) */
+.sidebar-item.active {
+  background-color: #eaf3ea;
+  color: #24582e;
+  font-weight: 600;
+}
+
+.sidebar-item.logout-link {
+  color: #374151;
+}
+
+.sidebar-item.logout-link:hover {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+/* ── Right Content Area ───────────────────────────────────── */
+.settings-content {
+  flex: 1;
+  min-width: 0;
+  max-width: 780px;
+}
+
+/* ── Settings Cards ───────────────────────────────────────── */
+.settings-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.settings-card:last-child {
+  margin-bottom: 0;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+
+/* ── Avatar / Profile Photo Row ───────────────────────────── */
+.avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.avatar-circle {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background-color: #24582e;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  overflow: hidden;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.avatar-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.btn-change-photo {
+  background: #ffffff;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #344054;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1.4;
+}
+
+.btn-change-photo:hover {
+  background-color: #f9fafb;
+  border-color: #98a2b3;
+}
+
+.btn-change-photo:active {
+  background-color: #f2f4f7;
+}
+
+/* ── Form Groups & Controls ───────────────────────────────── */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #344054;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #101828;
+  background-color: #ffffff;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group input::placeholder {
+  color: #98a2b3;
+}
+
+.form-group input:focus {
+  border-color: #24582e;
+  box-shadow: 0 0 0 3px rgba(36, 88, 46, 0.12);
+}
+
+/* ── Two Column Grid for Password Inputs ──────────────────── */
+.form-row-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* ── Form Action Buttons ──────────────────────────────────── */
+.form-action {
+  margin-top: 22px;
+}
+
+.btn-primary {
+  background-color: #24582e;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 22px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+  line-height: 1.4;
+}
+
+.btn-primary:hover {
+  background-color: #1b4423;
+}
+
+.btn-primary:active {
+  transform: scale(0.99);
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ── Alert Notifications ──────────────────────────────────── */
+.alert-box {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  line-height: 1.4;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.alert-success {
+  background-color: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.alert-error {
+  background-color: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.alert-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.7;
+  padding: 0 4px;
+  margin-left: 8px;
+}
+
+.alert-close:hover {
+  opacity: 1;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Responsive Adaptations ───────────────────────────────── */
+@media (max-width: 860px) {
+  .settings-wrapper {
+    padding: 30px 24px 60px;
+  }
+
+  .settings-layout {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .settings-sidebar {
+    width: 100%;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .sidebar-item {
+    width: auto;
+  }
+
+  .settings-content {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .settings-wrapper {
+    padding: 24px 16px 40px;
+  }
+
+  .settings-page-title {
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
+
+  .settings-card {
+    padding: 20px;
+    border-radius: 10px;
+  }
+
+  .form-row-two-col {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}
