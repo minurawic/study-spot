@@ -423,7 +423,7 @@
            </svg>`;
     }
 
-    // ── Error Banner ──
+    // ── Error Banner (URL ?error= param) ──
     const params = new URLSearchParams(window.location.search);
     const code = params.get('error');
     if (code) {
@@ -436,6 +436,62 @@
       banner.textContent = msgs[code] || 'An error occurred.';
       banner.classList.add('show');
     }
+
+    // ── AJAX Login – intercept form submit ──
+    // This stores the user in localStorage so the navbar on every page
+    // can detect "logged in" and send the profile icon to profile.html.
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const banner   = document.getElementById('errorMessage');
+      const submitBtn = this.querySelector('[type="submit"]');
+
+      if (!email || !password) {
+        banner.textContent = 'Please fill in all fields.';
+        banner.classList.add('show');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.7';
+
+      try {
+        const res = await fetch('php/login.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (data.success && data.user) {
+          // ✅ Store user in localStorage so every page's navbar can read it
+          localStorage.setItem('study_user', JSON.stringify(data.user));
+          // Redirect to home (or the page they came from)
+          const redirect = new URLSearchParams(window.location.search).get('redirect');
+          window.location.href = redirect || 'index.html';
+        } else {
+          const msgs = {
+            invalid:    'Invalid email or password. Please try again.',
+            validation: 'Please fill in all fields correctly.',
+          };
+          banner.textContent = msgs[data.error] || data.message || 'Login failed. Please try again.';
+          banner.classList.add('show');
+        }
+      } catch (err) {
+        // Network error – fall back to normal form POST
+        console.warn('AJAX login failed, falling back to form POST:', err);
+        this.submit();
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '';
+      }
+    });
   </script>
 
 </body>
