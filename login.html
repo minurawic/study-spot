@@ -122,6 +122,21 @@
       display: block;
     }
 
+    .success-message {
+      background: rgba(61, 220, 132, 0.15);
+      color: #3ddc84;
+      border: 1px solid rgba(61, 220, 132, 0.3);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      font-size: var(--fs-sm);
+      display: none;
+    }
+
+    .success-message.show {
+      display: block;
+    }
+
     /* ── Input Fields ── */
     .input-group {
       position: relative;
@@ -320,8 +335,9 @@
     <h1 class="auth-title">Welcome Back!</h1>
     <p class="auth-subtitle">Login to continue to your account</p>
 
-    <!-- Error -->
+    <!-- Alerts -->
     <div class="error-message" id="errorMessage" role="alert"></div>
+    <div class="success-message" id="successMessage" role="status"></div>
 
     <!-- Form -->
     <form action="php/login.php" method="POST" id="loginForm" novalidate>
@@ -363,7 +379,7 @@
 
       <!-- Forgot -->
       <div class="forgot-row">
-        <a href="#" class="forgot-link">Forgot Password?</a>
+        <a href="forgot-password.html" class="forgot-link">Forgot Password?</a>
       </div>
 
       <button type="submit" class="btn-login">
@@ -423,9 +439,11 @@
            </svg>`;
     }
 
-    // ── Error Banner (URL ?error= param) ──
+    // ── Error & Success Banners (URL ?error= / ?success= params) ──
     const params = new URLSearchParams(window.location.search);
     const code = params.get('error');
+    const successCode = params.get('success');
+
     if (code) {
       const msgs = {
         invalid: 'Invalid email or password. Please try again.',
@@ -435,6 +453,15 @@
       const banner = document.getElementById('errorMessage');
       banner.textContent = msgs[code] || 'An error occurred.';
       banner.classList.add('show');
+    } else if (successCode) {
+      const successMsgs = {
+        reset_success: 'Password reset successfully! Please log in with your new password.',
+      };
+      const successBanner = document.getElementById('successMessage');
+      if (successBanner) {
+        successBanner.textContent = successMsgs[successCode] || 'Success! You can now log in.';
+        successBanner.classList.add('show');
+      }
     }
 
     // ── AJAX Login – intercept form submit ──

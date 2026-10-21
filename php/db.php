@@ -9,7 +9,7 @@ define('DB_PASS',    '');
 define('DB_CHARSET', 'utf8mb4');
 
 $hostsToTry = ['127.0.0.1', 'localhost'];
-$portsToTry = [3606, 3306];
+$portsToTry = [3306, 3307, 3606];
 $databasesToTry = ['studyspot', 'studyspot_db'];
 $pdo = null;
 
