@@ -5,10 +5,10 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   const bookingsList = document.getElementById('bookingsList');
-<<<<<<< HEAD
-  const tabUpcoming = document.getElementById('tabUpcoming');
-  const tabCompleted = document.getElementById('tabCompleted');
-  const tabCancelled = document.getElementById('tabCancelled');
+  const tabBtns      = document.querySelectorAll('.tab-btn');
+
+  let allBookings = [];
+  let currentTab  = 'upcoming';
 
   // Seeded fallback matching database/schema.sql
   const fallbackBookings = [
@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
+  // ── Render bookings filtered by current tab ─────────────────
   function renderBookings() {
     bookingsList.innerHTML = '';
 
@@ -106,10 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="empty-bookings-title">No ${currentTab === 'all' ? '' : currentTab} bookings found</div>
           <p class="empty-bookings-sub">You don't have any bookings in this section yet.</p>
           <a href="explore.html" class="btn-explore">Find Study Spaces</a>
->>>>>>> main
         </div>
       `;
       return;
+    }
 
     filtered.forEach(b => {
       const card = document.createElement('article');
@@ -146,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Filter tabs
+  // ── Filter tabs ─────────────────────────────────────────────
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       tabBtns.forEach(b => b.classList.remove('active'));
@@ -156,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Load from DB API
+  // ── Load from DB API ────────────────────────────────────────
   async function loadBookings() {
     try {
       const res = await fetch('php/get_user_bookings.php');

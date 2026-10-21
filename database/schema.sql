@@ -251,7 +251,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Sahan Perera','sahan@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(2,'Tharushi D.','tharushi@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(3,'Nimal Fernando','nimal@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(4,'Shanilka Induwara','shani@gamil.com','$2y$10$7uWOlhD34kRIo/Zjqork/O6rKauw6bpxFxQ6JHXqaBu9bDdFLlAOa',NULL,'2026-09-30 04:22:57');
+INSERT INTO `users` VALUES (1,'Sahan Perera','sahan@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(2,'Tharushi D.','tharushi@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(3,'Nimal Fernando','nimal@example.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-09-23 04:12:06'),(4,'Shanilka Induwara','shani@gamil.com','$2y$10$7uWOlhD34kRIo/Zjqork/O6rKauw6bpxFxQ6JHXqaBu9bDdFLlAOa',NULL,'2026-09-30 04:22:57'),(5,'Nimali Perera','nimali.perera@gmail.com','$2y$10$zIl.N41sf10AUJEQbBtbMOC5YDxup8sA7.rAHZVHoiJZN7q6pT2KK',NULL,'2026-10-14 09:30:00');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -343,4 +343,3 @@ CREATE TABLE `password_resets` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 -- Dump completed on 2026-10-14 12:30:00
-
