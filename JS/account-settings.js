@@ -207,6 +207,28 @@ document.addEventListener('DOMContentLoaded', () => {
           if (result.user && result.user.id) {
             currentUserId = result.user.id;
           }
+
+          // ── Update localStorage so navbar chip refreshes instantly ──
+          try {
+            const raw = localStorage.getItem('study_user') || localStorage.getItem('studyspot_user');
+            const cached = raw ? JSON.parse(raw) : {};
+            cached.name  = fullName;
+            cached.email = email;
+            if (result.user && result.user.avatar) {
+              cached.avatar = result.user.avatar;
+              // Also update avatar preview in the form
+              avatarImage.src = result.user.avatar;
+              avatarImage.style.display = 'block';
+              avatarInitials.style.display = 'none';
+            }
+            localStorage.setItem('study_user', JSON.stringify(cached));
+            // Live-update the navbar chip
+            if (typeof _ssUpdateNavUI === 'function') {
+              _ssUpdateNavUI(cached);
+            }
+          } catch (_) {}
+
+          selectedAvatarFile = null; // reset so next save won't re-upload
         } else {
           showAlert(profileAlert, (result && result.error) || 'Failed to update profile.', 'error');
         }
@@ -215,6 +237,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // Graceful simulated update if MySQL server is offline
         avatarInitials.textContent = getInitials(fullName);
         showAlert(profileAlert, 'Profile details saved successfully.', 'success');
+
+        // Still update localStorage with new name/email and preview avatar
+        try {
+          const raw = localStorage.getItem('study_user') || localStorage.getItem('studyspot_user');
+          const cached = raw ? JSON.parse(raw) : {};
+          cached.name  = fullName;
+          cached.email = email;
+          // Use the base64 preview from the img element if user picked a photo
+          if (avatarImage.style.display !== 'none' && avatarImage.src && avatarImage.src.startsWith('data:')) {
+            cached.avatar = avatarImage.src;
+          }
+          localStorage.setItem('study_user', JSON.stringify(cached));
+          if (typeof _ssUpdateNavUI === 'function') { _ssUpdateNavUI(cached); }
+        } catch (_) {}
+
+        selectedAvatarFile = null;
       } finally {
         btnSaveProfile.disabled = false;
         btnSaveProfile.textContent = originalBtnText;
