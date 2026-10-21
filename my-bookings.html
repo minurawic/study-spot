@@ -10,4 +10,84 @@
     window.location.href = 'dashboard.html' + window.location.search;
   </script>
 </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Bookings – StudySpot</title>
+  <link rel="stylesheet" href="CSS/base.css" />
+  <link rel="stylesheet" href="CSS/navbar.css" />
+  <link rel="stylesheet" href="CSS/my-bookings.css" />
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════════════════════════ -->
+  <nav class="navbar">
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.png" alt="StudySpot Logo" />
+      <span><span class="study">Study</span><span class="spot">Spot</span></span>
+    </a>
+
+    <!-- Nav Links -->
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="help.html">About Us</a></li>
+    </ul>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <!-- Favourites Button -->
+      <button class="btn-icon" aria-label="Favourites" title="Favourites" type="button" onclick="window.location.href='favourites.html'">
+      <button class="btn-icon" aria-label="Favourites" title="Favourites" type="button"
+        onclick="window.location.href='favourites.html'">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+      </button>
+
+      <!-- Account Button -->
+      <button class="btn-icon" aria-label="Account" title="Account" type="button"
+        onclick="window.location.href='login.html'">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MAIN CONTENT: MY BOOKINGS
+  ════════════════════════════════════════════════════════════ -->
+  <main class="bookings-container">
+    <header class="bookings-header">
+      <h1 class="page-title">My Bookings</h1>
+      <p class="page-subtitle">Track and manage your upcoming, completed, and past study spot reservations.</p>
+    </header>
+
+    <!-- Filter Tabs -->
+    <div class="booking-tabs" role="tablist">
+      <button type="button" class="tab-btn active" data-tab="all">All Bookings</button>
+      <button type="button" class="tab-btn" data-tab="upcoming">Upcoming</button>
+      <button type="button" class="tab-btn" data-tab="completed">Completed</button>
+      <button type="button" class="tab-btn" data-tab="cancelled">Cancelled</button>
+    </div>
+
+    <!-- Bookings List -->
+    <section class="bookings-list" id="bookingsList" aria-label="Your Bookings">
+      <!-- Populated dynamically via my-bookings.js / MySQL API -->
+    </section>
+  </main>
+
+  <script src="JS/my-bookings.js"></script>
+</body>
+
 </html>

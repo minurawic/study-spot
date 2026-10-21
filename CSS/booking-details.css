@@ -1,0 +1,500 @@
+/* ============================================================
+   StudySpot – Booking Details Stylesheet (booking-details.css)
+   Clean, modern, and branded for StudySpot reservations
+   ============================================================ */
+
+:root {
+  --green-primary: #2D6A2D;
+  --green-hover:   #235323;
+  --green-light:   #e8f5e9;
+  --green-subtle:  #f0fdf4;
+  --green-badge-bg: #9feec4;
+  --green-badge-text: #065f46;
+  --blue-badge-bg:  #dbeafe;
+  --blue-badge-text: #1e40af;
+  --red-badge-bg:   #fee2e2;
+  --red-badge-text:  #b91c1c;
+  --text-dark:      #111827;
+  --text-body:      #374151;
+  --text-muted:     #6b7280;
+  --border-color:   #e5e7eb;
+  --radius-card:    14px;
+  --radius-btn:     8px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CONTAINER & HEADER
+   ══════════════════════════════════════════════════════════════ */
+.details-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 36px 24px 80px;
+}
+
+/* Back Link */
+.back-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b5563;
+  text-decoration: none;
+  margin-bottom: 24px;
+  transition: color 0.15s ease;
+}
+
+.back-nav-link:hover {
+  color: var(--green-primary);
+}
+
+.back-nav-link svg {
+  transition: transform 0.15s ease;
+}
+
+.back-nav-link:hover svg {
+  transform: translateX(-3px);
+}
+
+/* Page Header */
+.details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.header-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.details-title {
+  font-size: var(--fs-xl, 30px);
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.4px;
+}
+
+.booking-ref-badge {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  font-family: monospace;
+}
+
+.header-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 20px;
+  border-radius: 9999px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.header-status-badge.upcoming {
+  background-color: var(--green-badge-bg);
+  color: var(--green-badge-text);
+}
+
+.header-status-badge.completed {
+  background-color: var(--blue-badge-bg);
+  color: var(--blue-badge-text);
+}
+
+.header-status-badge.cancelled {
+  background-color: var(--red-badge-bg);
+  color: var(--red-badge-text);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MAIN CARD
+   ══════════════════════════════════════════════════════════════ */
+.booking-detail-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+/* Space Overview Banner */
+.venue-banner {
+  display: flex;
+  align-items: center;
+  padding: 24px 28px;
+  gap: 24px;
+  border-bottom: 1px solid var(--border-color);
+  background: #fafafa;
+}
+
+.venue-img-wrap {
+  width: 180px;
+  height: 120px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f3f4f6;
+}
+
+.venue-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.venue-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.venue-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+}
+
+.venue-type-city {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 8px;
+}
+
+.venue-address {
+  font-size: 14px;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.venue-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-space-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--green-primary);
+  text-decoration: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: var(--green-subtle);
+  border: 1px solid #bbf7d0;
+  transition: all 0.15s;
+}
+
+.btn-space-link:hover {
+  background: var(--green-primary);
+  color: #ffffff;
+}
+
+/* Info Grid */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 28px;
+  gap: 28px;
+}
+
+.detail-section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f3f4f6;
+}
+
+.detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.detail-label {
+  color: #6b7280;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-label svg {
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.detail-value {
+  color: var(--text-dark);
+  font-weight: 600;
+  text-align: right;
+  max-width: 60%;
+}
+
+.detail-value.highlight-green {
+  color: var(--green-primary);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+/* Facilities Chips */
+.facilities-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.facility-chip {
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+  background: #f3f4f6;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CARD FOOTER & ACTIONS
+   ══════════════════════════════════════════════════════════════ */
+.card-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 28px;
+  background: #fafafa;
+  border-top: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-left-actions,
+.footer-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-action-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--green-primary);
+  color: #ffffff;
+  padding: 10px 22px;
+  border-radius: var(--radius-btn);
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.btn-action-primary:hover {
+  background-color: var(--green-hover);
+}
+
+.btn-action-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #374151;
+  padding: 9px 18px;
+  border-radius: var(--radius-btn);
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid #d1d5db;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.btn-action-outline:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+  color: #111827;
+}
+
+.btn-action-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #dc2626;
+  padding: 9px 18px;
+  border-radius: var(--radius-btn);
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid #fca5a5;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-action-danger:hover {
+  background-color: #fee2e2;
+  border-color: #ef4444;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CANCEL MODAL
+   ══════════════════════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  padding: 20px;
+}
+
+.modal-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 440px;
+  width: 100%;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  transform: translateY(15px);
+  transition: transform 0.2s ease;
+}
+
+.modal-overlay.show .modal-card {
+  transform: translateY(0);
+}
+
+.modal-icon-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #fee2e2;
+  color: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.modal-text {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PRINT STYLES
+   ══════════════════════════════════════════════════════════════ */
+@media print {
+  .navbar,
+  .back-nav-link,
+  .card-footer-actions,
+  .venue-actions {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+  }
+
+  .details-container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .booking-detail-card {
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE DESIGN
+   ══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .venue-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .venue-img-wrap {
+    width: 100%;
+    height: 180px;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .card-footer-actions {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 18px 20px;
+  }
+
+  .footer-left-actions,
+  .footer-right-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-action-primary,
+  .btn-action-outline,
+  .btn-action-danger {
+    width: 100%;
+    justify-content: center;
+  }
+}

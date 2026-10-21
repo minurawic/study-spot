@@ -35,6 +35,9 @@ studyspotnew/
 │   ├── add-review.php     Saves a review
 │   ├── toggle_favorite.php  Adds/removes a favorite (fetch API)
 │   ├── get_favorites.php    Returns favorited spaces for user (MySQL)
+│   ├── get_user_bookings.php Returns upcoming/completed/cancelled bookings for user (MySQL)
+│   ├── get_booking_detail.php Returns single booking information with space details (MySQL)
+│   ├── cancel_booking.php   Cancels an upcoming booking in MySQL
 │   ├── update-profile.php   Updates name/email (account-settings.html)
 │   ├── update-password.php  Changes password (account-settings.html)
 │   ├── get_faqs.php         Returns FAQs from MySQL with auto-table seeding
@@ -42,6 +45,8 @@ studyspotnew/
 │   ├── get_profile_data.php Returns user profile, favorites & reviews
 │   ├── contact.php          Handles contact form inquiries & saves to MySQL
 │   ├── seed_database.php    Seeds database for Dashboard, Profile & Contact
+│   ├── get_booking_confirmation.php Returns confirmed booking details from DB
+│   ├── get_user_bookings.php Returns all bookings for user from DB
 │   ├── admin_stats.php      Provides live counts for users, spaces, bookings
 │   ├── admin_spaces.php     Full CRUD & status toggling for study spaces
 │   ├── admin_users.php      Lists and manages user accounts
