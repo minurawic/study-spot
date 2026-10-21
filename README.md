@@ -41,6 +41,10 @@ studyspotnew/
 │   ├── update-profile.php   Updates name/email (account-settings.html)
 │   ├── update-password.php  Changes password (account-settings.html)
 │   ├── get_faqs.php         Returns FAQs from MySQL with auto-table seeding
+│   ├── get_dashboard_data.php Returns live dashboard metrics & upcoming bookings
+│   ├── get_profile_data.php Returns user profile, favorites & reviews
+│   ├── contact.php          Handles contact form inquiries & saves to MySQL
+│   ├── seed_database.php    Seeds database for Dashboard, Profile & Contact
 │   ├── get_booking_confirmation.php Returns confirmed booking details from DB
 │   ├── get_user_bookings.php Returns all bookings for user from DB
 │   ├── admin_stats.php      Provides live counts for users, spaces, bookings
@@ -57,8 +61,13 @@ studyspotnew/
 ├── booking.html             Booking form
 ├── payment.html             Payment form
 ├── confirmation.html        Booking confirmed
+├── dashboard.html          User Dashboard (Upcoming Bookings, Favorites, Quick Actions)
+├── my-dashboard.html       Dashboard routing alias
+├── contact.html            Contact Us & Help support page (Send message + Get in touch)
+├── contact-us.html         Contact routing alias
+├── profile.html            Profile Overview (User profile, Saved favorites, My reviews)
+├── user-profile.html       Profile routing alias
 ├── my-bookings.html         Upcoming / completed / cancelled bookings
-├── profile.html              User dashboard (shows the real logged-in user)
 ├── account-settings.html     Update name/email/password
 ├── recently-viewed.html      Spaces you've opened (tracked via localStorage)
 ├── favourites.html           Saved spaces

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Dashboard – StudySpot</title>
+  <link rel="stylesheet" href="CSS/base.css" />
+  <link rel="stylesheet" href="CSS/dashboard.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════
+       NAVBAR (Image 1 Mockup Match)
+  ════════════════════════════════════════════════════════════ -->
+  <nav class="dash-navbar" aria-label="Main Navigation">
+    <a href="index.html" class="dash-brand">
+      Study<span class="spot">Spot</span>
+    </a>
+
+    <ul class="dash-nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="help.html">About Us</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="login.html" class="btn-nav-login">Login</a></li>
+    </ul>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════
+       DASHBOARD MAIN CONTENT
+  ════════════════════════════════════════════════════════════ -->
+  <main class="dashboard-wrapper">
+
+    <!-- Header Section -->
+    <header class="dashboard-header">
+      <span class="tag-overview">OVERVIEW</span>
+      <h1 class="dashboard-title">My Dashboard</h1>
+      <p class="dashboard-subtitle">Your bookings, favourites and recent activity in one place.</p>
+    </header>
+
+    <!-- Top 3 Stat Cards Row -->
+    <section class="stats-grid" aria-label="Quick Statistics">
+      <!-- Stat 1 -->
+      <article class="stat-card">
+        <div class="stat-label">Upcoming Bookings</div>
+        <div class="stat-number" id="statUpcoming">2</div>
+      </article>
+
+      <!-- Stat 2 -->
+      <article class="stat-card">
+        <div class="stat-label">Favourite Spaces</div>
+        <div class="stat-number" id="statFavorites">4</div>
+      </article>
+
+      <!-- Stat 3 -->
+      <article class="stat-card">
+        <div class="stat-label">Reviews Written</div>
+        <div class="stat-number" id="statReviews">6</div>
+      </article>
+    </section>
+
+    <!-- Main Grid: Bookings + Quick Actions -->
+    <section class="dashboard-main-grid">
+
+      <!-- Left Column: Upcoming Bookings -->
+      <article class="dash-card">
+        <div class="dash-card-header">
+          <h2 class="dash-card-title">Upcoming Bookings</h2>
+          <a href="booking.html" class="btn-new-booking">New Booking</a>
+        </div>
+
+        <div class="bookings-list" id="upcomingBookingsList">
+          <!-- Item 1: Colombo Public Library -->
+          <div class="booking-item">
+            <div class="booking-info">
+              <span class="booking-name">
+                <a href="space-detail.html?id=9">Colombo Public Library</a>
+              </span>
+              <span class="booking-meta">Tomorrow · 09:00 AM – 11:00 AM</span>
+            </div>
+            <span class="status-pill confirmed">Confirmed</span>
+          </div>
+
+          <hr class="booking-divider" />
+
+          <!-- Item 2: Focus Coworking -->
+          <div class="booking-item">
+            <div class="booking-info">
+              <span class="booking-name">
+                <a href="space-detail.html?id=11">Focus Coworking</a>
+              </span>
+              <span class="booking-meta">12 Oct · 02:00 PM – 04:00 PM</span>
+            </div>
+            <span class="status-pill pending">Pending</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Right Column: Quick Actions -->
+      <aside class="dash-card">
+        <h2 class="dash-card-title" style="margin-bottom: 20px;">Quick Actions</h2>
+
+        <div class="quick-actions-list">
+          <a href="explore.html" class="action-btn">
+            <span class="action-icon">🔎</span>
+            <span>Explore Spaces</span>
+          </a>
+
+          <a href="map.html" class="action-btn">
+            <span class="action-icon">📍</span>
+            <span>Open Map</span>
+          </a>
+
+          <a href="profile.html" class="action-btn">
+            <span class="action-icon">👤</span>
+            <span>Edit Profile</span>
+          </a>
+
+          <a href="write-review.html" class="action-btn">
+            <span class="action-icon">⭐</span>
+            <span>Write Review</span>
+          </a>
+        </div>
+      </aside>
+
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════════════════ -->
+  <footer class="dash-footer">
+    Study_Spot · Find a better place to focus.
+  </footer>
+
+  <script src="JS/dashboard.js"></script>
+</body>
+</html>
