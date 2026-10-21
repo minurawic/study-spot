@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us – StudySpot</title>
+  <link rel="stylesheet" href="CSS/base.css" />
+  <link rel="stylesheet" href="CSS/contact.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════
+       NAVBAR (Image 2 Mockup Match)
+  ════════════════════════════════════════════════════════════ -->
+  <nav class="dash-navbar" aria-label="Main Navigation">
+    <a href="index.html" class="dash-brand">
+      Study<span class="spot">Spot</span>
+    </a>
+
+    <ul class="dash-nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="help.html">About Us</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="login.html" class="btn-nav-login">Login</a></li>
+    </ul>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════
+       CONTACT US MAIN CONTENT
+  ════════════════════════════════════════════════════════════ -->
+  <main class="contact-wrapper">
+
+    <!-- Header Section -->
+    <header class="contact-header">
+      <span class="tag-help">HELP &amp; SUPPORT</span>
+      <h1 class="contact-title">Contact Us</h1>
+      <p class="contact-subtitle">Have a question or suggestion? Send us a message and our team can help.</p>
+    </header>
+
+    <!-- 2-Column Grid -->
+    <section class="contact-grid">
+
+      <!-- Left Column: Send a Message Form -->
+      <article class="contact-card">
+        <h2 class="contact-card-title">Send a Message</h2>
+
+        <div id="formAlert" class="form-alert" role="alert"></div>
+
+        <form id="contactForm" class="contact-form" action="php/contact.php" method="POST">
+          <div class="form-row-two">
+            <div class="form-group">
+              <label for="contactName">Name</label>
+              <input type="text" id="contactName" name="name" placeholder="Your name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="contactEmail">Email</label>
+              <input type="email" id="contactEmail" name="email" placeholder="you@example.com" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contactSubject">Subject</label>
+            <input type="text" id="contactSubject" name="subject" placeholder="How can we help?" required />
+          </div>
+
+          <div class="form-group">
+            <label for="contactMessage">Message</label>
+            <textarea id="contactMessage" name="message" placeholder="Write your message..." required></textarea>
+          </div>
+
+          <button type="submit" id="btnSubmitMessage" class="btn-send-message">Send Message</button>
+        </form>
+      </article>
+
+      <!-- Right Column: Get in Touch Info -->
+      <aside class="contact-card">
+        <h2 class="contact-card-title">Get in Touch</h2>
+
+        <div class="touch-list">
+          <!-- Email -->
+          <div class="touch-item">
+            <div class="touch-item-header">
+              <span class="touch-icon">📧</span>
+              <span>Email</span>
+            </div>
+            <div class="touch-value">
+              <a href="mailto:support@studyspot.example">support@studyspot.example</a>
+            </div>
+          </div>
+
+          <!-- Phone -->
+          <div class="touch-item">
+            <div class="touch-item-header">
+              <span class="touch-icon">📞</span>
+              <span>Phone</span>
+            </div>
+            <div class="touch-value">
+              <a href="tel:+94112345678">+94 11 234 5678</a>
+            </div>
+          </div>
+
+          <!-- Location -->
+          <div class="touch-item">
+            <div class="touch-item-header">
+              <span class="touch-icon">📍</span>
+              <span>Location</span>
+            </div>
+            <div class="touch-value">
+              Colombo, Sri Lanka
+            </div>
+          </div>
+
+          <!-- Support Hours -->
+          <div class="touch-item">
+            <div class="touch-item-header">
+              <span class="touch-icon">⏰</span>
+              <span>Support Hours</span>
+            </div>
+            <div class="touch-value">
+              Monday – Friday, 9:00 AM – 5:00 PM
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════════════════ -->
+  <footer class="contact-footer">
+    Study_Spot · Find a better place to focus.
+  </footer>
+
+  <script src="JS/contact.js"></script>
+</body>
+</html>
