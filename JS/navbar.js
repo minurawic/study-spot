@@ -1,5 +1,5 @@
 /* ============================================================
-   StudySpot – navbar.js  (v3 – profile dropdown)
+   StudySpot – navbar.js  (v4 – profile picture support)
    ============================================================ */
 
 /* ── Helpers ─────────────────────────────────────────────── */
@@ -15,6 +15,27 @@ function _ssSetCache(user) {
 function _ssClearCache() {
   localStorage.removeItem('study_user');
   localStorage.removeItem('studyspot_user');
+}
+
+/* ── Avatar helper — returns <img> tag or initial letter ─── */
+function _ssAvatarHTML(user, size = 42, fontSize = 18) {
+  if (user && user.avatar) {
+    return `<img src="${user.avatar}"
+      style="width:${size}px;height:${size}px;border-radius:50%;object-fit:cover;display:block;flex-shrink:0;"
+      alt="Profile photo"
+      onerror="this.style.display='none';this.nextSibling.style.display='flex';">
+    <span style="display:none;width:${size}px;height:${size}px;border-radius:50%;
+      background:#1f7a3d;color:#fff;font-size:${fontSize}px;font-weight:700;
+      align-items:center;justify-content:center;flex-shrink:0;">
+      ${(user.name || 'U').trim()[0].toUpperCase()}
+    </span>`;
+  }
+  const initial = (user && user.name ? user.name : 'U').trim()[0].toUpperCase();
+  return `<span style="width:${size}px;height:${size}px;border-radius:50%;
+    background:#1f7a3d;color:#fff;font-size:${fontSize}px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+    ${initial}
+  </span>`;
 }
 
 /* ── Public API ───────────────────────────────────────────── */
@@ -49,8 +70,6 @@ function _ssToggleDropdown(chip, user) {
     'font-family:inherit'
   ].join(';');
 
-  // Header — avatar + name + email
-  const initial = (user.name || 'U').trim()[0].toUpperCase();
   drop.innerHTML = `
     <style>
       @keyframes _ssDrop {
@@ -78,9 +97,9 @@ function _ssToggleDropdown(chip, user) {
 
     <!-- User header -->
     <div style="display:flex;align-items:center;gap:12px;padding:16px 18px 12px;border-bottom:1px solid #f0f0f0;">
-      <div style="width:42px;height:42px;border-radius:50%;background:#1f7a3d;color:#fff;
-                  display:flex;align-items:center;justify-content:center;
-                  font-size:18px;font-weight:700;flex-shrink:0;">${initial}</div>
+      <div style="display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        ${_ssAvatarHTML(user, 42, 18)}
+      </div>
       <div style="overflow:hidden;">
         <div style="font-weight:700;font-size:15px;color:#111827;
                     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${user.name || ''}</div>
@@ -186,7 +205,7 @@ function _ssUpdateNavUI(user) {
     }
   });
 
-  // 3. Green initial chip — replaces the icon, opens dropdown on click
+  // 3. Profile chip — shows avatar photo if available, else green initial
   const navActions = document.querySelector('.nav-actions, .profile-nav-actions');
   if (!navActions) return;
 
@@ -194,25 +213,43 @@ function _ssUpdateNavUI(user) {
   document.getElementById('_ssProfileDrop')?.remove();
 
   if (user) {
-    const initial = (user.name || 'U').trim()[0].toUpperCase();
-
     const chip = document.createElement('span');
     chip.className = 'nav-user-chip';
-    chip.textContent = initial;
     chip.title = `Logged in as ${user.name}`;
     chip.setAttribute('aria-label', 'My Profile');
     chip.style.cssText = [
       'display:inline-flex', 'align-items:center', 'justify-content:center',
       'width:34px', 'height:34px', 'border-radius:50%',
-      'background:#1f7a3d', 'color:#fff', 'font-size:14px',
-      'font-weight:700', 'cursor:pointer', 'flex-shrink:0',
-      'font-family:inherit', 'letter-spacing:0.5px',
+      'overflow:hidden',
+      'cursor:pointer', 'flex-shrink:0',
       'transition:opacity 0.2s', 'position:relative'
     ].join(';');
+
+    if (user.avatar) {
+      // Show profile picture
+      chip.innerHTML = `
+        <img src="${user.avatar}"
+          style="width:34px;height:34px;border-radius:50%;object-fit:cover;display:block;"
+          alt="Profile photo"
+          onerror="this.style.display='none';this.nextSibling.style.display='flex';">
+        <span style="display:none;width:34px;height:34px;border-radius:50%;
+          background:#1f7a3d;color:#fff;font-size:14px;font-weight:700;
+          align-items:center;justify-content:center;">
+          ${(user.name || 'U').trim()[0].toUpperCase()}
+        </span>`;
+    } else {
+      // Show green initial
+      chip.style.background = '#1f7a3d';
+      chip.style.color = '#fff';
+      chip.style.fontSize = '14px';
+      chip.style.fontWeight = '700';
+      chip.style.fontFamily = 'inherit';
+      chip.style.letterSpacing = '0.5px';
+      chip.textContent = (user.name || 'U').trim()[0].toUpperCase();
+    }
+
     chip.addEventListener('mouseenter', () => chip.style.opacity = '0.82');
     chip.addEventListener('mouseleave', () => chip.style.opacity = '1');
-
-    // Click → toggle dropdown (not direct navigate)
     chip.addEventListener('click', (e) => {
       e.stopPropagation();
       _ssToggleDropdown(chip, user);
