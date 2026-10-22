@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recently Viewed – StudySpot</title>
+  <link rel="stylesheet" href="CSS/base.css" />
+  <link rel="stylesheet" href="CSS/navbar.css" />
+  <link rel="stylesheet" href="CSS/recently-viewed.css" />
+</head>
+
+<body>
+
+  <!-- ════════════════════════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════════════════════════ -->
+  <nav class="navbar">
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.png" alt="StudySpot Logo" />
+      <span><span class="study">Study</span><span class="spot">Spot</span></span>
+    </a>
+
+    <!-- Nav Links -->
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="help.html">About Us</a></li>
+    </ul>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <!-- Favourites Button -->
+      <button class="btn-icon" aria-label="Favourites" title="Favourites" type="button" onclick="window.location.href='favourites.html'">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+      </button>
+
+      <!-- Account Button -->
+      <button class="btn-icon" aria-label="Account" title="Account" type="button" onclick="navGoToProfile()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════════════════
+       MAIN CONTENT: RECENTLY VIEWED
+  ════════════════════════════════════════════════════════════ -->
+  <main class="recently-container">
+    <div class="recently-header">
+      <div class="recently-header-left">
+        <h1 class="page-title">Recently viewed</h1>
+        <p class="page-subtitle">Spaces you opened on this device.</p>
+      </div>
+      <button type="button" class="btn-clear-history" id="btnClearHistory">Clear history</button>
+    </div>
+
+    <!-- Recently Viewed List (populated dynamically via DB / recently-viewed.js) -->
+    <section class="recently-list" id="recentlyList" aria-label="Recently Viewed Study Spaces">
+      
+      <!-- Card 1: The Library Cafe -->
+      <article class="recent-card" data-id="5">
+        <div class="card-img-wrap">
+          <a href="space-detail.html?id=5">
+            <img src="images/library-cafe.jpg" alt="The Library Cafe" loading="lazy" onerror="this.src='images/national-library.jpg'">
+          </a>
+        </div>
+        <div class="card-details">
+          <h2 class="card-title">
+            <a href="space-detail.html?id=5">The Library Cafe</a>
+          </h2>
+          <div class="card-location">Kandy</div>
+          <div class="card-rating-wrap">
+            <svg class="star-icon" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <span>4.8 (124)</span>
+          </div>
+          <div class="card-viewed-time">Viewed today, 2:15 PM</div>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="btn-fav-toggle" aria-label="Toggle favourite" title="Save to favourites" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </button>
+          <a href="space-detail.html?id=5" class="btn-view-space">View</a>
+        </div>
+      </article>
+
+      <!-- Card 2: National Library Colombo -->
+      <article class="recent-card" data-id="1">
+        <div class="card-img-wrap">
+          <a href="space-detail.html?id=1">
+            <img src="images/national-library.jpg" alt="National Library Colombo" loading="lazy" onerror="this.src='images/national-library.jpg'">
+          </a>
+        </div>
+        <div class="card-details">
+          <h2 class="card-title">
+            <a href="space-detail.html?id=1">National Library Colombo</a>
+          </h2>
+          <div class="card-location">Colombo</div>
+          <div class="card-rating-wrap">
+            <svg class="star-icon" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <span>4.5 (98)</span>
+          </div>
+          <div class="card-viewed-time">Viewed today, 11:40 AM</div>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="btn-fav-toggle" aria-label="Toggle favourite" title="Save to favourites" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </button>
+          <a href="space-detail.html?id=1" class="btn-view-space">View</a>
+        </div>
+      </article>
+
+      <!-- Card 3: Hub Lanka Co-working Space -->
+      <article class="recent-card" data-id="3">
+        <div class="card-img-wrap">
+          <a href="space-detail.html?id=3">
+            <img src="images/hub-lanka.jpg" alt="Hub Lanka Co-working Space" loading="lazy" onerror="this.src='images/national-library.jpg'">
+          </a>
+        </div>
+        <div class="card-details">
+          <h2 class="card-title">
+            <a href="space-detail.html?id=3">Hub Lanka Co-working Space</a>
+          </h2>
+          <div class="card-location">Colombo</div>
+          <div class="card-rating-wrap">
+            <svg class="star-icon" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <span>4.6 (57)</span>
+          </div>
+          <div class="card-viewed-time">Viewed yesterday</div>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="btn-fav-toggle" aria-label="Toggle favourite" title="Save to favourites" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </button>
+          <a href="space-detail.html?id=3" class="btn-view-space">View</a>
+        </div>
+      </article>
+
+      <!-- Card 4: Green Space -->
+      <article class="recent-card" data-id="8">
+        <div class="card-img-wrap">
+          <a href="space-detail.html?id=8">
+            <img src="images/green-space.jpg" alt="Green Space" loading="lazy" onerror="this.src='images/national-library.jpg'">
+          </a>
+        </div>
+        <div class="card-details">
+          <h2 class="card-title">
+            <a href="space-detail.html?id=8">Green Space</a>
+          </h2>
+          <div class="card-location">Kandy</div>
+          <div class="card-rating-wrap">
+            <svg class="star-icon" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            <span>4.4 (31)</span>
+          </div>
+          <div class="card-viewed-time">Viewed Sun, 11 Oct</div>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="btn-fav-toggle" aria-label="Toggle favourite" title="Save to favourites" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#e11d48" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </button>
+          <a href="space-detail.html?id=8" class="btn-view-space">View</a>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════════
+       UNDO TOAST NOTIFICATION
+  ════════════════════════════════════════════════════════════ -->
+  <div class="recent-toast" id="recentToast" role="alert" aria-live="polite">
+    <span id="recentToastMsg">Recently viewed history cleared</span>
+    <button type="button" class="recent-toast-undo" id="recentToastUndo">Undo</button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="JS/main.js"></script>
+  <script src="JS/places-data.js"></script>
+  <script src="JS/recently-viewed.js"></script>
+  <script src="JS/navbar.js"></script>
+</body>
+
+</html>
