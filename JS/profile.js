@@ -178,6 +178,72 @@ document.addEventListener('DOMContentLoaded', () => {
     reviewsList.innerHTML = html;
   }
 
+  // ── Render Sidebar Avatar ────────────────────────────────────
+  function renderSidebarAvatar(user) {
+    const wrap = document.getElementById('profileAvatarWrap');
+    if (!wrap) return;
+
+    if (user && user.avatar) {
+      // Show profile picture
+      wrap.innerHTML = `
+        <img src="${user.avatar}"
+          style="width:76px;height:76px;border-radius:50%;object-fit:cover;display:block;"
+          alt="Profile photo"
+          onerror="this.style.display='none';this.nextSibling.style.display='flex';">
+        <span style="display:none;width:76px;height:76px;border-radius:50%;
+          background:#1f7a3d;color:#fff;font-size:28px;font-weight:700;
+          align-items:center;justify-content:center;">
+          ${(user.name || user.full_name || 'U').trim()[0].toUpperCase()}
+        </span>`;
+      wrap.style.background = 'transparent';
+      wrap.style.boxShadow = 'none';
+      wrap.style.padding = '0';
+    } else if (user && (user.name || user.full_name)) {
+      // Show green initial circle
+      const name = user.name || user.full_name || 'U';
+      const initial = name.trim()[0].toUpperCase();
+      wrap.innerHTML = `<span style="font-size:28px;font-weight:700;color:#fff;">${initial}</span>`;
+      wrap.style.background = '#1f7a3d';
+    } else {
+      // Default grey person icon
+      wrap.innerHTML = `<svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+      </svg>`;
+      wrap.style.background = '#111827';
+    }
+  }
+
+  // ── Render Review Avatars with profile pic ───────────────────
+  function renderReviewAvatar(user) {
+    document.querySelectorAll('.review-avatar').forEach(el => {
+      if (user && user.avatar) {
+        el.innerHTML = `<img src="${user.avatar}"
+          style="width:40px;height:40px;border-radius:50%;object-fit:cover;"
+          onerror="this.outerHTML='<svg width=22 height=22 viewBox=\\'0 0 24 24\\' fill=\\'currentColor\\'><path d=\\'M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z\\'/></svg>'">`;
+      } else if (user && (user.name || user.full_name)) {
+        const initial = (user.name || user.full_name).trim()[0].toUpperCase();
+        el.innerHTML = `<span style="width:40px;height:40px;border-radius:50%;
+          background:#1f7a3d;color:#fff;font-size:16px;font-weight:700;
+          display:flex;align-items:center;justify-content:center;">${initial}</span>`;
+      }
+    });
+  }
+
+  // ── Quick render from localStorage (instant, no flicker) ─────
+  (function applyFromCache() {
+    try {
+      const raw = localStorage.getItem('study_user') || localStorage.getItem('studyspot_user');
+      if (!raw) return;
+      const u = JSON.parse(raw);
+      if (u) {
+        renderSidebarAvatar(u);
+        if (profileUserName) profileUserName.textContent = u.name || '';
+        if (profileUserEmail) profileUserEmail.textContent = u.email || '';
+        renderReviewAvatar(u);
+      }
+    } catch (_) {}
+  })();
+
   // ── Fetch from Backend API ──────────────────────────────────
   function loadProfileData() {
     fetch('php/get_profile_data.php')
@@ -187,9 +253,21 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .then(data => {
         if (data && data.success) {
-          if (profileUserName && data.user) profileUserName.textContent = data.user.full_name || fallbackData.user.full_name;
-          if (profileUserEmail && data.user) profileUserEmail.textContent = data.user.email || fallbackData.user.email;
+          const u = data.user || {};
+          if (profileUserName) profileUserName.textContent = u.full_name || fallbackData.user.full_name;
+          if (profileUserEmail) profileUserEmail.textContent = u.email || fallbackData.user.email;
           if (favCountText) favCountText.textContent = `${data.favorites_count ?? 4} saved places`;
+
+          // Merge avatar from cached localStorage if DB doesn't have it yet
+          let avatarUrl = u.avatar;
+          if (!avatarUrl) {
+            try {
+              const raw = localStorage.getItem('study_user') || localStorage.getItem('studyspot_user');
+              if (raw) { const cached = JSON.parse(raw); avatarUrl = cached.avatar; }
+            } catch (_) {}
+          }
+          renderSidebarAvatar({ ...u, avatar: avatarUrl });
+          renderReviewAvatar({ ...u, avatar: avatarUrl });
 
           renderFavorites(data.favorites && data.favorites.length ? data.favorites : fallbackData.favorites);
           renderReviews(data.reviews && data.reviews.length ? data.reviews : fallbackData.reviews);
@@ -204,8 +282,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function applyFallback() {
-    if (profileUserName) profileUserName.textContent = fallbackData.user.full_name;
-    if (profileUserEmail) profileUserEmail.textContent = fallbackData.user.email;
+    // Still try localStorage for real user data
+    try {
+      const raw = localStorage.getItem('study_user') || localStorage.getItem('studyspot_user');
+      if (raw) {
+        const u = JSON.parse(raw);
+        if (profileUserName && u.name) profileUserName.textContent = u.name;
+        if (profileUserEmail && u.email) profileUserEmail.textContent = u.email;
+        renderSidebarAvatar(u);
+        renderReviewAvatar(u);
+      } else {
+        if (profileUserName) profileUserName.textContent = fallbackData.user.full_name;
+        if (profileUserEmail) profileUserEmail.textContent = fallbackData.user.email;
+        renderSidebarAvatar(null);
+      }
+    } catch (_) {
+      if (profileUserName) profileUserName.textContent = fallbackData.user.full_name;
+      if (profileUserEmail) profileUserEmail.textContent = fallbackData.user.email;
+    }
     if (favCountText) favCountText.textContent = `${fallbackData.favorites_count} saved places`;
     renderFavorites(fallbackData.favorites);
     renderReviews(fallbackData.reviews);

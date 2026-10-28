@@ -122,9 +122,12 @@ if ($pdo) {
             $stmtUpdate->execute([$fullName, $email, $userId]);
         }
 
-        $_SESSION['user_id'] = $userId;
-        $_SESSION['user_name'] = $fullName;
-        $_SESSION['user_email'] = $email;
+        $_SESSION['user_id']     = $userId;
+        $_SESSION['user_name']   = $fullName;
+        $_SESSION['user_email']  = $email;
+        if ($avatarPath) {
+            $_SESSION['user_avatar'] = $avatarPath;
+        }
 
         $stmtUser = $pdo->prepare("SELECT id, full_name, email, avatar FROM users WHERE id = ?");
         $stmtUser->execute([$userId]);

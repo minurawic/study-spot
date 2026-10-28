@@ -166,8 +166,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 14px;
+  margin: 0 auto 14px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .user-name {
