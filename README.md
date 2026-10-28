@@ -181,3 +181,5 @@ JavaScript API and your own API key.
 - The payment form is a **demo only** (no real card processing) — do not use
   real card details, and do not connect it to a real payment gateway without
   proper PCI-compliant handling.
+
+Last updated: October 28, 2026
