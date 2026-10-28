@@ -17,7 +17,7 @@
   margin: 0 auto;
   padding: 56px 48px 40px;
   display: grid;
-  grid-template-columns: 280px repeat(4, 1fr);
+  grid-template-columns: 320px repeat(4, 1fr);
   gap: 40px;
 }
 
@@ -33,10 +33,10 @@
 }
 
 .footer-logo img {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  /* Keep original green logo color on dark background */
 }
 
 .footer-logo-text {
@@ -65,20 +65,23 @@
 .footer-subscribe {
   display: flex;
   align-items: center;
-  gap: 0;
-  border: 1px solid #1f3a25;
-  border-radius: 8px;
+  background: #111e14;
+  border: 1px solid #2a4a30;
+  border-radius: 999px;
   overflow: hidden;
   margin-bottom: 24px;
-  background: #111e14;
+  width: 100%;
+  max-width: 300px;
+  padding: 4px 4px 4px 16px;
 }
 
 .footer-subscribe input {
   flex: 1;
+  min-width: 0;
   background: transparent;
   border: none;
   outline: none;
-  padding: 10px 14px;
+  padding: 7px 0;
   font-size: 13px;
   color: #cbd5e1;
   font-family: inherit;
@@ -89,17 +92,19 @@
 }
 
 .footer-subscribe button {
+  flex-shrink: 0;
   background: #22c55e;
   border: none;
-  color: #fff;
+  color: #ffffff;
   font-size: 13px;
   font-weight: 700;
-  padding: 10px 18px;
+  padding: 9px 20px;
   cursor: pointer;
   font-family: inherit;
   transition: background 0.18s;
+  border-radius: 999px;
   white-space: nowrap;
-  flex-shrink: 0;
+  letter-spacing: 0.01em;
 }
 
 .footer-subscribe button:hover {
