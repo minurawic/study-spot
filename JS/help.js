@@ -1,5 +1,5 @@
-/* ============================================================
-   StudySpot – help.js
+﻿/* ============================================================
+   StudySpot â€“ help.js
    Frontend logic for Help & FAQ page + DB integration
    ============================================================ */
 
@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contactForm');
   const navAuthArea = document.getElementById('navAuthArea');
 
-  // ── Render Navbar Auth ───────────────────────────────────────
+  // â”€â”€ Render Navbar Auth â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   renderNavAuth();
 
-  // ── Initial Seed / Fallback FAQs (Exact match to PNG 1) ─────
+  // â”€â”€ Initial Seed / Fallback FAQs (Exact match to PNG 1) â”€â”€â”€â”€â”€
   const fallbackFaqs = [
     {
       id: 1,
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  // ── Load FAQs from MySQL Database ───────────────────────────
+  // â”€â”€ Load FAQs from MySQL Database â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   async function loadFaqs() {
     try {
       const response = await fetch('php/get_faqs.php');
@@ -65,21 +65,16 @@ document.addEventListener('DOMContentLoaded', () => {
     renderFaqItems(fallbackFaqs);
   }
 
-  // ── Render FAQ DOM ──────────────────────────────────────────
+  // â”€â”€ Render FAQ DOM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function renderFaqItems(faqs) {
     if (!faqListContainer) return;
     faqListContainer.innerHTML = faqs.map((faq, index) => `
       <div class="faq-item" id="faq-${faq.id || index}">
         <button class="faq-header" type="button" aria-expanded="false" onclick="toggleFaq(this)">
           <span class="faq-question">${escapeHtml(faq.question)}</span>
-          <span class="faq-toggle-icon" aria-hidden="true">
-            <!-- Custom curved eyelid / eyelash icon matching PNG 1 -->
-            <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.5 3.5C5.5 9.5 8.5 9.5 11 3.5C13.5 9.5 16.5 9.5 20.5 3.5" stroke="#111827" stroke-width="2" stroke-linecap="round"/>
-              <line x1="4" y1="7" x2="3" y2="11" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/>
-              <line x1="7.5" y1="8.5" x2="7.5" y2="12" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/>
-              <line x1="14.5" y1="8.5" x2="14.5" y2="12" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/>
-              <line x1="18" y1="7" x2="19" y2="11" stroke="#111827" stroke-width="1.8" stroke-linecap="round"/>
+                    <span class="faq-toggle-icon" aria-hidden="true">
+            <svg class="faq-chevron" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
             </svg>
           </span>
         </button>
@@ -92,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `).join('');
   }
 
-  // ── Toggle Accordion ─────────────────────────────────────────
+  // â”€â”€ Toggle Accordion â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   window.toggleFaq = function(headerBtn) {
     const item = headerBtn.closest('.faq-item');
     if (!item) return;
@@ -117,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  // ── Contact Modal Handlers ──────────────────────────────────
+  // â”€â”€ Contact Modal Handlers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (contactBtn) {
     contactBtn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -151,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Navbar Auth Helper ──────────────────────────────────────
+  // â”€â”€ Navbar Auth Helper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   function renderNavAuth() {
     if (!navAuthArea) return;
     const user = JSON.parse(localStorage.getItem('studyspot_user') || 'null');
@@ -183,6 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/"/g, '&quot;');
   }
 
-  // ── Init ────────────────────────────────────────────────────
+  // â”€â”€ Init â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   loadFaqs();
 });

@@ -135,8 +135,17 @@ a {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  color: #111827;
+  color: #374151;
   transition: transform 0.3s ease;
+}
+
+.faq-chevron {
+  width: 22px;
+  height: 22px;
+}
+
+.faq-item.active .faq-toggle-icon {
+  color: #1f7a3d;
 }
 
 .faq-item.active .faq-toggle-icon {
