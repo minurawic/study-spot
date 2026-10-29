@@ -166,6 +166,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Simulate Declined Card
+  const btnSimulateFail = document.getElementById('btnSimulateFail');
+  if (btnSimulateFail) {
+    btnSimulateFail.addEventListener('click', () => {
+      redirectToFailed('Card declined by bank.', 'Please check your card details or try another payment method. You have not been charged.');
+    });
+  }
+
   // Confirm Bank Transfer
   const btnConfirmBank = document.getElementById('btnConfirmBank');
   if (btnConfirmBank) {
@@ -198,6 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
       total_price: totalPrice,
       payment_ref: paymentRef,
       method:      method,
+      card_number: method === 'card' && cardNumberInput ? cardNumberInput.value : '',
     };
 
     try {
@@ -211,6 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (result.success) {
         showModal(result.payment_ref || paymentRef);
+      } else if (result.payment_status === 'failed') {
+        redirectToFailed(result.reason, result.description, result.payment_ref);
       } else {
         alert(result.error || 'Payment could not be processed. Please try again.');
       }
@@ -224,6 +235,25 @@ document.addEventListener('DOMContentLoaded', () => {
         activeBtn.textContent = method === 'card' ? 'Pay Now' : 'Confirm Booking';
       }
     }
+  }
+
+  function redirectToFailed(reason, desc, ref) {
+    const q = new URLSearchParams({
+      booking_id:   bookingId || 1,
+      ref:          ref || paymentRef,
+      place_id:     placeId,
+      place_name:   placeName,
+      place_city:   placeCity,
+      cover_image:  coverImg,
+      booking_date: bookDate,
+      start_time:   startTime,
+      end_time:     endTime,
+      people:       people,
+      total_price:  totalPrice,
+      reason:       reason || 'Card declined by bank.',
+      desc:         desc || 'Please check your card details or try another payment method. You have not been charged.'
+    });
+    window.location.href = `payment-failed.html?${q.toString()}`;
   }
 
   // ── 9. Success Modal & Confirmation ────────────────────────────────

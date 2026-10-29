@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Failed – StudySpot</title>
+  <link rel="stylesheet" href="CSS/base.css" />
+  <link rel="stylesheet" href="CSS/navbar.css" />
+  <link rel="stylesheet" href="CSS/footer.css" />
+  <link rel="stylesheet" href="CSS/payment-failed.css" />
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.png" alt="StudySpot Logo" />
+      <span><span class="study">Study</span><span class="spot">Spot</span></span>
+    </a>
+
+    <!-- Nav Links -->
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="help.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <!-- Favourites Button -->
+      <button class="btn-icon" aria-label="Favourites" title="Favourites" type="button"
+        onclick="window.location.href='favourites.html'">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+      </button>
+
+      <!-- Account Button -->
+      <button class="btn-icon" aria-label="Account" title="Account" type="button"
+        onclick="window.location.href='my-bookings.html'">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN PAYMENT FAILED CONTENT -->
+  <main class="payment-failed-container">
+
+    <!-- Top Failure Hero: Red Circular X Badge & Heading -->
+    <section class="failed-hero">
+      <div class="failed-icon-wrap">
+        <div class="failed-cross-circle" role="img" aria-label="Payment Failed icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </div>
+      </div>
+
+      <h1 class="failed-title">Payment Failed</h1>
+      <p class="failed-subtitle">We could not process your payment. Your booking has not been confirmed.</p>
+    </section>
+
+    <!-- Booking Summary Card -->
+    <article class="booking-summary-card" aria-label="Booking Summary">
+
+      <!-- Place Thumbnail Image -->
+      <div class="card-thumb-wrap">
+        <img id="failedImg" src="images/library-cafe.jpg" alt="The Library Cafe" class="card-thumb-img"
+          onerror="this.onerror=null; this.src='images/placeholder.svg'" />
+      </div>
+
+      <!-- Booking Details -->
+      <div class="card-details-wrap">
+        <h2 class="place-name" id="failedPlaceName">The Library Cafe</h2>
+        <div class="place-city" id="failedPlaceCity">Kandy</div>
+
+        <div class="details-table">
+          <div class="detail-row">
+            <span class="detail-label">Date</span>
+            <span class="detail-value" id="failedDate">2026-09-12</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Time</span>
+            <span class="detail-value" id="failedTime">10.00 AM - 12.00 PM</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">People</span>
+            <span class="detail-value" id="failedPeople">1</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Total Price</span>
+            <span class="detail-value" id="failedPrice">Rs. 500</span>
+          </div>
+        </div>
+      </div>
+
+    </article>
+
+    <!-- Reason Alert Box -->
+    <div class="payment-failed-alert" role="alert">
+      <div class="alert-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <div class="alert-content">
+        <div class="alert-reason-title">Reason: <span id="failedReason">Card declined by bank.</span></div>
+        <div class="alert-reason-desc" id="failedDesc">Please check your card details or try another payment method. You have not been charged.</div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="payment-failed-actions">
+      <a href="payment.html" class="btn-failed-primary" id="btnTryAgain">Try Again</a>
+      <a href="booking.html" class="btn-failed-secondary" id="btnBackBooking">Back to Booking</a>
+    </div>
+
+    <!-- Need Help Support Link -->
+    <div class="support-link-wrap">
+      Need help? <a href="contact.html">Contact support</a>
+    </div>
+
+  </main>
+
+  <!-- ==================== SITE FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="footer-body">
+
+      <!-- Brand Column -->
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">
+          <img src="images/logo.png" alt="StudySpot Logo">
+          <span class="footer-logo-text">
+            <span class="study">Study</span><span class="spot">Spot</span>
+          </span>
+        </a>
+        <p class="footer-tagline">Helping Sri Lankan students find, book and review quiet places to study.</p>
+
+        <!-- Email Subscribe -->
+        <div class="footer-subscribe">
+          <input type="email" placeholder="Your email address" aria-label="Subscribe email">
+          <button type="button">Subscribe</button>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="footer-socials">
+          <a href="#" class="footer-social-btn" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="footer-social-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="footer-social-btn" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" class="footer-social-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Explore Column -->
+      <div class="footer-col">
+        <div class="footer-col-heading">Explore</div>
+        <ul>
+          <li><a href="explore.html">All spaces</a></li>
+          <li><a href="map.html">Map view</a></li>
+          <li><a href="explore.html?type=library">Libraries</a></li>
+          <li><a href="explore.html?type=cafe">Cafés</a></li>
+          <li><a href="explore.html?type=coworking">Co-working</a></li>
+        </ul>
+      </div>
+
+      <!-- Account Column -->
+      <div class="footer-col">
+        <div class="footer-col-heading">Account</div>
+        <ul>
+          <li><a href="profile.html">My profile</a></li>
+          <li><a href="my-bookings.html">My bookings</a></li>
+          <li><a href="favourites.html">Favourites</a></li>
+          <li><a href="account-settings.html">Notifications</a></li>
+        </ul>
+      </div>
+
+      <!-- Support Column -->
+      <div class="footer-col">
+        <div class="footer-col-heading">Support</div>
+        <ul>
+          <li><a href="help.html">Help &amp; FAQ</a></li>
+          <li><a href="contact.html">Contact us</a></li>
+          <li><a href="my-bookings.html">Cancel a booking</a></li>
+          <li><a href="contact.html">Report a problem</a></li>
+        </ul>
+      </div>
+
+      <!-- Company Column -->
+      <div class="footer-col">
+        <div class="footer-col-heading">Company</div>
+        <ul>
+          <li><a href="help.html">About us</a></li>
+          <li><a href="contact.html">List your space</a></li>
+          <li><a href="help.html">Privacy policy</a></li>
+          <li><a href="help.html">Terms of service</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p class="footer-bottom-copy">
+        &copy; 2026 <strong>StudySpot</strong>. All rights reserved. Made for students in Sri Lanka.
+      </p>
+      <div class="footer-bottom-locale">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        English &middot; LKR
+      </div>
+    </div>
+  </footer>
+
+  <script src="JS/payment-failed.js"></script>
+  <script src="JS/navbar.js"></script>
+</body>
+
+</html>
