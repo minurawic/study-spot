@@ -40,6 +40,32 @@ if (empty($paymentRef)) {
     $paymentRef = 'SS-' . rand(100100, 999999);
 }
 
+// Check for simulated failure or declined card (e.g., card ending in 0000 or flag)
+$cardNumber = preg_replace('/\D/', '', (string)($input['card_number'] ?? ''));
+$isDeclined = (!empty($input['simulate_fail']) || ($method === 'card' && (str_ends_with($cardNumber, '0000') || $cardNumber === '4000000000000000')));
+
+if ($isDeclined) {
+    if ($bookingId > 0) {
+        try {
+            // Keep status as pending in database
+            $uStmt = $pdo->prepare('UPDATE bookings SET status = "pending", payment_ref = ? WHERE id = ?');
+            $uStmt->execute([$paymentRef, $bookingId]);
+        } catch (Exception $e) {
+            // non-fatal
+        }
+    }
+    echo json_encode([
+        'success'        => false,
+        'payment_status' => 'failed',
+        'reason'         => 'Card declined by bank.',
+        'description'    => 'Please check your card details or try another payment method. You have not been charged.',
+        'booking_id'     => $bookingId,
+        'place_id'       => $placeId,
+        'payment_ref'    => $paymentRef
+    ]);
+    exit;
+}
+
 try {
     // ── Case 1: We have a booking_id – update the existing booking row ──
     if ($bookingId > 0) {
