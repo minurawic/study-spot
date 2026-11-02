@@ -1,7 +1,7 @@
 <?php
 // ============================================================
 //  StudySpot – API: Cancel Booking
-//  Updates booking status to 'cancelled' in the database
+//  Updates booking status to 'cancelled' and records reason in DB
 // ============================================================
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -28,6 +28,7 @@ if (empty($input)) {
 
 $bookingId = (int)($input['booking_id'] ?? $input['id'] ?? 0);
 $userId    = (int)($_SESSION['user_id'] ?? $input['user_id'] ?? 1);
+$reason    = trim((string)($input['reason'] ?? $input['cancellation_reason'] ?? ''));
 
 if ($bookingId <= 0) {
     http_response_code(400);
@@ -52,12 +53,21 @@ try {
         exit;
     }
 
-    $stmt = $pdo->prepare("UPDATE `bookings` SET status = 'cancelled' WHERE id = ?");
-    $stmt->execute([$bookingId]);
+    // Try updating with cancellation_reason & cancelled_at if columns exist
+    try {
+        $stmt = $pdo->prepare("UPDATE `bookings` SET status = 'cancelled', cancellation_reason = ?, cancelled_at = NOW() WHERE id = ?");
+        $stmt->execute([$reason ?: null, $bookingId]);
+    } catch (Exception $colEx) {
+        // Fallback for default schema without optional columns
+        $stmt = $pdo->prepare("UPDATE `bookings` SET status = 'cancelled' WHERE id = ?");
+        $stmt->execute([$bookingId]);
+    }
 
     echo json_encode([
         'success' => true,
-        'message' => 'Booking cancelled successfully.'
+        'message' => 'Booking cancelled successfully.',
+        'booking_id' => $bookingId,
+        'cancellation_reason' => $reason
     ]);
 } catch (Exception $e) {
     http_response_code(500);

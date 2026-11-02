@@ -1,4 +1,4 @@
-# StudySpot 🏠📚
+﻿# StudySpot 🏠📚
 
 A web app where Sri Lankan students can find and review quiet study spaces near
 them — libraries, cafes, co-working spaces, and university common areas —
@@ -76,6 +76,8 @@ studyspotnew/
 ├── profile.html            Profile Overview (User profile, Saved favorites, My reviews)
 ├── user-profile.html       Profile routing alias
 ├── my-bookings.html         Upcoming / completed / cancelled bookings
+├── cancel-booking.html        Cancel a booking (cancellation reasons & refund breakdown)
+├── cancel-confirmation.html   Cancellation confirmed & refund status page
 ├── account-settings.html     Update name/email/password
 ├── recently-viewed.html      Spaces you've opened (tracked via MySQL & localStorage)
 ├── recent.html               Recently viewed routing alias
@@ -138,6 +140,7 @@ Suggested role split:
 4. **Book it** → `booking.html` → `php/book.php` → `payment.html` → `php/pay.php` → `confirmation.html`
 5. **Review it** → `write-review.html` → `php/add-review.php`
 6. **Manage account** → `profile.html`, `my-bookings.html`, `favourites.html`
+7. **Cancel a booking** → `cancel-booking.html?id=<booking_id>` → `php/cancel_booking.php` → `cancel-confirmation.html`
 
 ---
 
@@ -186,3 +189,9 @@ JavaScript API and your own API key.
   real card details, and do not connect it to a real payment gateway without
   proper PCI-compliant handling.
 
+feat: add booking cancellation page and confirmation
+
+- Add cancel booking page
+- Add cancellation confirmation page
+- Add CSS and JavaScript files
+- Update PHP booking cancellation logic

@@ -1,0 +1,258 @@
+/* ============================================================
+   StudySpot – Cancellation Confirmed Stylesheet (cancel-confirmation.css)
+   ============================================================ */
+
+:root {
+  --cancel-gold: #e6a213;
+  --cancel-pill-bg: #fee2e2;
+  --cancel-pill-text: #dc2626;
+  --green-primary: #15803d;
+  --green-hover: #166534;
+  --green-light-bg: #eaf7ee;
+  --green-light-border: #c5e9ce;
+  --green-text-dark: #166534;
+  --text-dark: #111827;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --border-card: #e5e7eb;
+  --bg-page: #ffffff;
+  --radius-card: 16px;
+  --radius-box: 10px;
+  --radius-btn: 10px;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.cancel-confirm-container {
+  max-width: 540px;
+  width: 100%;
+  margin: 48px auto 70px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Top Header ── */
+.confirm-header {
+  text-align: center;
+  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.confirm-badge-circle {
+  width: 64px;
+  height: 64px;
+  background-color: #fee2e2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.15);
+  animation: pop-in 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.confirm-badge-circle svg {
+  width: 32px;
+  height: 32px;
+  stroke: #dc2626;
+}
+
+.confirm-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.confirm-subtitle {
+  font-size: 14.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ── Details Card ── */
+.confirm-details-card {
+  background: #ffffff;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.confirm-venue-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-card);
+  margin-bottom: 16px;
+}
+
+.confirm-venue-thumb {
+  width: 90px;
+  height: 64px;
+  border-radius: var(--radius-box);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.confirm-venue-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.confirm-venue-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 2px;
+}
+
+.confirm-venue-city {
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+
+.confirm-status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: var(--cancel-pill-bg);
+  color: var(--cancel-pill-text);
+}
+
+.confirm-meta-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.confirm-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+}
+
+.confirm-meta-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.confirm-meta-val {
+  color: var(--text-dark);
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ── Refund Status Box ── */
+.confirm-refund-box {
+  background-color: var(--green-light-bg);
+  border: 1px solid var(--green-light-border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.confirm-refund-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--green-primary);
+  display: block;
+}
+
+.confirm-refund-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green-primary);
+  margin-bottom: 4px;
+}
+
+.confirm-refund-desc {
+  font-size: 13px;
+  color: var(--green-text-dark);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ── Action Buttons ── */
+.confirm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-primary-green {
+  width: 100%;
+  height: 48px;
+  background-color: #2d6a2d;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-btn);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.btn-primary-green:hover {
+  background-color: #245524;
+}
+
+.btn-outline-green {
+  width: 100%;
+  height: 48px;
+  background-color: #ffffff;
+  color: #2d6a2d;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid #2d6a2d;
+  border-radius: var(--radius-btn);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.btn-outline-green:hover {
+  background-color: #f0fdf4;
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 560px) {
+  .cancel-confirm-container {
+    margin: 32px auto 50px;
+    padding: 0 16px;
+  }
+}

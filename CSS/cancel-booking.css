@@ -1,0 +1,425 @@
+/* ============================================================
+   StudySpot – Cancel Booking Stylesheet (cancel-booking.css)
+   Pixel-accurate matching to UI design mockup
+   ============================================================ */
+
+:root {
+  --cancel-gold: #e6a213;
+  --cancel-gold-dark: #c8890a;
+  --danger-red: #dc2626;
+  --danger-red-hover: #b91c1c;
+  --green-primary: #15803d;
+  --green-hover: #166534;
+  --green-light-bg: #eaf7ee;
+  --green-light-border: #c5e9ce;
+  --green-text-dark: #166534;
+  --text-dark: #111827;
+  --text-secondary: #374151;
+  --text-muted: #6b7280;
+  --border-card: #e5e7eb;
+  --bg-page: #ffffff;
+  --radius-card: 16px;
+  --radius-box: 10px;
+  --radius-btn: 10px;
+}
+
+body {
+  background-color: var(--bg-page);
+  color: var(--text-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MAIN CANCEL BOOKING CONTAINER
+   ══════════════════════════════════════════════════════════════ */
+.cancel-container {
+  max-width: 520px;
+  width: 100%;
+  margin: 48px auto 70px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Top Yellow Circular Badge & Titles ── */
+.cancel-header {
+  text-align: center;
+  margin-bottom: 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cancel-badge-circle {
+  width: 58px;
+  height: 58px;
+  background-color: var(--cancel-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 14px rgba(230, 162, 19, 0.28);
+  flex-shrink: 0;
+  animation: pop-in 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cancel-badge-circle svg {
+  width: 28px;
+  height: 28px;
+  stroke: #ffffff;
+}
+
+.cancel-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.cancel-subtitle {
+  font-size: 14.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CARD 1: VENUE / BOOKING SUMMARY
+   ══════════════════════════════════════════════════════════════ */
+.booking-summary-card {
+  background: #ffffff;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.venue-row {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.venue-thumb-wrap {
+  width: 145px;
+  height: 98px;
+  flex-shrink: 0;
+  border-radius: var(--radius-box);
+  overflow: hidden;
+  background-color: #f3f4f6;
+}
+
+.venue-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.venue-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.venue-name {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.venue-city {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+.venue-meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+}
+
+.meta-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.meta-value {
+  color: var(--text-dark);
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CARD 2: REASON FOR CANCELLING
+   ══════════════════════════════════════════════════════════════ */
+.cancellation-reason-card {
+  background: #ffffff;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-card);
+  padding: 20px 22px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.section-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+}
+
+.reason-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reason-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-box);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+  user-select: none;
+}
+
+.reason-option:hover {
+  border-color: #cbd5e1;
+  background-color: #f9fafb;
+}
+
+.reason-option.selected {
+  border-color: #2d6a2d;
+  background-color: #ffffff;
+}
+
+/* Hidden native radio */
+.reason-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Custom Radio Circle */
+.custom-radio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease;
+}
+
+.reason-option.selected .custom-radio {
+  border-color: #2d6a2d;
+}
+
+.custom-radio-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #2d6a2d;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.15s ease;
+}
+
+.reason-option.selected .custom-radio-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.reason-text {
+  font-size: 14px;
+  color: #1f2937;
+  font-weight: 500;
+}
+
+/* Optional Other Reason textarea */
+.other-reason-wrap {
+  display: none;
+  margin-top: 10px;
+}
+
+.other-reason-wrap.show {
+  display: block;
+}
+
+.other-reason-textarea {
+  width: 100%;
+  min-height: 70px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-box);
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--text-dark);
+  resize: vertical;
+  outline: none;
+}
+
+.other-reason-textarea:focus {
+  border-color: #2d6a2d;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CARD 3: REFUND INFORMATION BOX
+   ══════════════════════════════════════════════════════════════ */
+.refund-alert-box {
+  background-color: var(--green-light-bg);
+  border: 1px solid var(--green-light-border);
+  border-radius: 12px;
+  padding: 15px 18px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 22px;
+}
+
+.refund-icon-wrap {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.refund-icon-wrap svg {
+  width: 20px;
+  height: 20px;
+  stroke: var(--green-primary);
+  display: block;
+}
+
+.refund-content {
+  flex: 1;
+}
+
+.refund-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--green-primary);
+  margin-bottom: 3px;
+  line-height: 1.3;
+}
+
+.refund-description {
+  font-size: 13px;
+  color: var(--green-text-dark);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ACTION BUTTONS
+   ══════════════════════════════════════════════════════════════ */
+.cancel-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-cancel-danger {
+  width: 100%;
+  height: 48px;
+  background-color: var(--danger-red);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  box-shadow: 0 1px 3px rgba(220, 38, 38, 0.2);
+}
+
+.btn-cancel-danger:hover {
+  background-color: var(--danger-red-hover);
+}
+
+.btn-cancel-danger:active {
+  transform: scale(0.99);
+}
+
+.btn-cancel-danger:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.btn-keep-booking {
+  width: 100%;
+  height: 48px;
+  background-color: #ffffff;
+  color: #1e3a1e;
+  font-size: 15px;
+  font-weight: 600;
+  border: 1px solid #15803d;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-keep-booking:hover {
+  background-color: #f0fdf4;
+}
+
+/* ── Animation ── */
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Responsive adjustments ── */
+@media (max-width: 560px) {
+  .cancel-container {
+    margin: 32px auto 50px;
+    padding: 0 16px;
+  }
+
+  .cancel-title {
+    font-size: 24px;
+  }
+
+  .venue-row {
+    flex-direction: column;
+  }
+
+  .venue-thumb-wrap {
+    width: 100%;
+    height: 140px;
+  }
+}

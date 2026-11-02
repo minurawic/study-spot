@@ -41,6 +41,8 @@ CREATE TABLE `bookings` (
   `total_price` decimal(10,2) DEFAULT 0.00,
   `status` enum('pending','upcoming','completed','cancelled') DEFAULT 'pending',
   `payment_ref` varchar(50) DEFAULT NULL,
+  `cancellation_reason` varchar(255) DEFAULT NULL,
+  `cancelled_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -56,7 +58,7 @@ CREATE TABLE `bookings` (
 
 LOCK TABLES `bookings` WRITE;
 /*!40000 ALTER TABLE `bookings` DISABLE KEYS */;
-INSERT INTO `bookings` VALUES (1,1,5,'2026-09-12','10:00:00','12:00:00',1,500.00,'upcoming','SS-100231','2026-09-23 04:12:06'),(2,1,8,'2026-09-15','14:00:00','16:00:00',2,0.00,'upcoming','SS-100232','2026-09-23 04:12:06'),(3,1,2,'2026-08-20','09:00:00','11:00:00',1,350.00,'completed','SS-100198','2026-09-23 04:12:06'),(4,1,3,'2026-08-11','08:00:00','17:00:00',1,300.00,'completed','SS-100177','2026-09-23 04:12:06'),(5,1,1,'2026-07-30','13:00:00','16:00:00',3,0.00,'completed','SS-100120','2026-09-23 04:12:06'),(6,1,6,'2026-08-02','10:00:00','12:00:00',1,600.00,'cancelled','SS-100150','2026-09-23 04:12:06');
+INSERT INTO `bookings` (`id`, `user_id`, `place_id`, `booking_date`, `start_time`, `end_time`, `people`, `total_price`, `status`, `payment_ref`, `cancellation_reason`, `cancelled_at`, `created_at`) VALUES (1,1,5,'2026-09-12','10:00:00','12:00:00',1,500.00,'upcoming','SS-100231',NULL,NULL,'2026-09-23 04:12:06'),(2,1,8,'2026-09-15','14:00:00','16:00:00',2,0.00,'upcoming','SS-100232',NULL,NULL,'2026-09-23 04:12:06'),(3,1,2,'2026-08-20','09:00:00','11:00:00',1,350.00,'completed','SS-100198',NULL,NULL,'2026-09-23 04:12:06'),(4,1,3,'2026-08-11','08:00:00','17:00:00',1,300.00,'completed','SS-100177',NULL,NULL,'2026-09-23 04:12:06'),(5,1,1,'2026-07-30','13:00:00','16:00:00',3,0.00,'completed','SS-100120',NULL,NULL,'2026-09-23 04:12:06'),(6,1,6,'2026-08-02','10:00:00','12:00:00',1,600.00,'cancelled','SS-100150','My plans changed','2026-08-01 10:00:00','2026-09-23 04:12:06'),(7,1,3,'2026-10-30','14:00:00','16:00:00',2,600.00,'upcoming','SS-100231',NULL,NULL,'2026-10-28 10:00:00');
 /*!40000 ALTER TABLE `bookings` ENABLE KEYS */;
 UNLOCK TABLES;
 
