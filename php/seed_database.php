@@ -47,6 +47,13 @@ try {
     ");
     $stmt->execute([$tomorrow]);
 
+    // Insert Hub Lanka upcoming booking (place 3) matching the Cancel Booking mockup
+    $pdo->exec("
+        INSERT INTO bookings (id, user_id, place_id, booking_date, start_time, end_time, people, total_price, status, payment_ref)
+        VALUES (7, 1, 3, '2026-10-30', '14:00:00', '16:00:00', 2, 600.00, 'upcoming', 'SS-100231')
+        ON DUPLICATE KEY UPDATE booking_date=VALUES(booking_date), start_time=VALUES(start_time), end_time=VALUES(end_time), people=VALUES(people), total_price=VALUES(total_price), status=VALUES(status);
+    ");
+
     // 4. Ensure user 1 has exactly 4 favorites (places 1, 2, 3, 4)
     $pdo->exec("DELETE FROM favorites WHERE user_id=1");
     $pdo->exec("

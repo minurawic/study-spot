@@ -291,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Cancel Modal & Handling ─────────────────────────────────
   if (btnCancelBooking) {
     btnCancelBooking.addEventListener('click', () => {
-      if (cancelModal) cancelModal.classList.add('show');
+      window.location.href = 'cancel-booking.html?id=' + encodeURIComponent(currentRecord.id);
     });
   }
 
