@@ -1,0 +1,151 @@
+/* ============================================================
+   MY REVIEWS PAGE STYLES
+   ============================================================ */
+
+/* ── Page Header ─────────────────────────────────────────── */
+.reviews-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.reviews-page-header-left h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px 0;
+}
+
+.reviews-count {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.btn-review-space {
+  color: #2D6A2D;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.btn-review-space:hover {
+  text-decoration: underline;
+}
+
+/* ── Review Card ─────────────────────────────────────────── */
+.review-card {
+  display: flex;
+  gap: 16px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  align-items: flex-start;
+}
+
+.review-card-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.review-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.review-card-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.review-space-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: #111827;
+}
+
+.review-location {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.review-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.review-stars {
+  color: #f59e0b;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.review-time {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.review-text {
+  font-size: 13.5px;
+  color: #4b5563;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Review Card Actions ─────────────────────────────────── */
+.review-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.btn-edit,
+.btn-delete {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-edit {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+}
+
+.btn-edit:hover {
+  background: #f3f4f6;
+}
+
+.btn-delete {
+  border: 1px solid #fca5a5;
+  background: #fff;
+  color: #ef4444;
+}
+
+.btn-delete:hover {
+  background: #fef2f2;
+}
