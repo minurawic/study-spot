@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Reviews &ndash; StudySpot</title>
+  <link rel="stylesheet" href="CSS/base.css" />
+  <link rel="stylesheet" href="CSS/navbar.css" />
+  <link rel="stylesheet" href="CSS/footer.css" />
+  <link rel="stylesheet" href="CSS/profile.css" />
+  <link rel="stylesheet" href="CSS/my-reviews.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================ -->
+  <nav class="navbar">
+
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.png" alt="StudySpot Logo">
+      <span>
+        <span class="study">Study</span><span class="spot">Spot</span>
+      </span>
+    </a>
+
+    <!-- Navigation Links -->
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="explore.html">Explore</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="about-us.html">About us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <!-- Navigation Actions -->
+    <div class="nav-actions">
+      <!-- Favourites -->
+      <button class="btn-icon" aria-label="Favourites" title="Favourites" type="button"
+        onclick="window.location.href='favourites.html'">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+      </button>
+
+      <!-- Account -->
+      <button class="btn-icon" aria-label="Account" title="Account" type="button"
+        onclick="navGoToProfile()">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+        </svg>
+      </button>
+    </div>
+
+  </nav>
+
+  <!-- ============================================================
+       PROFILE CONTAINER
+  ============================================================ -->
+  <div class="profile-container">
+
+    <!-- ── Left Sidebar ──────────────────────────────────────── -->
+    <aside class="profile-sidebar" aria-label="User Profile Navigation">
+
+      <!-- User Profile Card -->
+      <div class="user-profile-summary">
+        <div class="large-avatar-circle" id="profileAvatarWrap">
+          <!-- Filled by JS from localStorage -->
+        </div>
+        <h2 class="user-name" id="profileUserName"></h2>
+        <div class="user-email" id="profileUserEmail"></div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <ul class="sidebar-menu">
+        <li>
+          <a href="profile.html">
+            <span class="menu-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </span>
+            <span>Profile Overview</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="favourites.html">
+            <span class="menu-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+              </svg>
+            </span>
+            <span>My Favorites</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="my-reviews.html" class="active">
+            <span class="menu-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </span>
+            <span>My Reviews</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="recently-viewed.html">
+            <span class="menu-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </span>
+            <span>Recently Viewed</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="account-settings.html">
+            <span class="menu-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </span>
+            <span>Account Settings</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="php/logout.php">
+            <span class="menu-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </span>
+            <span>Logout</span>
+          </a>
+        </li>
+      </ul>
+
+    </aside>
+
+    <!-- ── Right Main Content ──────────────────────────────── -->
+    <main class="profile-content">
+
+      <!-- Page Header -->
+      <div class="reviews-page-header">
+        <div class="reviews-page-header-left">
+          <h1>My Reviews</h1>
+          <p class="reviews-count">Showing 4 of 6 reviews</p>
+        </div>
+        <a href="write-review.html" class="btn-review-space">Review a Space</a>
+      </div>
+
+      <!-- Review Card 1: National Library Colombo -->
+      <div class="review-card">
+        <img class="review-card-img" src="images/national-library.jpg" alt="National Library Colombo" />
+        <div class="review-card-body">
+          <div class="review-card-title-row">
+            <span class="review-space-name">National Library Colombo</span>
+            <span class="review-location">Colombo</span>
+          </div>
+          <div class="review-meta-row">
+            <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+            <span class="review-time">5 days ago</span>
+          </div>
+          <p class="review-text">Very quiet and comfortable. Perfect place for long study sessions!</p>
+        </div>
+        <div class="review-card-actions">
+          <button class="btn-edit" type="button" onclick="openEditModal(this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Edit
+          </button>
+          <button class="btn-delete" type="button" onclick="openDeleteModal(this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+              <path d="M10 11v6"/><path d="M14 11v6"/>
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+            </svg>
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <!-- Review Card 2: Cafe Kumbuk -->
+      <div class="review-card">
+        <img class="review-card-img" src="images/cafe-kumbuk.jpg" alt="Cafe Kumbuk" />
+        <div class="review-card-body">
+          <div class="review-card-title-row">
+            <span class="review-space-name">Caf&eacute; Kumbuk</span>
+            <span class="review-location">Colombo 05</span>
+          </div>
+          <div class="review-meta-row">
+            <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+            <span class="review-time">2 weeks ago</span>
+          </div>
+          <p class="review-text">Great coffee and fast Wi-Fi. Gets a little busy in the afternoon.</p>
+        </div>
+        <div class="review-card-actions">
+          <button class="btn-edit" type="button" onclick="openEditModal(this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Edit
+          </button>
+          <button class="btn-delete" type="button" onclick="openDeleteModal(this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+              <path d="M10 11v6"/><path d="M14 11v6"/>
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+            </svg>
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <!-- Review Card 3: Hub Lanka -->
+      <div class="review-card">
+        <img class="review-card-img" src="images/hub-lanka.jpg" alt="Hub Lanka" />
+        <div class="review-card-body">
+          <div class="review-card-title-row">
+            <span class="review-space-name">Hub Lanka</span>
+            <span class="review-location">Colombo 03</span>
+          </div>
+          <div class="review-meta-row">
+            <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+            <span class="review-time">1 month ago</span>
+          </div>
+          <p class="review-text">Clean desks, power outlets everywhere and a calm atmosphere.</p>
+        </div>
+        <div class="review-card-actions">
+          <button class="btn-edit" type="button" onclick="openEditModal(this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Edit
+          </button>
+          <button class="btn-delete" type="button" onclick="openDeleteModal(this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+              <path d="M10 11v6"/><path d="M14 11v6"/>
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+            </svg>
+            Delete
+          </button>
+        </div>
+      </div>
+
+      <!-- Review Card 4: University of Colombo Library -->
+      <div class="review-card">
+        <img class="review-card-img" src="images/uoc-library.jpg" alt="University of Colombo Library" />
+        <div class="review-card-body">
+          <div class="review-card-title-row">
+            <span class="review-space-name">University of Colombo Library</span>
+            <span class="review-location">Colombo 03</span>
+          </div>
+          <div class="review-meta-row">
+            <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+            <span class="review-time">2 months ago</span>
+          </div>
+          <p class="review-text">Excellent resources and silent zones. Seats fill up fast during exams.</p>
+        </div>
+        <div class="review-card-actions">
+          <button class="btn-edit" type="button" onclick="openEditModal(this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Edit
+          </button>
+          <button class="btn-delete" type="button" onclick="openDeleteModal(this)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+              <path d="M10 11v6"/><path d="M14 11v6"/>
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+            </svg>
+            Delete
+          </button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="site-footer">
+    <div class="footer-body">
+
+      <!-- Brand Column -->
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">
+          <img src="images/logo.png" alt="StudySpot Logo">
+          <span class="footer-logo-text">
+            <span class="study">Study</span><span class="spot">Spot</span>
+          </span>
+        </a>
+        <p class="footer-tagline">Helping Sri Lankan students find, book and review quiet places to study.</p>
+
+        <!-- Email Subscribe -->
+        <div class="footer-subscribe">
+          <input type="email" placeholder="Your email address" aria-label="Subscribe email">
+          <button type="button">Subscribe</button>
+        </div>
+
+        <!-- Social Icons -->
+        <div class="footer-socials">
+          <a href="#" class="footer-social-btn" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="footer-social-btn" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="footer-social-btn" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" class="footer-social-btn" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Explore Column -->
+      <div class="footer-col">
+        <div class="footer-col-heading">Explore</div>
+        <ul>
+          <li><a href="explore.html">All spaces</a></li>
+          <li><a href="map.html">Map view</a></li>
+          <li><a href="explore.html?type=library">Libraries</a></li>
+          <li><a href="explore.html?type=cafe">Caf&eacute;s</a></li>
+          <li><a href="explore.html?type=coworking">Co-working</a></li>
+        </ul>
+      </div>
+
+      <!-- Account Column -->
+      <div class="footer-col">
+        <div class="footer-col-heading">Account</div>
+        <ul>
+          <li><a href="profile.html">My profile</a></li>
+          <li><a href="my-bookings.html">My bookings</a></li>
+          <li><a href="favourites.html">Favourites</a></li>
+          <li><a href="account-settings.html">Notifications</a></li>
+        </ul>
+      </div>
+
+      <!-- Support Column -->
+      <div class="footer-col">
+        <div class="footer-col-heading">Support</div>
+        <ul>
+          <li><a href="help.html">Help &amp; FAQ</a></li>
+          <li><a href="contact.html">Contact us</a></li>
+          <li><a href="cancel-booking.html">Cancel a booking</a></li>
+          <li><a href="contact.html">Report a problem</a></li>
+        </ul>
+      </div>
+
+      <!-- Company Column -->
+      <div class="footer-col">
+        <div class="footer-col-heading">Company</div>
+        <ul>
+          <li><a href="about-us.html">About us</a></li>
+          <li><a href="contact.html">List your space</a></li>
+          <li><a href="help.html">Privacy policy</a></li>
+          <li><a href="help.html">Terms of service</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p class="footer-bottom-copy">
+        &copy; 2026 <strong>StudySpot</strong>. All rights reserved. Made for students in Sri Lanka.
+      </p>
+      <div class="footer-bottom-locale">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        English &middot; LKR
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
+  <script src="JS/navbar.js?v=2"></script>
+
+  <!-- ── Edit Review Modal ───────────────────────────────────── -->
+  <div id="editReviewModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:16px;padding:32px;width:100%;max-width:480px;margin:16px;box-shadow:0 20px 60px rgba(0,0,0,0.2);position:relative;">
+      <button onclick="closeEditModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;color:#6b7280;line-height:1;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <h2 style="font-size:18px;font-weight:700;color:#111827;margin:0 0 4px;">Edit Review</h2>
+      <p id="editModalSpaceName" style="font-size:13px;color:#6b7280;margin:0 0 20px;"></p>
+
+      <!-- Star Rating -->
+      <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:8px;">Rating</label>
+      <div id="editStarRow" style="display:flex;gap:6px;margin-bottom:20px;">
+        <span class="edit-star" data-val="1" onclick="setEditStar(1)" style="font-size:28px;cursor:pointer;color:#d1d5db;">&#9733;</span>
+        <span class="edit-star" data-val="2" onclick="setEditStar(2)" style="font-size:28px;cursor:pointer;color:#d1d5db;">&#9733;</span>
+        <span class="edit-star" data-val="3" onclick="setEditStar(3)" style="font-size:28px;cursor:pointer;color:#d1d5db;">&#9733;</span>
+        <span class="edit-star" data-val="4" onclick="setEditStar(4)" style="font-size:28px;cursor:pointer;color:#d1d5db;">&#9733;</span>
+        <span class="edit-star" data-val="5" onclick="setEditStar(5)" style="font-size:28px;cursor:pointer;color:#d1d5db;">&#9733;</span>
+      </div>
+
+      <!-- Review Text -->
+      <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:8px;">Your Review</label>
+      <textarea id="editReviewText"
+        style="width:100%;box-sizing:border-box;border:1px solid #d1d5db;border-radius:8px;padding:12px;font-size:14px;font-family:inherit;resize:vertical;min-height:100px;outline:none;color:#111827;"
+        placeholder="Write your review..."></textarea>
+
+      <!-- Actions -->
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px;">
+        <button onclick="closeEditModal()" style="padding:9px 20px;border:1px solid #d1d5db;border-radius:8px;background:#fff;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;color:#374151;">Cancel</button>
+        <button onclick="saveEditReview()" style="padding:9px 20px;border:none;border-radius:8px;background:#2D6A2D;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Delete Confirm Modal ────────────────────────────────── -->
+  <div id="deleteConfirmModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;">
+    <div style="background:#fff;border-radius:16px;padding:32px;width:100%;max-width:400px;margin:16px;box-shadow:0 20px 60px rgba(0,0,0,0.2);text-align:center;">
+      <div style="width:52px;height:52px;border-radius:50%;background:#fef2f2;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+          <path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+        </svg>
+      </div>
+      <h2 style="font-size:18px;font-weight:700;color:#111827;margin:0 0 8px;">Delete Review?</h2>
+      <p style="font-size:14px;color:#6b7280;margin:0 0 24px;">This review will be permanently deleted. This action cannot be undone.</p>
+      <div style="display:flex;gap:10px;justify-content:center;">
+        <button onclick="closeDeleteModal()" style="padding:9px 24px;border:1px solid #d1d5db;border-radius:8px;background:#fff;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;color:#374151;">Cancel</button>
+        <button onclick="confirmDelete()" style="padding:9px 24px;border:none;border-radius:8px;background:#ef4444;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="JS/navbar.js?v=2"></script>
+  <script>
+    // ── Sidebar user info ──────────────────────────────────────
+    (function () {
+      const raw = localStorage.getItem('study_user');
+      if (!raw) return;
+      try {
+        const u = JSON.parse(raw);
+        const nameEl = document.getElementById('profileUserName');
+        const emailEl = document.getElementById('profileUserEmail');
+        const avatarWrap = document.getElementById('profileAvatarWrap');
+        if (nameEl) nameEl.textContent = u.name || u.username || '';
+        if (emailEl) emailEl.textContent = u.email || '';
+        if (avatarWrap) {
+          if (u.avatar) {
+            avatarWrap.innerHTML = '<img src="' + u.avatar + '" alt="Avatar" style="width:100%;height:100%;border-radius:50%;object-fit:cover;" />';
+          } else {
+            const initials = (u.name || u.username || 'U').charAt(0).toUpperCase();
+            avatarWrap.innerHTML = '<span style="font-size:36px;font-weight:700;color:#fff;">' + initials + '</span>';
+            avatarWrap.style.background = '#2D6A2D';
+            avatarWrap.style.display = 'flex';
+            avatarWrap.style.alignItems = 'center';
+            avatarWrap.style.justifyContent = 'center';
+          }
+        }
+      } catch (e) {}
+    })();
+
+    // ── Edit Modal ─────────────────────────────────────────────
+    let _activeCard = null;
+    let _editStarVal = 0;
+
+    function openEditModal(btn) {
+      _activeCard = btn.closest('.review-card');
+      const spaceName = _activeCard.querySelector('.review-space-name').textContent;
+      const reviewText = _activeCard.querySelector('.review-text').textContent;
+      const starsEl = _activeCard.querySelector('.review-stars');
+      const currentStars = (starsEl.textContent.match(/★/g) || []).length;
+
+      document.getElementById('editModalSpaceName').textContent = spaceName;
+      document.getElementById('editReviewText').value = reviewText;
+      setEditStar(currentStars);
+
+      const modal = document.getElementById('editReviewModal');
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeEditModal() {
+      document.getElementById('editReviewModal').style.display = 'none';
+      document.body.style.overflow = '';
+      _activeCard = null;
+    }
+
+    function setEditStar(val) {
+      _editStarVal = val;
+      document.querySelectorAll('.edit-star').forEach(s => {
+        s.style.color = parseInt(s.dataset.val) <= val ? '#f59e0b' : '#d1d5db';
+      });
+    }
+
+    function saveEditReview() {
+      if (!_activeCard) return;
+      const newText = document.getElementById('editReviewText').value.trim();
+      if (!newText) {
+        document.getElementById('editReviewText').style.borderColor = '#ef4444';
+        return;
+      }
+
+      // Update review text
+      _activeCard.querySelector('.review-text').textContent = newText;
+
+      // Update stars
+      if (_editStarVal > 0) {
+        const filled = '★'.repeat(_editStarVal);
+        const empty  = '☆'.repeat(5 - _editStarVal);
+        _activeCard.querySelector('.review-stars').textContent = filled + empty;
+      }
+
+      closeEditModal();
+
+      // Brief success flash
+      _activeCard.style.transition = 'box-shadow 0.3s';
+      _activeCard.style.boxShadow = '0 0 0 2px #2D6A2D44';
+      setTimeout(() => { _activeCard.style.boxShadow = ''; }, 1200);
+    }
+
+    // ── Delete Modal ───────────────────────────────────────────
+    let _deleteCard = null;
+
+    function openDeleteModal(btn) {
+      _deleteCard = btn.closest('.review-card');
+      const modal = document.getElementById('deleteConfirmModal');
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteConfirmModal').style.display = 'none';
+      document.body.style.overflow = '';
+      _deleteCard = null;
+    }
+
+    function confirmDelete() {
+      if (!_deleteCard) return;
+      _deleteCard.style.transition = 'opacity 0.3s, transform 0.3s';
+      _deleteCard.style.opacity = '0';
+      _deleteCard.style.transform = 'scale(0.97)';
+      setTimeout(() => {
+        _deleteCard.remove();
+        updateReviewCount();
+      }, 300);
+      closeDeleteModal();
+    }
+
+    function updateReviewCount() {
+      const remaining = document.querySelectorAll('.review-card').length;
+      const countEl = document.querySelector('.reviews-count');
+      if (countEl) countEl.textContent = 'Showing ' + remaining + ' of 6 reviews';
+    }
+
+    // Close modals on backdrop click
+    document.getElementById('editReviewModal').addEventListener('click', function(e) {
+      if (e.target === this) closeEditModal();
+    });
+    document.getElementById('deleteConfirmModal').addEventListener('click', function(e) {
+      if (e.target === this) closeDeleteModal();
+    });
+  </script>
+
+</body>
+</html>
